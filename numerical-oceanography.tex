@@ -1,5 +1,6 @@
 \documentclass{beamer}
 \usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
 
 \usepackage{pgf,pgfpages}
 \usepackage{tikz}
@@ -104,7 +105,7 @@
       }{\vspace{-1.0\baselineskip}%
       \end{minipage}\end{tabular}\end{block}}
 
-\newenvironment{BlockWithoutTitle}{%
+\newenvironment{BlockNoTitle}{%
   \HideBlockTitle%
   \begin{block}{}}{%
   \end{block}%
@@ -185,6 +186,7 @@
 \newcommand\colorUnderLine[2][PHDyellow]{\color{#1}\underline{{\color{black}#2}}\color{black}\xspace}
 \newcommand\gris{\color{PHDgray}}
 \newcommand\amarillo{\color{PHDyellow}}
+\newcommand\tiragris[1]{{\par\hfill\small\gris{#1}}}
 %<<<<<<<<<<<<<<<
 
 \setcounter{tocdepth}{1}
@@ -278,9 +280,9 @@
 %%,---------------------------------------------------------------------
 %%| Introduction
 %%`---------------------------------------------------------------------
-\section{Introduction}
+\section[Introduction]{Mathematical Modelling and Numerical Simulation}
 \label{sec:introduction}
-%\include{sec-intro}
+\include{sec-intro}
 
 % %%,---------------------------------------------------------------------
 % %%| Hydrostatic Stokes Stability

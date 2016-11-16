@@ -1,0 +1,120 @@
+\begin{frame}{Mathematical Modelling and Numerical Simulation}
+  \begin{itemize}
+  \item \alert{Mathematical Model}: representation of physical reality
+    that is suitable for \textit{analysis} and \textit{calculation}
+  \item \alert{Numerical Simulation} allows us to \textit{calculate the
+    solution of a model} in a computer and therefore to simulate
+    physical reality
+  \end{itemize}
+  \medskip
+  In this work\dots
+  \smallskip
+  \begin{itemize}
+  \item models defined by \textbf{PDEs} (Partial Differential Equations)
+  \item we shall introduce models of \textit{increasing complexity}
+  \item targets:
+    \begin{itemize}
+    \item to explore and \textit{analyze} models in large-scale
+      \textbf{Oceanography}
+    \item to develop \textit{numerical methods} for simulate
+      ocean flow
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{A First Example of Modelling}
+  Modelling requires \alert{great effort} for an applied mathematician
+  \begin{itemize}
+  \item Thorough knowledge of \llaveizq{\textit{mathematics}\\\textit{scientific discipline}}
+  \item To communicate with other scientists, to select the adequate
+    model between different possibilities, to simplify models which
+    are too complex\dots
+  \item In later stage, also \textit{computing skills}
+  \end{itemize}
+
+  \bigskip
+  We start describing a simple model: the \alert{Heat Equation}
+\end{frame}
+
+\SetEmptyBackground
+\begin{frame}
+  Let
+  \begin{itemize}
+  \item $\Omega\subset\Rset^N$, \quad ($N=1,2,3$), \ open spatial domain \tiragris{occupied by a
+      homogeneous, isotropic, heat conductor material}
+  \item $\xx=(x_1,\dots,x_N) \in \Omega$: \textit{space} variable, \quad $t\in (0,T)$: \textit{time} variable
+  \item \textit{Temperature}: unknown function,
+    \begin{align*}
+    u:\Omega\times (0,T) \to \Rset, \\
+      (\xx,t) \mapsto u(\xx,t).
+    \end{align*}
+    \vspace{-1em}
+    \pause
+  \item \textit{Heat source}: a given function, $f(\xx,t)$
+    \vspace{0.66em}
+  \item Using physical laws (see e.g.~\cite{allaire:2007}),
+    \begin{itemize}
+    \item conservation of energy (of heat),
+    \item quantity of heat is proportional to temperature: $c u$, \ $c\in\Rset$,
+    \item heat flux proportional to temperature gradient: $q=-k\grad u$, $k\in\Rset$,
+      \tiragris{\tiny $c$, $k$: physical
+        constants (dependent on material), called ``specific heat'' and ``thermal conductivity''}
+    \end{itemize}
+  \item \dots and some mathematical theory (Gauss theorem), we arrive to\dots
+  \end{itemize}
+\end{frame}
+
+\SetDefaultBackground
+\begin{frame}{The Heat Equation}
+  \begin{itemize}
+  \item ... we arrive to the following \textbf{PDE} in $\Omega$:
+    \begin{BlockNoTitle}
+      \begin{equation*}
+        c\, \framedmath<2>{\dt u} - k\, \framedmath<3>{\Delta u} = f
+        \qquad {\color{PHDgray} \text{in} \quad \Omega\times (0,T),}
+      \end{equation*}
+    \end{BlockNoTitle}
+    where:
+    \begin{itemize}
+    \item $\framedmath<2>{\dt u} = \frac{\partial u}{\partial t}$
+      \quad (time partial derivative)
+    \item
+      $\framedmath<3>{\Delta u} = \sum_{i=1}^N \frac{\partial^2
+        u}{\partial x_i^2}$ \quad (Laplacian operator)
+    \end{itemize}
+    \bigskip
+    \item<4-> We must add an \textbf{initial condition}
+      {\color{PHDgray}(state of the model at time $t=0$)}:
+      \begin{BlockNoTitle}
+        \begin{equation*}
+          u(\xx,0) = u_0(\xx), {\color{PHDgray} \qquad \forall \xx\in\Omega}
+        \end{equation*}
+      \end{BlockNoTitle}
+
+    \item<4->
+      And also \textbf{boundary conditions}
+      {\color{PHDgray}(evolution of the model on the boundary,
+        $\xx\in\partial\Omega$)}\dots
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Boundary Conditions (on $\partial\Omega$)}
+  Different possibilities {\color{PHDgray} (depending on physical context)}:
+  \begin{itemize}
+  \item \alert{Dirichlet} boundary condition
+    \begin{BlockNoTitle}
+      \begin{equation*}
+        u(\xx,t)=0, \quad \forall \xx\in\partial\Omega, \quad \forall t\in(0,T)
+      \end{equation*}
+    \end{BlockNoTitle}
+  \item \alert{Neumman} boundary condition
+  \item \alert{Robin} boundary condition
+  \end{itemize}
+\end{frame}
+
+%%% Local Variables:
+%%% coding: utf-8
+%%% TeX-master: "numerical-oceanography"
+%%% mode: latex
+%%% ispell-local-dictionary: "english"
+%%% End:
