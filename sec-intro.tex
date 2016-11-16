@@ -98,17 +98,165 @@
   \end{itemize}
 \end{frame}
 
-\begin{frame}{Boundary Conditions (on $\partial\Omega$)}
-  Different possibilities {\color{PHDgray} (depending on physical context)}:
-  \begin{itemize}
-  \item \alert{Dirichlet} boundary condition
+\begin{frame}{Boundary Conditions {\small (to select depending on physical context)}}
+  % \vspace{-1.5em}
+  % Different possibilities to select {\color{PHDgray} (depending on physical context)}:
+  % \medskip
+  \begin{enumerate}
+  \item \alert{Dirichlet} boundary condition:
     \begin{BlockNoTitle}
       \begin{equation*}
         u(\xx,t)=0, \quad \forall \xx\in\partial\Omega, \quad \forall t\in(0,T)
       \end{equation*}
     \end{BlockNoTitle}
-  \item \alert{Neumman} boundary condition
-  \item \alert{Robin} boundary condition
+  \item \alert{Neumman} boundary condition:
+    \begin{BlockNoTitle}
+      \begin{equation*}
+        \partial_{\nn} u(\xx,t) := \grad u(\xx,t)\cdot\nn = 0,
+      \end{equation*}
+    \end{BlockNoTitle}
+    {\small\hfill
+     where $\grad u =$ gradient vector and $\nn=$ unit outward vector normal to $\Omega$.}
+    \smallskip
+    \tiragris{\scriptsize{}
+        \textbf{Interpretation}: No heat flux across $\partial\Omega$ (domain isolated from the exterior)}
+  \item \alert{Robin} (or Fourier) boundary condition
+    \begin{BlockNoTitle}
+      \begin{equation*}
+        \partial_{\nn} u(\xx,t) + \alpha u(\xx,t) = 0,
+      \end{equation*}
+    \end{BlockNoTitle}
+    {\small\hfill where $\alpha>0$ is a given constant}
+    \tiragris{\scriptsize
+      \begin{tabular}{r}
+      \textbf{Interpretation}: Heat flux trough $\partial\Omega$ is proportional to
+        the difference \\ of temperature between exterior and interior
+      \end{tabular}
+    }
+  \end{enumerate}
+\end{frame}
+
+\begin{frame}{The Heat Equation}
+  We can summarize in the following problem: find $u(\xx,t)$ such that
+  \begin{BlockNoTitle}%
+    \begin{tabular}[t]{l|>{$}l<{$}l}
+       \rotatebox[origin=c]{40}{\small \heatProblem}
+      &
+        \begin{aligned}%
+          \dt u - \nu\, \Delta u &= f
+          \qquad \text{in} \ \Omega\times (0,T),
+          \\\noalign{\smallskip}
+          u|_{t=0} &= u_0
+          \qquad \text{in}\ \Omega,
+          \\\noalign{\smallskip}
+          u&=0
+          \qquad \text{on}\ \partial\Omega \times (0,T),
+        \end{aligned}
+    \end{tabular}
+  \end{BlockNoTitle}
+  where $\nu=k/c>0$ (viscosity coefficient) and we fixed Dirichlet B.C.
+  \pause
+  \small
+  \begin{remark}
+    This problem has a universal character and is applied to model \structure{many phenomena}:
+    \begin{itemize}
+    \item Heat propagation
+    \item Diffusion of a density or concentration (of biological
+      species, of pollution,\dots)
+    \item In finance, value of an option to buy a stock
+    \item \dots
+    \end{itemize}
+  \end{remark}
+\end{frame}
+
+\begin{frame}{The Poisson Problem}
+  For certain choices of the source term, $f(x)$, Heat Equation reaches a
+  \alert{\textbf{steady}} or (\textbf{stationary}) state, that is
+  $$
+  u(\xx,t) \longrightarrow u_\infty(\xx) \quad\mbox{as}\quad t\to\infty.
+  $$
+  Often it is interesting to calculate the steady state directly, solving:
+  \begin{BlockNoTitle}%
+    \begin{tabular}[t]{l|>{$}l<{$}l}
+       \rotatebox[origin=c]{30}{\small \poissonProblem}
+      &
+        \begin{aligned}%
+          \Delta u &= f
+          \qquad \text{in} \ \Omega,
+          \\\noalign{\smallskip}
+          u&=0
+          \qquad \text{on}\ \partial\Omega.
+        \end{aligned}
+    \end{tabular}
+  \end{BlockNoTitle}
+  \medskip
+  \pause
+  Now we are about to use this simpler problem as example for:
+  \smallskip
+  \begin{enumerate}
+  \item \emph{Analysis} of the model (including existence and uniqueness of solution) and
+  \item \emph{Numerical simulation} (calculating the solution).
+\end{enumerate}
+\end{frame}
+
+\begin{frame}{Variational Formulation of \poissonProblem}
+  \small
+  \begin{proposition}
+  Let
+  $$
+  X=\{ \Phi\in C^1(\overline\Omega) \st \Phi=0 \quad \mbox{on } \partial\Omega\}.
+  $$
+  A function $u\in C^2(\Omega)$ is a solution of \poissonProblem $\mathbf\Longleftrightarrow$ $u\in X$ and satisfies:
+  \begin{equation}
+    \tag{PV}
+    \int_\Omega \grad u(\xx) \grad v(\xx) d\xx = \int_\Omega f(\xx) v(\xx) d\xx \quad \forall v\in X.
+    \label{eq:poisson.variational}
+  \end{equation}
+  \end{proposition}
+  \begin{itemize}
+  \item Proof: follows from Green's formula (integration by parts).
+  \item Problem (\ref{eq:poisson.variational}) is called
+    \alert{\textbf{Variational Formulation}} of \poissonProblem.
+  \item $v$ is called \textbf{test function}.
+  \item (\ref{eq:poisson.variational}) only requires
+    $u\in C^1(\Omega)$. In this sense it is \textbf{weaker} than ``classical
+    formulation'' of \poissonProblem, which requires $u\in C^2(\Omega)$.
+  \item $\Rightarrow$ we suspect that it is \textbf{easier to solve}
+    (\ref{eq:poisson.variational}) than ``classical formulation''.
+  \end{itemize}
+  \begin{center}
+    \textbf{Task:} to develop a theory for well-posedness
+    of~(\ref{eq:poisson.variational}).
+  \end{center}
+\end{frame}
+
+\begin{frame}{Abstract framework}
+  \begin{itemize}
+  \item We can reformulate~(\ref{eq:poisson.variational}) as follows: find
+    $u\in X$ such that
+    \begin{BlockNoTitle}
+      \begin{equation}
+        a(u,v) = L(v) \quad \forall v\in
+        X,\label{eq:abstract.variational}
+      \end{equation}
+    \end{BlockNoTitle}
+    were $a(\cdot,\cdot)$ and $L(\cdot)$ are bilinear and linear forms,
+    respectively:
+    \begin{equation*}
+      a(u,v) = \int_\Omega \grad u \grad v, \qquad
+      L(v) = \int_\Omega f  v.
+    \end{equation*}
+
+  \item We shall see that there \textbf{exists a powerful theory} for analysing
+    abstract variational formulations
+    like~(\ref{eq:abstract.variational}).
+
+  \item However, this theory \textbf{only works for Hilbert spaces}. And
+    $$
+    X=\{ \Phi\in C^1(\overline\Omega) \st \Phi=0 \quad \mbox{on } \partial\Omega\}
+    $$
+    is \textbf{not a Hilbert space} (equipped with  the "natural" scalar product for this problem).
+  \item We therefore must \textbf{replace $X$ with a Hilbert space}: $V=H_0^1(\Omega)$.
   \end{itemize}
 \end{frame}
 
