@@ -232,10 +232,11 @@
 
 \begin{frame}{Abstract framework}
   \begin{itemize}
-  \item We can reformulate~(\ref{eq:poisson.variational}) as follows: find
+  \item Reformulation of (\ref{eq:poisson.variational}): find
     $u\in X$ such that
     \begin{BlockNoTitle}
       \begin{equation}
+        \tag{PA}
         a(u,v) = L(v) \quad \forall v\in
         X,\label{eq:abstract.variational}
       \end{equation}
@@ -247,9 +248,9 @@
       L(v) = \int_\Omega f  v.
     \end{equation*}
 
-  \item We shall see that there \textbf{exists a powerful theory} for analysing
-    abstract variational formulations
-    like~(\ref{eq:abstract.variational}).
+  \item There \textbf{exists a powerful theory}
+    {\color{PHDgray}(e. g. Lax-Milgram)} for analysing abstract variational
+    formulations like~(\ref{eq:abstract.variational}).
 
   \item However, this theory \textbf{only works for Hilbert spaces}. And
     $$
@@ -257,6 +258,75 @@
     $$
     is \textbf{not a Hilbert space} (equipped with  the "natural" scalar product for this problem).
   \item We therefore must \textbf{replace $X$ with a Hilbert space}: $V=H_0^1(\Omega)$.
+  \end{itemize}
+
+\end{frame}
+
+\begin{frame}{Lax-Milgram Theory}
+  Let us consider the abstract variational problem: find $u\in V$ such that
+    \begin{BlockNoTitle}
+      \begin{equation}
+        \tag{PA}
+        a(u,v) = L(v) \quad \forall v\in V,
+        \label{eq:abstract.variational.hilbert}
+      \end{equation}
+    \end{BlockNoTitle}
+    \begin{enumerate}
+    \item $L: V \to \Rset$ is linear and continuous
+    \end{enumerate}
+    \begin{theorem}[Lax-Milgram]
+      Let $V$ be a real Hilbert space
+      Then~(\ref{eq:abstract.variational.hilbert})
+      has a unique solution.
+    \end{theorem}
+\end{frame}
+
+\begin{frame}{Sobolev spaces}
+  \small
+  {\color{PHDgray} Brief summary of results from \textbf{functional analysis}:}
+  \begin{itemize}
+  \setlength\itemsep{0.5em}
+  \item<1->
+    $L^p(\Omega)=\{ f: \Omega \to \Rset \quad \text{measurable} \st
+    \alert{\int_\Omega |f(\xx)|^p < +\infty} \} \quad p \in [1,+\infty)$
+    \begin{itemize}
+      \setlength\itemsep{0.3em}
+      \scriptsize
+    \item $L^p(\Omega)$ is a Banach space for
+      $\norm[L^p(\Omega)]{f}=\left(\int_\Omega|f(\xx)|^p\right)^{1/p}$
+    \item $L^2(\Omega)$ is a Hilbert space for $(f,g)_{L^2(\Omega)}=\int_\Omega f(\xx) g(\xx) d\xx$
+    \end{itemize}
+
+  \item<2->
+    $ H^m(\Omega) = \{ f\in L^2(\Omega) \st \text{\alert{weak derivatives} of
+      order $|\alpha| \le m$ are \alert{in} } \alert{L^2(\Omega)} \} $
+    \begin{itemize}
+      \setlength\itemsep{0.3em}
+      \scriptsize
+    \item Hilbert space for
+      $(f,g)_{H^m(\Omega)}=\sum_{|\alpha|\le m} \int_\Omega D^\alpha f
+      \; D^\alpha g \,d\xx$.
+      \par {\color{PHDgray} which induces the norm:} \quad
+      $\norm[H^m(\Omega)]{f}=\left(\sum_{|\alpha|\le m} \int_\Omega|D^\alpha f(\xx)|^2\right)^{1/2}$
+      \item $C^\infty(\overline\Omega) \subset H^m(\Omega)$, dense inclusion.
+    \end{itemize}
+
+  \item<3-> \alert{$H_0^1(\Omega) = \{ v \in H^1(\Omega) \st v|_{\partial\Omega}=0 \}$}
+     \hfill{\color{PHDgray} (sense of $v|_{\partial\Omega}=0$ ? Trace theory)}
+    \begin{itemize}
+      \setlength\itemsep{0.3em}
+      \scriptsize
+    \item Hilbert space for
+      $(f,g)_{H_0^1(\Omega)}=\int_\Omega \grad f \; \grad g \, d\xx $
+      \par {\color{PHDgray} which induces the norm:} \quad
+      $\norm[H_0^1(\Omega)]{f}=\left(\int_\Omega|\grad f|^2\, d\xx\right)^{1/2}$
+    \item $D(\Omega) =\{ \small \Phi\in C^\infty(\Omega) \st \text{ soporte compacto} \}
+      \subset H_0^1(\Omega)$, dense.
+       \small
+     $$\Rightarrow
+      D(\Omega) \subset \alert{X=\{ \Phi\in C^1(\overline\Omega) \st \Phi=0 \quad \mbox{on
+      } \partial\Omega\} \subset H_0^1(\Omega)} \text{, dense}.$$
+    \end{itemize}
   \end{itemize}
 \end{frame}
 
