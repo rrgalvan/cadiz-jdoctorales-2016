@@ -408,13 +408,67 @@ and define $u_h(\xx)$ by piecewise interpolation of the approximations \structur
       -\frac{u_{i,j-1}-2u_{ij}+u_{i,j+1}}{h^2} = f(x_i,x_j).
     \end{multline*}
   \end{BlockNoTitle}
-  + B.C. $\Rightarrow$ \textbf{linear system} with $(M-1)^2$ equations and unknowns.
+  + B.C. $\Rightarrow$ \textbf{linear equations system}, $(M-1)^2$ equations and unknowns.
 \end{enumerate}
 
 \end{frame}
 
+\begin{frame}{Finite Element Method}
+  \small
+  \begin{enumerate}
+  \item We approximate $\overline\Omega$ by a \alert{triangulation
+    ${\cal T}_h= \{K_i\}_{i}^M$}. Then select a \alert{polynomial order,
+    $k\in\Nset$}, and define a finite-dimensional space
+    \begin{BlockNoTitle}
+      \vspace{-0.5em}
+      $$
+      V_h = \big\{ v_h\in C^0(\overline\Omega) \;\st\;
+      v_h|_{K_i}\in\mathbb{P}_k, \ \forall K_i \in {\cal T}, \quad
+      v_h|_{\partial\Omega}=0 \big\} \subset H_0^1(\Omega)
+      $$
+    \end{BlockNoTitle}
+    This kind of approximations shall also be denoted as \alert{\P{k}}.
+    \par \vspace{-0.7em}
+    \setlength{\tabcolsep}{1.5em}
+    \begin{center}
+      \begin{tabular}{cc}
+        \centering
+        \includegraphics[height=0.20\linewidth]{img/FE_triangulation}
+        &
+          \includegraphics[height=0.15\linewidth]{img/FE_function_3d}
+        \\
+        {\scriptsize  Triangulation of $\overline\Omega$}
+        &
+          {\scriptsize Function $u_h \in V_h$ (\P1 approximation)}
+      \end{tabular}
+    \end{center}
+
+  \item We \alert{approximate the \textbf{variational formulation}} of
+    the Poisson problem as follows: find $u_h\in V_h$ such that:
+    \begin{BlockNoTitle}
+      \vspace{-0.5em}
+      \begin{equation*}
+        \int_\Omega \grad u_h(\xx) \grad v_h(\xx) d\xx = \int_\Omega f(\xx) v_h(\xx) d\xx \quad \forall v_h\in V_h.
+        \label{eq:poisson.variational}
+      \end{equation*}
+    \end{BlockNoTitle}
+  \end{enumerate}
+\end{frame}
+
 \begin{frame}
-  \textbf{Idea:} to approximate
+  \begin{theorem}
+    Let ${\cal T}_h$ ($h\to 0$) be a sequence of regular meshes of
+    $\Omega$. Let $u\in H_0^1(\Omega)$ be the solution of the Poisson
+    problem and $u_h\in V_h$ its $\P{k}$ FE approximation. Then
+    $$
+    \lim_{h\to 0} \norm[H^1(\Omega)]{u-u_h} = 0.
+    $$
+    Moreover, if $u\in H^{k+1}$ and $k+1>N/2$, then we have the error estimate:
+    $$
+    \norm[H^1(\Omega)]{u-u_h} \le C \, h^k \, \norm[H^{k+1}(\Omega)]{u}.
+    $$
+    where $C$ is a constant (independent of $h$ and $u$).
+  \end{theorem}
 \end{frame}
 
 %%% Local Variables:
