@@ -71,7 +71,7 @@
     \begin{BlockNoTitle}
       \begin{equation*}
         c\, \framedmath<2>{\dt u} - k\, \framedmath<3>{\Delta u} = f
-        \qquad {\color{PHDgray} \text{in} \quad \Omega\times (0,T),}
+        \qquad \soften{\text{in} \quad \Omega\times (0,T),}
       \end{equation*}
     \end{BlockNoTitle}
     where:
@@ -84,23 +84,23 @@
     \end{itemize}
     \bigskip
     \item<4-> We must add an \textbf{initial condition}
-      {\color{PHDgray}(state of the model at time $t=0$)}:
+      \soften{(state of the model at time $t=0$)}:
       \begin{BlockNoTitle}
         \begin{equation*}
-          u(\xx,0) = u_0(\xx), {\color{PHDgray} \qquad \forall \xx\in\Omega}
+          u(\xx,0) = u_0(\xx), \soften{ \qquad \forall \xx\in\Omega}
         \end{equation*}
       \end{BlockNoTitle}
 
     \item<4->
       And also \textbf{boundary conditions}
-      {\color{PHDgray}(evolution of the model on the boundary,
+      \soften{(evolution of the model on the boundary,
         $\xx\in\partial\Omega$)}\dots
   \end{itemize}
 \end{frame}
 
 \begin{frame}{Boundary Conditions {\small (to select depending on physical context)}}
   % \vspace{-1.5em}
-  % Different possibilities to select {\color{PHDgray} (depending on physical context)}:
+  % Different possibilities to select \soften{ (depending on physical context)}:
   % \medskip
   \begin{enumerate}
   \item \alert{Dirichlet} boundary condition:
@@ -208,7 +208,7 @@
   $$
   A function $u\in C^2(\Omega)$ is a solution of \poissonProblem $\mathbf\Longleftrightarrow$ $u\in X$ and satisfies:
   \begin{equation}
-    \tag{PV}
+    \tag{\ensuremath{P_V}}
     \int_\Omega \grad u(\xx) \grad v(\xx) d\xx = \int_\Omega f(\xx) v(\xx) d\xx \quad \forall v\in X.
     \label{eq:poisson.variational}
   \end{equation}
@@ -224,10 +224,13 @@
   \item $\Rightarrow$ we suspect that it is \textbf{easier to solve}
     (\ref{eq:poisson.variational}) than ``classical formulation''.
   \end{itemize}
-  \begin{center}
-    \textbf{Task:} to develop a theory for well-posedness
-    of~(\ref{eq:poisson.variational}).
-  \end{center}
+  \vspace{-1em}
+  \begin{BlockNoTitle}
+    \begin{center}
+      \textbf{Idea:} Is possible to develop a theory for
+      well-posedness of~(\ref{eq:poisson.variational})? \ \dots
+    \end{center}
+  \end{BlockNoTitle}
 \end{frame}
 
 \begin{frame}{Abstract framework}
@@ -236,54 +239,71 @@
     $u\in X$ such that
     \begin{BlockNoTitle}
       \begin{equation}
-        \tag{PA}
+        \tag{\ensuremath{P_V}}
         a(u,v) = L(v) \quad \forall v\in
         X,\label{eq:abstract.variational}
       \end{equation}
     \end{BlockNoTitle}
-    were $a(\cdot,\cdot)$ and $L(\cdot)$ are bilinear and linear forms,
-    respectively:
+    were $a(\cdot,\cdot)$ and $L(\cdot)$ \soften{are the following} bilinear and linear forms:
     \begin{equation*}
       a(u,v) = \int_\Omega \grad u \grad v, \qquad
       L(v) = \int_\Omega f  v.
     \end{equation*}
 
-  \item There \textbf{exists a powerful theory}
-    {\color{PHDgray}(e. g. Lax-Milgram)} for analysing abstract variational
+  \item There \alert{\textbf{exists a powerful theory}}
+    (\structure{Lax-Milgram}) for analysing abstract variational
     formulations like~(\ref{eq:abstract.variational}).
 
-  \item However, this theory \textbf{only works for Hilbert spaces}. And
+  \item \soften{However, this theory} \textbf{only works for Hilbert spaces}. \soften{And}
     $$
     X=\{ \Phi\in C^1(\overline\Omega) \st \Phi=0 \quad \mbox{on } \partial\Omega\}
     $$
-    is \textbf{not a Hilbert space} (equipped with  the "natural" scalar product for this problem).
-  \item We therefore must \textbf{replace $X$ with a Hilbert space}: $V=H_0^1(\Omega)$.
+    is \textbf{not a Hilbert space} \soften{(equipped with  the "natural" scalar product for this problem)}.
+  \item \soften{We therefore must} \alert{\textbf{replace $X$ with a Hilbert space}, $V$}.
   \end{itemize}
-
 \end{frame}
 
 \begin{frame}{Lax-Milgram Theory}
-  Let us consider the abstract variational problem: find $u\in V$ such that
+  \small
+  Let $V$ a Hilbert space.
+  \soften{Consider the abstract problem:}
+  Find $u\in V$ such that
     \begin{BlockNoTitle}
       \begin{equation}
-        \tag{PA}
+        \tag{\ensuremath{P_V}}
         a(u,v) = L(v) \quad \forall v\in V,
         \label{eq:abstract.variational.hilbert}
       \end{equation}
     \end{BlockNoTitle}
+    \soften{and the following} hypothesis:
     \begin{enumerate}
-    \item $L: V \to \Rset$ is linear and continuous
+    \item $L(\cdot)$ is \textbf{linear} and \textbf{continuous}, \soften{i.e.} $\exists C>0$ \soften{such that:}
+      \label{item:1}
+      \begin{equation*}
+        |L(v)|\le C \norm[]{v} \quad \forall v\in V.
+      \end{equation*}
+    \item $a(\cdot,\cdot)$ is \textbf{bilinear} and \textbf{continuous}, \soften{i.e.} $\exists M>0$ \soften{such that:}
+      \label{item:2}
+      \begin{equation*}
+        |a(v,w)|\le M \norm[]{v}\norm[]{w} \quad\forall v,w\in V,
+      \end{equation*}
+    \item $a(\cdot,\cdot)$ is \textbf{coercive}, \soften{i.e.} $\exists \nu>0$ \soften{such that:}
+      \label{item:3}
+      \begin{equation*}
+        |a(v,v)| \ge \nu  \norm[]{v}^2 \quad\forall v\in V,
+      \end{equation*}
     \end{enumerate}
     \begin{theorem}[Lax-Milgram]
-      Let $V$ be a real Hilbert space
-      Then~(\ref{eq:abstract.variational.hilbert})
-      has a unique solution.
+      Under previous
+      hypothesis,~\alert{(\ref{eq:abstract.variational.hilbert})} is
+        well posed, i.e., it \alert{\textbf{has a unique solution}} which
+      depends continuously on $L$.
     \end{theorem}
 \end{frame}
 
 \begin{frame}{Sobolev spaces}
   \small
-  {\color{PHDgray} Brief summary of results from \textbf{functional analysis}:}
+  \soften{Some results from \textbf{functional analysis}:}
   \begin{itemize}
   \setlength\itemsep{0.5em}
   \item<1->
@@ -306,19 +326,19 @@
     \item Hilbert space for
       $(f,g)_{H^m(\Omega)}=\sum_{|\alpha|\le m} \int_\Omega D^\alpha f
       \; D^\alpha g \,d\xx$.
-      \par {\color{PHDgray} which induces the norm:} \quad
+      \par \soften{ which induces the norm:} \quad
       $\norm[H^m(\Omega)]{f}=\left(\sum_{|\alpha|\le m} \int_\Omega|D^\alpha f(\xx)|^2\right)^{1/2}$
       \item $C^\infty(\overline\Omega) \subset H^m(\Omega)$, dense inclusion.
     \end{itemize}
 
   \item<3-> \alert{$H_0^1(\Omega) = \{ v \in H^1(\Omega) \st v|_{\partial\Omega}=0 \}$}
-     \hfill{\color{PHDgray} (sense of $v|_{\partial\Omega}=0$ ? Trace theory)}
+     \hfill\soften{ (sense of $v|_{\partial\Omega}=0$ ? Trace theory)}
     \begin{itemize}
       \setlength\itemsep{0.3em}
       \scriptsize
     \item Hilbert space for
       $(f,g)_{H_0^1(\Omega)}=\int_\Omega \grad f \; \grad g \, d\xx $
-      \par {\color{PHDgray} which induces the norm:} \quad
+      \par \soften{ which induces the norm:} \quad
       $\norm[H_0^1(\Omega)]{f}=\left(\int_\Omega|\grad f|^2\, d\xx\right)^{1/2}$
     \item $D(\Omega) =\{ \small \Phi\in C^\infty(\Omega) \st \text{ soporte compacto} \}
       \subset H_0^1(\Omega)$, dense.
@@ -328,6 +348,73 @@
       } \partial\Omega\} \subset H_0^1(\Omega)} \text{, dense}.$$
     \end{itemize}
   \end{itemize}
+\end{frame}
+
+\begin{frame}{Well-posedness of the Poisson Problem}
+  \begin{theorem}
+    Let $\Omega \subset \Rset^N$ open, bounded set. Take $f\in L^2(\Omega)$.
+    \begin{enumerate}
+    \item \alert{$\exists! u \in V=H_0^1(\Omega)$ solution} of the variational formulation
+      \begin{equation}
+        \tag{\ensuremath{P_V}}
+        \int_\Omega \grad u \, \grad v \,d\xx = \int_\Omega f\, v \, d\xx \quad \forall v\in V.
+        \label{eq:1}
+      \end{equation}
+    \item Further, it \alert{depends continuously on the data}, i.e., $\exists C>0$ such that
+      $$
+      \norm[H_0^1(\Omega)]{u} \le C \norm[L^2(\Omega)]{f}.
+      $$
+    \item If $\Omega$ is an open set of class $C^{m+2}$ and
+      $f\in H^m(\Omega)$ with $m>N/2$, then the solution $u$
+      of~(\ref{eq:1}) is a \alert{\textbf{strong} or \textbf{classical solution}} i.e. it verfies
+      $$
+      u\in C^2(\overline\Omega), \qquad -\Delta u(\xx) = f(\xx) \quad \forall \xx\in\Omega, \quad u|_{\partial\Omega}=0.
+      $$
+    \end{enumerate}
+  \end{theorem}
+  \scriptsize \textbf{Proof}: (1) and (2) are consequence of
+  \structure{\textbf{Lax-Milgram}} Theorem. (3) requires more \structure{functional
+    analysis}, see e.g.~\cite{brezis:2017,allaire:2007}.
+\end{frame}
+
+\begin{frame}{Numerical Simulation of the Poisson Problem}
+
+\small
+Construction of any numerical method for solving a (steady) PDE requires to consider:
+\begin{enumerate}
+\item How to represent the solution $u(\xx,t)$ by an
+  \textit{approximate solution} $u_h(\xx,t)$?
+\item In which sense the approximate solution $u_h (\xx,t)$
+  satisfies the PDE?
+\end{enumerate}
+
+\bigskip
+
+\textbf{Example}: \alert{\textbf{Finite Difference}} method for the \alert{Poisson
+problem} (steady) in $\Omega=(0,1)\times (0,1) \subset\Rset^2$ \soften{(the unit
+square)}:
+
+\begin{enumerate}
+\item We consider the mesh \structure{$\overline \Omega_h = \{ (x_i,y_j)=(ih,jh) \st 0 \le i,j \le M \} $}
+and define $u_h(\xx)$ by piecewise interpolation of the approximations \structure{$u^h_{ij}\simeq u(x_i,y_j)$}
+\item Partial derivatives are approximated \structure{on each node $(x_i,y_j)$} as incremental quotients:
+  \begin{BlockNoTitle}
+    \vspace{-1.5em}
+    \begin{multline*}
+      -\Delta u(x_i,y_j) = -\partial^2_{xx}u(x_i,y_j)
+      -\partial^2_{yy}u(x_i,y_j)\simeq
+      \\
+      -\frac{u_{i-1,j}-2u_{ij}+u_{i+1,j}}{h^2}
+      -\frac{u_{i,j-1}-2u_{ij}+u_{i,j+1}}{h^2} = f(x_i,x_j).
+    \end{multline*}
+  \end{BlockNoTitle}
+  + B.C. $\Rightarrow$ \textbf{linear system} with $(M-1)^2$ equations and unknowns.
+\end{enumerate}
+
+\end{frame}
+
+\begin{frame}
+  \textbf{Idea:} to approximate
 \end{frame}
 
 %%% Local Variables:
