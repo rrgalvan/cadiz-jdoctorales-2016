@@ -1,4 +1,6 @@
+%--------------------------------------------------------------------------
 \begin{frame}{Mathematical Modelling and Numerical Simulation}
+%--------------------------------------------------------------------------
   \begin{itemize}
   \item \alert{Mathematical Model}: representation of physical reality
     that is suitable for \textit{analysis} and \textit{calculation}
@@ -22,7 +24,9 @@
   \end{itemize}
 \end{frame}
 
+%--------------------------------------------------------------------------
 \begin{frame}{A First Example of Modelling}
+%--------------------------------------------------------------------------
   Modelling requires \alert{great effort} for an applied mathematician
   \begin{itemize}
   \item Thorough knowledge of \llaveizq{\textit{mathematics}\\\textit{scientific discipline}}
@@ -37,7 +41,9 @@
 \end{frame}
 
 \SetEmptyBackground
+%--------------------------------------------------------------------------
 \begin{frame}
+%--------------------------------------------------------------------------
   Let
   \begin{itemize}
   \item $\Omega\subset\Rset^N$, \quad ($N=1,2,3$), \ open spatial domain \tiragris{occupied by a
@@ -65,7 +71,9 @@
 \end{frame}
 
 \SetDefaultBackground
+%--------------------------------------------------------------------------
 \begin{frame}{The Heat Equation}
+%--------------------------------------------------------------------------
   \begin{itemize}
   \item ... we arrive to the following \textbf{PDE} in $\Omega$:
     \begin{BlockNoTitle}
@@ -98,7 +106,9 @@
   \end{itemize}
 \end{frame}
 
+%--------------------------------------------------------------------------
 \begin{frame}{Boundary Conditions {\small (to select depending on physical context)}}
+%--------------------------------------------------------------------------
   % \vspace{-1.5em}
   % Different possibilities to select \soften{ (depending on physical context)}:
   % \medskip
@@ -136,7 +146,9 @@
   \end{enumerate}
 \end{frame}
 
+%--------------------------------------------------------------------------
 \begin{frame}{The Heat Equation}
+%--------------------------------------------------------------------------
   We can summarize in the following problem: find $u(\xx,t)$ such that
   \begin{BlockNoTitle}%
     \begin{tabular}[t]{l|>{$}l<{$}l}
@@ -169,7 +181,9 @@
   \end{remark}
 \end{frame}
 
+%--------------------------------------------------------------------------
 \begin{frame}{The Poisson Problem}
+%--------------------------------------------------------------------------
   For certain choices of the source term, $f(x)$, Heat Equation reaches a
   \alert{\textbf{steady}} or (\textbf{stationary}) state, that is
   $$
@@ -199,7 +213,9 @@
 \end{enumerate}
 \end{frame}
 
+%--------------------------------------------------------------------------
 \begin{frame}{Variational Formulation of \poissonProblem}
+%--------------------------------------------------------------------------
   \small
   \begin{proposition}
   Let
@@ -233,7 +249,9 @@
   \end{BlockNoTitle}
 \end{frame}
 
+%--------------------------------------------------------------------------
 \begin{frame}{Abstract framework}
+%--------------------------------------------------------------------------
   \begin{itemize}
   \item Reformulation of (\ref{eq:poisson.variational}): find
     $u\in X$ such that
@@ -263,7 +281,9 @@
   \end{itemize}
 \end{frame}
 
+%--------------------------------------------------------------------------
 \begin{frame}{Lax-Milgram Theory}
+%--------------------------------------------------------------------------
   \small
   Let $V$ a Hilbert space.
   \soften{Consider the abstract problem:}
@@ -301,7 +321,9 @@
     \end{theorem}
 \end{frame}
 
+%--------------------------------------------------------------------------
 \begin{frame}{Sobolev spaces}
+%--------------------------------------------------------------------------
   \small
   \soften{Some results from \textbf{functional analysis}:}
   \begin{itemize}
@@ -350,7 +372,9 @@
   \end{itemize}
 \end{frame}
 
+%--------------------------------------------------------------------------
 \begin{frame}{Well-posedness of the Poisson Problem}
+%--------------------------------------------------------------------------
   \begin{theorem}
     Let $\Omega \subset \Rset^N$ open, bounded set. Take $f\in L^2(\Omega)$.
     \begin{enumerate}
@@ -377,27 +401,39 @@
     analysis}, see e.g.~\cite{brezis:2017,allaire:2007}.
 \end{frame}
 
-\begin{frame}{Numerical Simulation of the Poisson Problem}
+%--------------------------------------------------------------------------
+\begin{frame}{Numerical Simulation}
+%--------------------------------------------------------------------------
 
-\small
 Construction of any numerical method for solving a (steady) PDE requires to consider:
+
+\bigskip
+
 \begin{enumerate}
+  \setlength\itemsep{1.2em}
 \item How to represent the solution $u(\xx,t)$ by an
   \textit{approximate solution} $u_h(\xx,t)$?
 \item In which sense the approximate solution $u_h (\xx,t)$
   satisfies the PDE?
 \end{enumerate}
+\end{frame}
 
-\bigskip
+%--------------------------------------------------------------------------
+\begin{frame}{Finite Difference Method}
+%--------------------------------------------------------------------------
+Simpler numerical method for PDE
 
-\textbf{Example}: \alert{\textbf{Finite Difference}} method for the \alert{Poisson
-problem} (steady) in $\Omega=(0,1)\times (0,1) \subset\Rset^2$ \soften{(the unit
-square)}:
+Example: the \alert{Poisson problem} in
+$\Omega=(0,1)\times (0,1) \subset\Rset^2$:
 
 \begin{enumerate}
+  \setlength\itemsep{1.1em}
 \item We consider the mesh \structure{$\overline \Omega_h = \{ (x_i,y_j)=(ih,jh) \st 0 \le i,j \le M \} $}
-and define $u_h(\xx)$ by piecewise interpolation of the approximations \structure{$u^h_{ij}\simeq u(x_i,y_j)$}
-\item Partial derivatives are approximated \structure{on each node $(x_i,y_j)$} as incremental quotients:
+and \alert{define $u_h(\xx)$ by} \soften{piecewise interpolation of the approximations}
+$$
+\alert{u^h_{ij}\simeq u(x_i,y_j)}.
+$$
+\item Partial derivatives are approximated \structure{on each interior node $(x_i,y_j)$} as incremental quotients:
   \begin{BlockNoTitle}
     \vspace{-1.5em}
     \begin{multline*}
@@ -413,29 +449,33 @@ and define $u_h(\xx)$ by piecewise interpolation of the approximations \structur
 
 \end{frame}
 
-\begin{frame}{Finite Element Method}
-  \small
+%--------------------------------------------------------------------------
+\begin{frame}{Finite Element Method (FEM)}
+%--------------------------------------------------------------------------
   \begin{enumerate}
   \item We approximate $\overline\Omega$ by a \alert{triangulation
-    ${\cal T}_h= \{K_i\}_{i}^M$}. Then select a \alert{polynomial order,
-    $k\in\Nset$}, and define a finite-dimensional space
+    ${\cal T}_h= \{K_i\}_{i}^M$}. Then select a polynomial order,
+    \alert{$k\in\Nset$}, and define the space
     \begin{BlockNoTitle}
       \vspace{-0.5em}
       $$
-      V_h = \big\{ v_h\in C^0(\overline\Omega) \;\st\;
+      \alert{V_h} = \big\{ v_h\in C^0(\overline\Omega) \;\st\;
       v_h|_{K_i}\in\mathbb{P}_k, \ \forall K_i \in {\cal T}, \quad
-      v_h|_{\partial\Omega}=0 \big\} \subset H_0^1(\Omega)
+      v_h|_{\partial\Omega}=0 \big\}.
       $$
     \end{BlockNoTitle}
+
+    \medskip
     This kind of approximations shall also be denoted as \alert{\P{k}}.
-    \par \vspace{-0.7em}
+    \medskip
+
     \setlength{\tabcolsep}{1.5em}
     \begin{center}
       \begin{tabular}{cc}
         \centering
-        \includegraphics[height=0.20\linewidth]{img/FE_triangulation}
+        \includegraphics[height=0.25\linewidth]{img/FE_triangulation}
         &
-          \includegraphics[height=0.15\linewidth]{img/FE_function_3d}
+          \includegraphics[height=0.18\linewidth]{img/FE_function_3d}
         \\
         {\scriptsize  Triangulation of $\overline\Omega$}
         &
@@ -443,37 +483,123 @@ and define $u_h(\xx)$ by piecewise interpolation of the approximations \structur
       \end{tabular}
     \end{center}
 
-  \item We \alert{approximate the \textbf{variational formulation}} of
-    the Poisson problem as follows: find $u_h\in V_h$ such that:
-    \begin{BlockNoTitle}
-      \vspace{-0.5em}
-      \begin{equation*}
-        \int_\Omega \grad u_h(\xx) \grad v_h(\xx) d\xx = \int_\Omega f(\xx) v_h(\xx) d\xx \quad \forall v_h\in V_h.
-        \label{eq:poisson.variational}
-      \end{equation*}
-    \end{BlockNoTitle}
   \end{enumerate}
 \end{frame}
 
-\begin{frame}
-  \begin{theorem}
-    Let ${\cal T}_h$ ($h\to 0$) be a sequence of regular meshes of
-    $\Omega$. Let $u\in H_0^1(\Omega)$ be the solution of the Poisson
-    problem and $u_h\in V_h$ its $\P{k}$ FE approximation. Then
-    $$
-    \lim_{h\to 0} \norm[H^1(\Omega)]{u-u_h} = 0.
-    $$
-    Moreover, if $u\in H^{k+1}$ and $k+1>N/2$, then we have the error estimate:
-    $$
-    \norm[H^1(\Omega)]{u-u_h} \le C \, h^k \, \norm[H^{k+1}(\Omega)]{u}.
-    $$
-    where $C$ is a constant (independent of $h$ and $u$).
-  \end{theorem}
+%--------------------------------------------------------------------------
+\begin{frame}{Finite Element Method (FEM) \quad \soften{(for the Poisson Problem)}}
+%--------------------------------------------------------------------------
+  \begin{enumerate}
+    \setcounter{enumi}{1}
+  \item We \alert{approximate the \textbf{variational
+        formulation}} of the Poisson problem as follows: \alert{find
+    $u_h\in V_h$} such that:
+    \begin{BlockNoTitle}
+      \begin{equation}
+        \tag{\ensuremath{P_{\text{FEM}}}}
+        \int_\Omega \grad u_h(\xx) \grad v_h(\xx) d\xx = \int_\Omega f(\xx) v_h(\xx) d\xx \quad \forall v_h\in V_h.
+        \label{eq:pb.poisson.FE}
+      \end{equation}
+    \end{BlockNoTitle}
+  \end{enumerate}
+
+ \bigskip
+
+  \begin{proposition}
+    \begin{itemize}
+    \setlength\itemsep{0.7em}
+    \item \alert{$V_h$} is a \alert{finite-dimensional} subspace of
+        $V=\alert{H_0^1(\Omega)}$
+    \item (\ref{eq:pb.poisson.FE}) has a \alert{\textbf{unique
+          solution}}, $\uh$. In fact, it is \alert{equivalent to a
+        linear system} with sparse, symmetric and positive defined
+      matrix.
+    \end{itemize}
+  \end{proposition}
 \end{frame}
 
+
+%--------------------------------------------------------------------------
+\begin{frame}{Convergence and Error Orders}
+%--------------------------------------------------------------------------
+  \begin{itemize}
+    \setlength\itemsep{0.7em}
+  \item Let ${\cal T}_h$ ($h\to 0$) \soften{be a sequence of regular} meshes of $\Omega$ and let
+    \medskip
+    \begin{itemize}
+    \setlength\itemsep{0.3em}
+    \item $u\in H_0^1(\Omega)$: solution of the Poisson problem and
+    \item $u_h\in V_h$: its $\P{k}$ FE approximation \soften{(solution of~(\ref{eq:pb.poisson.FE}))}.
+    \end{itemize}
+    Then
+    $$
+    \alert{\lim_{h\to 0} \norm[H^1(\Omega)]{u-u_h} = 0}.
+    $$
+  \item Moreover, if $u\in H^{k+1}$ and $k+1>N/2$, one has \soften{the
+      following error estimates}%
+    \footnote{\soften{Where $C$ is a constant (independent of $h$ and
+        $u$). Regularity of $\partial\Omega$ or convexity for $n=2$ is
+        required for~(\ref{eq:error.estimate.L2}) see
+        e.g.~\cite{Brenner-Scott:08}.}}:
+    \begin{align}
+      \label{eq:error.estimate.H1}
+      \norm[\alert{H^1}(\Omega)]{u-u_h} &\le C \, \alert{h^k} \, \norm[H^{k+1}(\Omega)]{u}
+      \\
+      \label{eq:error.estimate.L2}
+      \norm[\alert{L^2}(\Omega)]{u-u_h} &\le C \, \alert{h^{k+1}} \, \norm[H^{k+1}(\Omega)]{u}
+    \end{align}
+    We say \alert{\textbf{optimal error estimates}}.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Numerical Methods for Time Dependent Problems}
+  Example: the \textbf{Heat equation}:
+  \begin{BlockNoTitle}%
+    \begin{equation*}
+        \begin{aligned}%
+          \dt u - \nu\, \Delta u &= f
+          \qquad \text{in} \ \Omega\times (0,T),
+          \\[0.1em]
+          u|_{t=0} &= u_0
+          \qquad \text{in}\ \Omega,
+          \\[0.1em]
+          u&=0
+          \qquad \text{on}\ \partial\Omega \times (0,T).
+        \end{aligned}
+      \end{equation*}
+  \end{BlockNoTitle}
+  \begin{itemize}
+    \setlength{\itemsep}{0.6em}
+  \item \small Partition of $[0,T]$: \
+    $0=t_0<t_1<\cdots<t_n=T$, \quad $k=T/n$ \soften{\small (time
+      step)}
+  \item Numerical scheme for Cauchy problems \soften{(ODE)}
+    \medskip
+  \begin{enumerate}
+    \setlength{\itemsep}{0.6em}
+  \item $u^0=u_0$ \soften{(initial data)}
+  \item Given $u^m\in H_0^1(\Omega)$, find \alert{$u^{m+1}\in H_0^1(\Omega)$} \soften{such that}
+    \vfill
+     \begin{BlockNoTitle}%
+      \begin{tabular}[t]{>{\hspace{3em}}l|>{$}l<{$}l}
+        \rotatebox[origin=c]{30}{\framedmath<2>{Implicit} Euler}
+        &\displaystyle
+          \begin{aligned}
+            \frac{\framedmath<2>{u^{m+1}}-u^m}{k} - \nu\Delta
+            \framedmath<2>{u^{m+1}} &= f^{m+1} \qquad \text{in}\ \Omega,
+            \\
+            u&=0
+            \qquad \text{on}\ \partial\Omega \times (0,T).
+          \end{aligned}
+      \end{tabular}
+     \end{BlockNoTitle}
+  \end{enumerate}
+\end{itemize}
+\end{frame}
 %%% Local Variables:
 %%% coding: utf-8
 %%% TeX-master: "numerical-oceanography"
-%%% mode: latex
+%%% mode: latexv
 %%% ispell-local-dictionary: "english"
+%%% \end{document}
 %%% End:
