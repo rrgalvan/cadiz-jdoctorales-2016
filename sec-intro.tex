@@ -552,8 +552,10 @@ $$
   \end{itemize}
 \end{frame}
 
-\begin{frame}{Numerical Methods for Time Dependent Problems}
-  Example: the \textbf{Heat equation}:
+\begin{frame}{Time Dependent Problems}
+  \begin{small}
+    Example: the \textbf{Heat equation}:
+  \end{small}
   \begin{BlockNoTitle}%
     \begin{equation*}
         \begin{aligned}%
@@ -563,27 +565,47 @@ $$
           u|_{t=0} &= u_0
           \qquad \text{in}\ \Omega,
           \\[0.1em]
-          u&=0
+          u&=0L^2
           \qquad \text{on}\ \partial\Omega \times (0,T).
         \end{aligned}
       \end{equation*}
   \end{BlockNoTitle}
+  \begin{theorem}
+    Let $\Omega$ be an regular open set of $\Rset^N$. Take a final
+    time $T>0$, initial data $u_0\in L^2(\Omega)$ and a source term
+    $f\in L_2( (0,T); L^2(\Omega))$.
+    \par\medskip
+    Then \alert{the heat equation has a unique solution}
+    $$
+    u\in L^2( (0,T); H_0^1(\Omega)) \ \cap \ C([0,T];L^2(\Omega))
+    $$
+    \soften{...and energy estimates are verified.}
+    % \par\medskip
+    % Further, there exists $C>0$ (which only depends on $\Omega$) such that
+    % $$
+    % \norm[L^2(\Omega)]{u(\cdot,t)}^2
+    % $$
+  \end{theorem}
+  \soften{\textbf{Proof}: functional analysis for evolution problems.}
+\end{frame}
+
+
+\begin{frame}{Numerical Methods for Time Dependent Problems}
+  \small
+  \textbf{Idea}: \soften{Numerical scheme for Cauchy problems (ODE), e.g. Implicit Euler}
+  \smallskip
   \begin{itemize}
-    \setlength{\itemsep}{0.6em}
+    \setlength{\itemsep}{0.3em}
   \item \small Partition of $[0,T]$: \
     $0=t_0<t_1<\cdots<t_n=T$, \quad $k=T/n$ \soften{\small (time
       step)}
-  \item Numerical scheme for Cauchy problems \soften{(ODE)}
-    \medskip
-  \begin{enumerate}
-    \setlength{\itemsep}{0.6em}
-  \item $u^0=u_0$ \soften{(initial data)}
-  \item Given $u^m\in H_0^1(\Omega)$, find \alert{$u^{m+1}\in H_0^1(\Omega)$} \soften{such that}
-    \vfill
+  \item At each time step, $t_{k}$, we look for
+     \alert{$u^{m+1}$} \soften{such that}
+    % \vfill
      \begin{BlockNoTitle}%
-      \begin{tabular}[t]{>{\hspace{3em}}l|>{$}l<{$}l}
+      \begin{tabular}[t]{>{\hspace{3em}}l|l}
         \rotatebox[origin=c]{30}{\framedmath<2>{Implicit} Euler}
-        &\displaystyle
+        &$\displaystyle
           \begin{aligned}
             \frac{\framedmath<2>{u^{m+1}}-u^m}{k} - \nu\Delta
             \framedmath<2>{u^{m+1}} &= f^{m+1} \qquad \text{in}\ \Omega,
@@ -591,15 +613,27 @@ $$
             u&=0
             \qquad \text{on}\ \partial\Omega \times (0,T).
           \end{aligned}
+               $
       \end{tabular}
-     \end{BlockNoTitle}
+    \end{BlockNoTitle}
+  \end{itemize}
+  \pause
+  \alert{Variational formulation\dots}
+  \begin{enumerate}
+    \setlength{\itemsep}{0.5em}
+  \item $u^0=u_0 \in H_0^1(\Omega)$
+  \item Given $u^m\in H_0^1(\Omega)$, find \alert{$u^{m+1}\in H_0^1(\Omega)$} \soften{such that}
+    $$ a(u^{m+1},v)= L(v) \quad \forall v\in H_0^1(\Omega), $$
   \end{enumerate}
-\end{itemize}
+  where, \soften{for all $u,v \in H_0^1(\Omega)$}:
+  $$
+  a(u,v) = \int_\Omega \big(u\,v+ k \nu \,\grad u \,\grad v\big), \quad L(v)=\int_\Omega \big( u^m  + k\, f^{m+1} \big) v.
+  $$
 \end{frame}
+
 %%% Local Variables:
 %%% coding: utf-8
 %%% TeX-master: "numerical-oceanography"
 %%% mode: latexv
 %%% ispell-local-dictionary: "english"
-%%% \end{document}
 %%% End:
