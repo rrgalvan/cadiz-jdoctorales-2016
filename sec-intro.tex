@@ -563,10 +563,10 @@ $$
           \qquad \text{in} \ \Omega\times (0,T),
           \\[0.1em]
           u|_{t=0} &= u_0
-          \qquad \text{in}\ \Omega,
+          \qquad \text{in }\ \Omega,
           \\[0.1em]
-          u&=0L^2
-          \qquad \text{on}\ \partial\Omega \times (0,T).
+          u&=0
+          \qquad \text{on }\ \partial\Omega \times (0,T).
         \end{aligned}
       \end{equation*}
   \end{BlockNoTitle}
@@ -586,7 +586,7 @@ $$
     % \norm[L^2(\Omega)]{u(\cdot,t)}^2
     % $$
   \end{theorem}
-  \soften{\textbf{Proof}: functional analysis for evolution problems.}
+  \soften{\small\textbf{Proof}: functional analysis for evolution problems, see e.g.~\cite{allaire:2007}.}
 \end{frame}
 
 
@@ -629,6 +629,131 @@ $$
   $$
   a(u,v) = \int_\Omega \big(u\,v+ k \nu \,\grad u \,\grad v\big), \quad L(v)=\int_\Omega \big( u^m  + k\, f^{m+1} \big) v.
   $$
+\end{frame}
+
+\begin{frame}{The Stokes System}
+  It models the flow of a \textit{\structure{viscous}}
+  \textit{\structure{incompressible}} \textbf{fluid}, with
+  ``\textit{\structure{small velocity}}''%
+  \footnote{\scriptsize {I.e. the Reynolds number is small:
+    $$
+    \text{Re}:=\frac{\text{intertial forces}}{\text{viscous forces}}
+    =\frac{vL}{\nu} \ll 1.
+    $$
+  }}
+\begin{BlockNoTitle}
+  \vspace{-1.2em}
+  \begin{align*}
+    \partial_t \uu - \nu \Delta\uu + \grad\pp &= \ff \quad\text{in }\Omega\times(0,T)
+    \\
+    \div\uu &= 0 \quad\text{in }\Omega\times (0,T)
+    \\
+    u &= 0 \quad\text{on } \partial\Omega\times (0,T), \quad u|_{t=0} = u_0 \quad\text{in } \Omega
+  \end{align*}
+\end{BlockNoTitle}
+\vspace{-0.5em}
+% where:
+\begin{small}
+  \begin{itemize}
+  \setlength{\itemsep}{-0.1em}
+\item Unknowns: \emph{\alert{velocity}}, \
+  $\uu(\xx,t)=(u_1(\xx,t),\dots,u_N(\xx,t))$ \ and
+  \emph{\alert{pressure}}, \ $p(\xx,t)$
+  \item First equation (\alert{conservation of momentum}) is vectorial ($N$ equations)
+  \item Last equation (\alert{incompressibility condition}) couples velocity unknowns!
+    $$\div\uu = \partial_{x_1}u_1+\cdots+\partial_{x_N}u_N=0.$$
+  \item \scriptsize{More general equations (for arbitrary Reynolds
+      number) are the \alert{Navier-Stokes} equations.}
+  \end{itemize}
+\end{small}
+\end{frame}
+
+\begin{frame}{Analysis of Steady Stokes Equations}
+  \begin{small}
+    Let us focus on the stationary case:
+  \end{small}
+  \begin{BlockNoTitle}
+    \vspace{-0.3em}
+    \begin{tabular}[t]{l|l}
+       \rotatebox[origin=c]{40}{\small \steadyStokes}
+      &
+        $
+    \begin{aligned}
+       - \nu \Delta\uu + \grad\pp &= \ff \quad\text{in }\Omega\times(0,T),
+      \\
+      \div\uu &= 0 \quad\text{in }\Omega\times (0,T),
+      \\
+      u &= 0 \quad\text{on } \partial\Omega\times (0,T).
+    \end{aligned}
+          $
+    \end{tabular}
+  \end{BlockNoTitle}
+  \alert{\textbf{Variational formulation}}: find
+  $(\uu,\pp)\in \mathbf{U}\times P$ such that
+  \begin{BlockNoTitle}
+    \vspace{-1.3em}
+    \begin{align*}
+    a(\uu,\bu) + b(\bu,\pp) &= L(\bu), & \forall \bu\in \mathbf{U},
+    \\
+    b(\uu,\bp) &= 0 & \forall\bp\in P,
+    \end{align*}
+  \end{BlockNoTitle}
+  \medskip
+  where \quad \alert{$\mathbf{U}=\big(H_0^1(\Omega)\big)^N$}, \quad
+  \alert{$P=\{p\in L^2(\Omega)/ \int_\Omega p=0 \}$} \quad and
+  \vspace{-0.3em}
+  \begin{align*}
+    a(\uu,\bu)&=\int_\Omega \grad\uu\grad \bu \ := \sum_{i=1}^N \int_\Omega \grad u_i \cdot \grad \overline u_i,
+    \\
+    b(\bu,\pp)&=-\int_\Omega p \div\bu, \qquad L(\bu)=\int_\omega \ff\cdot\bu
+  \end{align*}
+\end{frame}
+
+\SetEmptyBackground
+\begin{frame}
+    \begin{theorem}
+      Let $\Omega\subset\Rset^N$ be a regular open bounded connected set of
+      class $C^1$ and let $f\in L^2(\Omega)^N$.
+      \par\smallskip Then \alert{exists a unique
+      (weak) solution of \steadyStokes}, $(\uu,p)\in \mathbf{U}\times P$.
+    \end{theorem}
+    \begin{proof}
+      \small
+      \begin{itemize}
+        \setlength{\itemsep}{0.5em}
+      \item \small{Not possible to apply Lax-Milgram to the ``\textit{global bilinear
+        form}'' (not coercive on $\textbf{U}\times P$)}
+        \vspace{-0.5em}
+        $$
+        {\cal A}((\uu,\pp),(\bu,\bp))=a(\uu,\bu)+b(\bu,\pp)+b(\uu,\bp).
+        $$
+        \vspace{-1.5em}
+      \item But the following conditions hold:
+        \begin{enumerate}
+        \item  \alert{\textbf{Inf-Sup
+              Condition}}:
+          \begin{equation}
+            \tag{IS}
+            \sup_{\bu\in\mathbf{U}}\frac{b(\bu,p)}{\norm[\mathbf{U}]{\bu}} \ge \beta \norm[L^2(\Omega)]{p}, \quad \forall p\in P.
+          \end{equation}
+          \vspace{-0.5em}
+        \item $a(\cdot,\cdot)$ is coercive on \textbf{U}.
+        \end{enumerate}
+      \item And they are sufficient for a ``generalized saddle point result''  \cite{Boffi-Brezzi-Fortin:08}
+      \end{itemize}
+    \end{proof}
+\end{frame}
+
+\SetDefaultBackground
+\begin{frame}{Finite Elements for the Stokes problem}
+  Let $\Uh\subset \mathbf{U}$ and $\Ph\subset P$ finite element spaces on a mesh \Th:
+  \begin{align*}
+    \Uh &= \big\{\uh \in C^0(\Omega) \ \st\ \uh|_{K_i}\in \mathbb{P}_{\alert{k}}^N \quad \forall K_i\in \Th \quad \uh|_{\partial\Omega}=0\big\},
+    \\
+    \Ph &= \big\{\ph \in C^0(\Omega) \ \st\ \ph|_{K_i}\in \mathbb{P}_{\alert{\ell}}^N \quad \forall K_i\in \Th\}.
+  \end{align*}
+
+
 \end{frame}
 
 %%% Local Variables:
