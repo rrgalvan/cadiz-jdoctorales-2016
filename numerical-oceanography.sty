@@ -236,16 +236,16 @@
 
 \newcommand{\Vstokes}{V_h^S}
 
-\newcommand{\FEtwoSpaces}[2]{\mbox{\ensuremath{#1\,}\mbox{-}\ensuremath{\,#2}}\xspace}
+\newcommand{\FEtwoSpaces}[2]{\mbox{\ensuremath{#1\,}\mbox{--}\ensuremath{\,#2}}\xspace}
 \newcommand{\FEtwoSpacesP}[2]{%
   \ensuremath{\FEtwoSpaces{\P{#1}}{\P{#2}}}}
-\newcommand{\FEthreeSpaces}[3]{\FEtwoSpaces{#1/#2}{#3}}
+\newcommand{\FEthreeSpaces}[3]{\FEtwoSpaces{\big(#1,#2\big)}{#3}}
 \newcommand{\FEthreeSpacesP}[3]{%
   \ensuremath{\FEthreeSpaces{\P{#1}}{\P{#2}}{\P{#3}}}}
 \newcommand{\FEthreeSpacesQ}[3]{%
   \ensuremath{\FEthreeSpaces{\Q{#1}}{\Q{#2}}{\Q{#3}}}}
 \newcommand{\FEfourSpaces}[4]{%
-  \ensuremath{{#1}}/\ensuremath{{#2}}/\ensuremath{{#3}\,}\mbox{-}\ensuremath{\,{#4}}\xspace}
+  \ensuremath{\big({#1},{{#2}},{#3}\big)\,}\mbox{--}\ensuremath{\,{#4}}\xspace}
 \newcommand{\FEfourSpacesP}[4]{%
   \ensuremath{\FEfourSpaces{\P{#1}}{\P{#2}}{\P{#3}}{\P{#4}}}}
 
@@ -409,6 +409,13 @@
 
 \usepackage{movie15}
 
+\newcommand{\playVideoHref}[3]{\href{run:#3}{\rule{#1}{#2}}}
+
+\newcommand{\playVideoMovie}[3]{%
+  \includemovie[autoplay,
+  % , controls % Show Play/Stop buttons
+  ]{#1}{#2}{#3}}
+
 \usepackage{xparse} % From future LaTeX 3
 \DeclareDocumentCommand{\PlayVideoWithLabel}{%
   O{0.5\linewidth} O{0.5\linewidth}  O{} m }{%
@@ -417,7 +424,6 @@
   % #3: Label
   % #4: Video file
   \begin{BoxWithVerticalLabel}{#3}{#1}
-    \includemovie[autoplay,
-    % , controls % Show Play/Stop buttons
-    ]{#1}{#2}{#4}
+    \playVideoHref{#1}{#2}{#4}
+    % \playVideoMovie{#1}{#2}{#4}
   \end{BoxWithVerticalLabel}}

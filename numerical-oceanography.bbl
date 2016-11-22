@@ -1,4 +1,4 @@
-\begin{thebibliography}{BBF08}
+\begin{thebibliography}{GGRG16}
 
 \bibitem[AG01]{Azerad-Guillen:01}
 P.~Az{\'e}rad and F.~Guill{\'e}n.
@@ -11,9 +11,26 @@ Grégoire Allaire.
 \newblock {\em Numerical Analysis and Optimization}.
 \newblock Oxford University Press, Oxford, 2007.
 
+\bibitem[Az{\'e}94]{Azerad:1994}
+P.~Az{\'e}rad.
+\newblock Analyse et approximation du probl\`eme de {S}tokes dans un bassin peu
+  profond.
+\newblock {\em C. R. Acad. Sci. Paris S\'er. I Math.}, 318(1):53--58, 1994.
+
+\bibitem[Az{\'e}96]{Azerad:PhD:96}
+P.~Az{\'e}rad.
+\newblock {\em Analyse des équations de {N}avier-{S}tokes en bassin peu
+  profond et de l'équation de transport}.
+\newblock PhD thesis, Neuchâtel, 1996.
+
 \bibitem[BBF08]{Boffi-Brezzi-Fortin:08}
 Daniele Boffi, Franco Brezzi, and Michel Fortin.
 \newblock {Finite elements for the Stokes problem}, 2008.
+
+\bibitem[BF91]{Brezzi-Fortin:91}
+F.~Brezzi and M.~Fortin.
+\newblock {\em Mixed and Hybrid Finite Element Methods}.
+\newblock Springer-Verlag, New-York, 1991.
 
 \bibitem[BL92]{Besson-Laydi:92}
 O.~Besson and M.R. Laydi.
@@ -38,9 +55,28 @@ B.~{Cushman-Roisin} and J.~M. Beckers.
   Numerical Aspects}.
 \newblock Academic Press, 2009.
 
+\bibitem[GGRG16]{fguillen-rrgalvan-paper1-ApNumMath:2016}
+F.~Guillén-González and J.R. Rodríguez~Galván.
+\newblock On the stability of approximations for the {Stokes} problem using
+  different finite element spaces for each component of the velocity.
+\newblock {\em Applied Numerical Mathematics}, 99:51--76, January 2016.
+
 \bibitem[Ped87]{Pedlosky:1987}
 J.~Pedlosky.
 \newblock {\em Geophysical Fluid Dynamics.}
 \newblock Springer-Verlag, New York, USA, 1987.
+
+\bibitem[Ste84]{Stenberg:84}
+R.~Stenberg.
+\newblock Analysis of mixed finite element methods for the {Stokes} problem:
+  {A} unified approach.
+\newblock {\em Math Comput}, 42(165):9--23, January 1984.
+
+\bibitem[Ste90]{Stenberg:90}
+R.~Stenberg.
+\newblock A technique for analysing finite elements methods for viscuous
+  incompressible flow.
+\newblock {\em International Journal for Numerical Methods in Fluids},
+  11:835--948, 1990.
 
 \end{thebibliography}

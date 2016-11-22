@@ -54,16 +54,20 @@
 \begin{frame}{Numerical Experiment}
   \textbf{Stable FE approximations for Stokes} equations in a domain
   $$\alert{\Omega_{\epsilon}} = (0,1)\times(0,\alert{\varepsilon}) \subset \Rset^2$$
+  \vspace{-1.2em}
   \begin{itemize}
-  \item Standard \structure{lid-driven cavity test}: Boundary conditions\dots
+    \setlength{\itemsep}{0.5em}
+  \item Standard \structure{lid-driven cavity test}:
     \begin{itemize}
-    \item $u=1$, $v=0$ on $\Gamma_S$ (top boundary)
-    \item $u=0$, $v=0$ on other boundaries
+      \itemsep0.3em
+    \item $v=0$ on $\Gamma_S\cup \Gamma_B$
+    \item $u=0$ on $\Gamma_l \cup \Gamma_B$, traction B.C. on surface.
     \end{itemize}
   \item What happens if \structure{$\varepsilon \to 0$}? \hfill Test:
     $\varepsilon=1,10^{-1},10^{-2},\dots,10^{-5}$).
   \end{itemize}
-  \textbf{Equivalently}: solving \aniStokes in the \textbf{unit square}
+  \medskip
+  \textbf{Equivalently}: solving in the \textbf{unit square}
   $$\alert{\Omega} = (0,1)\times(0,1) \subset \Rset^2$$
   \vspace{-1.5em}
   \begin{BlockNoTitle}
@@ -119,14 +123,11 @@
 \end{frame}
 
 
-\begin{frame}{The linear stationary \textit{Hydrostatic Stokes} problem}
+\begin{frame}{Why does the above occurs?}
 \framesubtitle{A first approach}
 
-\alert{\textbf{Target: to analyze previous instability}}
-
 \begin{itemize}\itemsep0.66em
-\item We attack the most unfavorable case: $\varepsilon=0$ (linear,
-  steady, in first sections)
+\item We fix \textbf{the most unfavorable case}: $\varepsilon=0$
 
 \item Let us define the spaces (which reflect \textit{boundary conditions}):
   \begin{equation*}
@@ -459,17 +460,17 @@ Two Inf-Sup conditions are suggested:
   \end{theorem}
   \medskip
   {\gris \textbf{Proof}: Similar to the continuous case. \hfill $\square$}
-  \medskip
-  \vfill
-  \begin{block}{Hydrostatic stabilty}
-    \begin{itemize}
-    \item We say \FEthreeSpaces\Uh\Vh\Ph\xspace is \structure{\em
-        hydrostatic stable} if both \ISph and \ISvh hold
-    \item Hence \textbf{hydrostatic stability is more restrictive}
-      than usual Stokes stability (where only ``$\ISph$''
-      is necessary)
-    \end{itemize}
-  \end{block}
+  % \medskip
+  % \vfill
+  % \begin{block}{Hydrostatic stabilty}
+  %   \begin{itemize}
+  %   \item We say \FEthreeSpaces\Uh\Vh\Ph\xspace is \structure{\em
+  %       hydrostatic stable} if both \ISph and \ISvh hold
+  %   \item Hence \textbf{hydrostatic stability is more restrictive}
+  %     than usual Stokes stability (where only ``$\ISph$''
+  %     is necessary)
+  %   \end{itemize}
+  % \end{block}
 \end{frame}
 
 \begin{frame}{A pragmatic sufficient condition for \ISph}
@@ -677,204 +678,122 @@ Two Inf-Sup conditions are suggested:
   meshes:\bigskip
   \begin{itemize}\itemsep1em
   \item \FEthreeSpacesP210 \ \good
-  \item \FEthreeSpacesP{1,b}10 \ \question
-  \item \FEthreeSpacesP{1,b}11 \ \question
-  \item \FEthreeSpacesP211 \ \question
+  \item \FEthreeSpacesP{1,b}10 \ \alt<1-2>{\question}{\myframed<3>{\bad}}
+  \item \myframed<4>{\FEthreeSpacesP{1,b}11} \ \question
+  \item \myframed<4>{\FEthreeSpacesP211} \ \question
   \end{itemize}
   \bigskip
-  For each combination, we need testing both
-  \begin{itemize}
-  \item \ISph $\leftarrow$ \myframed{Stokes inf-sup}
-  \item \ISvh
-  \end{itemize}
+  \uncover<2->{
+    For each combination, we need testing both
+    \begin{itemize}
+    \item \ISvh $\leftarrow$ \myframed<2>{\textbf{Stokes inf-sup}}
+    \item \ISph
+    \item \only<4>{\myframed<4>{Work with F. Guillén, published in ApNumMath~\cite{fguillen-rrgalvan-paper1-ApNumMath:2016}}}
+    \end{itemize}
+  }
 \end{frame}
-
 
 \newcommand{\nv}{n}
 \renewcommand{\imgdir}{img/}
 
-\begin{sectionframe}
-  \vfill
-  \begin{abstract}
-    \begin{enumerate}
-    \item
-      \pgfsetfillopacity{0.33}
-      \textbf{Stability analysis of Hydrostatic Stokes} equations.
-      They are not stable for ``classical'' Stokes LBB-stable FE
-      combinations. The reason is:
-      \begin{itemize}
-      \item An additional inf-sup condition is required
-      \item It imposes richer FE spaces for horizontal velocity than
-        vertical one
-        % \begin{enumerate}
-        % \item Usual Stokes LBB inf-sup condition
-        % \item An additional ``hydrostatic'' inf-sup condition
-        % \end{enumerate}
-      \end{itemize}
-    \item<alert@*>
-      \pgfsetfillopacity{1.0}
-      {\textbf{Stability analysis of classical Stokes} equations when
-      unequal FE spaces are used for each component of the  velocity}
-    \item
-      \pgfsetfillopacity{0.33}
-      We provide some \textbf{new elements which are
-      stable} for the Hydrostatic Stokes Equations
-    \end{enumerate}
-  \end{abstract}
-\end{sectionframe}
-
-% \input{definitions2D.sty}
-% \begin{frame}{Introduction}
-%   \begin{itemize}\itemsep0.66em
-%   \item Classical Stokes stability with unequal FE spaces for \Uh and
-%     \Vh: not sufficently studied in literature
-%     \begin{itemize}
-%     \item With the exception of \FEthreeSpacesP210
-%     \end{itemize}
-%   \item But it is required for hydrostatic stability
-%   \item \textbf{We provide some new combinations}
-%     \FEthreeSpaces\Uh\Vh\Ph (with unequal approximation for \Uh
-%     and \Vh) \textbf{for which Stokes stability is shown}, i.e they
-%     verfy the following inf-sup or LBB condition:
-%     \begin{equation}
-%       \label{eq:stokes-inf-sup}
-%       \tag*{(IS)}
-%       ||\ph||_{L^2} \le \beta \sup_{0\neq(\uh,\vh)\in\Uh\times\Vh}
-%       \frac{\int_\Omega \div\big(\uh,\vh\big)\;
-%         \ph}{||(\uh,\vh)||_{H^1}} \quad
-%       \forall\ph\in\Ph,
-%     \end{equation}
-%     where we denote
-%     \begin{equation*}
-%       \div\big(\uh,\vh\big) = \divx\uh + \dz\vh
-%     \end{equation*}
-%   \item In these results, it will be important the structure of the mesh
-%   \end{itemize}
-% \end{frame}
-
-\begin{frame}{\myframedAlert{\FEthreeSpacesP{1,b}10} is not Stokes--stable}
-  \begin{itemize}\itemsep0.66em
-  \item Let us consider the discrete \textbf{2D} Stokes problem and
-    the spaces:
-    \begin{equation*}
-      \Uh \sim \P{1,b}, \qquad
-      \Vh \sim \P1, \qquad
-      \Ph \sim \P0
-    \end{equation*}
-  \item
-    If $\uh\in\Uh$ then $\uh=\uh^0+b$, where $\uh^0$ is $\P1$ and
-    $b$ is sum of bubbles
-  \item As \colorUnderLine{integrals of derivates of bubbles
-      vanish}, $\exists C>0$ s.t.
-    \begin{equation*}
-      \label{eq:b10.not.stability}
-      \frac{\int_\Omega(\divx\uh+\dy\vh)\ph}{||(\uh,\vh)||_{H^1}}
-      \le C
-      \frac{\int_\Omega(\divx\uh^0+\dy\vh)\ph}{||(\uh^0,\vh)||_{H^1}}
-    \end{equation*}
-  \item And as \colorUnderLine{$\FEthreeSpacesP110$ is not stable}
-    (excepting some meshes~\cita{QinZhang:07}):
-    \begin{equation*}
-      \forall\beta>0,\ \exists\pp\in\Ph:\quad
-      \beta\sup_{0\neq(\uh,\vh)\in\Uh\times\Vh}
-      \frac{\int_\Omega \div\big(\uh,\vh\big)\;
-        \ph}{||(\uh,\vh)||_{H^1}} < \norm[L^2]\pp
-    \end{equation*}
- % supreme
- %    of~(\ref{eq:b10.not.stability}) less than $\norm\pp$
-  \end{itemize}
-\end{frame}
 
 
-\begin{frame}{\myframedAlert{\FEthreeSpacesP{1,b}11}
-    \ Stokes--stability}
+\begin{frame}{\myframedAlert{\FEthreeSpacesP{1,b}11} verifies Stokes discrete~(\ref{eq:stokes:ISh}) }
   \begin{enumerate}\itemsep0.66em
+  \item Not easy task: less degrees of freedom than ``\textbf{Mini-element}'' \exclamation
   \item We have proved that \FEthreeSpacesP{1,b}11 is stable in most
     unstructured 2D meshes
   \item This theory has been extended to 3D
-  \item The tool employed: macroelements technique (R.~Stenberg~\cite{Stenberg:84,Stenberg:90}
+  \item The tool employed: \textit{\alert{macroelements}} technique
+    \par~\hfill\small(R.~Stenberg~\cite{Stenberg:84,Stenberg:90})
   \end{enumerate}
 \end{frame}
 
 
-% \newcommand{\macroCondition}{\emph{macro-condition}\xspace}
-% \newcommand{\macroelemA}[2]{
-%   \def\yCoordA{#1}
-%   \def\yCoordB{#2}
-%   \begin{tikzpicture}
-%     \def\nv{4}
-%     \def\ix{1.6}\def\iy{1}
-%     \def\vertices{
-%       \coordinate (q0) at (0,0) [label=120:\scriptsize$q_0$];
-%       \coordinate (q1) at (-\ix*0.25,\iy);
-% %      \coordinate  (q2) at (-\ix*0.5,\iy);
-%       \coordinate  (q2) at  (-\ix,-0.25*\iy);
-%       \coordinate  (q3) at  (0.75*\ix,-\iy);
-%       \coordinate  (q4) at (\ix*1,0.25*\iy);
-%     }
-%     \def\showPoints{
-%       \foreach \i in {0,...,\nv}
-%         \fill [black] (q\i) circle (3pt);
-%     }
-%     \def\showLines{
-%       % Draw borders
-%       \draw (q1) -- (q2) -- (q3) -- (q4) -- cycle;
-%       % Draw interior edges
-%       \foreach \i in {1,...,\nv} {
-%         \draw (q\i) -- (q0);
-%       }
-%     }
-%     \def\showTriangles{
-%       \node at ($ (q0)!.5!(q1) $) [label=0:\scriptsize${T_1}$] {};
-%       \node at ($ (q0)!.5!(q2) $) [label=90:\scriptsize${T_2}$] {};
-%       \node at ($ (q0)!.5!(q3) $) [label=180:\scriptsize${T_3}$] {};
-%       \node at ($ (q0)!.5!(q4) $) [label=-90:\scriptsize${T_4}$] {};
-%     }
-%     \vertices
-%     \showPoints
-%     \showLines
-%     \showTriangles
-%   \end{tikzpicture}
-% }
+\newcommand{\macroCondition}{\emph{macro-condition}\xspace}
+\newcommand{\macroelemA}[2]{
+  \def\yCoordA{#1}
+  \def\yCoordB{#2}
+  \begin{tikzpicture}
+    \def\nv{4}
+    \def\ix{1.6}\def\iy{1}
+    \def\vertices{
+      \coordinate (q0) at (0,0) [label=120:\scriptsize$q_0$];
+      \coordinate (q1) at (-\ix*0.25,\iy);
+%      \coordinate  (q2) at (-\ix*0.5,\iy);
+      \coordinate  (q2) at  (-\ix,-0.25*\iy);
+      \coordinate  (q3) at  (0.75*\ix,-\iy);
+      \coordinate  (q4) at (\ix*1,0.25*\iy);
+    }
+    \def\showPoints{
+      \foreach \i in {0,...,\nv}
+        \fill [black] (q\i) circle (3pt);
+    }
+    \def\showLines{
+      % Draw borders
+      \draw (q1) -- (q2) -- (q3) -- (q4) -- cycle;
+      % Draw interior edges
+      \foreach \i in {1,...,\nv} {
+        \draw (q\i) -- (q0);
+      }
+    }
+    \def\showTriangles{
+      \node at ($ (q0)!.5!(q1) $) [label=0:\scriptsize${T_1}$] {};
+      \node at ($ (q0)!.5!(q2) $) [label=90:\scriptsize${T_2}$] {};
+      \node at ($ (q0)!.5!(q3) $) [label=180:\scriptsize${T_3}$] {};
+      \node at ($ (q0)!.5!(q4) $) [label=-90:\scriptsize${T_4}$] {};
+    }
+    \vertices
+    \showPoints
+    \showLines
+    \showTriangles
+  \end{tikzpicture}
+}
 
-% \begin{frame}{Macroelements}
-
-%   \begin{columns}
-%     \column{0.7\linewidth}
-%     %---------------------
-%     \begin{itemize}\itemsep0.66em
-%       % \item Let $\Uh\sim\Pb$, $\Vh\sim\P1$, $\Ph\sim\P1$ continuous
-%       %   finite element spaces.
-%     \item Let $\Th$ a triangulation of $\domain\subset\Rset^2$
-%     \item Let $\Mh$ a \textbf{macroelement} partition of $\Th$
-%       \begin{flushright}\scriptsize
-%         (i.e. a family of connected sets which are union of at least
-%         two elements of $\Th$).
-%       \end{flushright}
-%     \end{itemize}
-%     \column{0.3\linewidth}
-%     %---------------------
-%     \vtop{\null\hbox{\macroelemA{-0.3}{-0.5}}}
-%   \end{columns}
-%   \bigskip
+\begin{frame}{Macroelements}
+  \small
+  \begin{columns}
+    \column{0.76\linewidth}
+    %---------------------
+    \begin{itemize}\itemsep0.1em
+      % \item Let $\Uh\sim\Pb$, $\Vh\sim\P1$, $\Ph\sim\P1$ continuous
+      %   finite element spaces.
+    \item Let $\Th$ a triangulation of $\domain\subset\Rset^2$
+    \item Let $\Mh$ a \textbf{macroelement} partition of $\Th$
+      \begin{flushright}\scriptsize
+        (i.e. a connected sets which is union of at least two
+        elements of $\Th$)
+      \end{flushright}
+    \item We consider macroelements with \alert{one
+        only interior vertex}, $q_0$
+    \item \textbf{Stenberg Theorem}: Under ``local to global''
+      hypothesis, \alert{\textbf{next condition is sufficient for
+          inf-sup}}:
+    \end{itemize}
+    \column{0.3\linewidth}
+    %---------------------
+    \vtop{\null\hbox{\macroelemA{-0.3}{-0.5}}}
+  \end{columns}
+ \bigskip
+  \begin{equation*}
+    \begin{aligned}
+      \text{The set $N_M=\left\{ p\in \PM \st \int_M
+          \div(u,v)\;p=0, \ \forall (u,v)\in
+          \UM\times\VM \right\}$}
+      \\[0.66em]
+      \text{only consists of the functions which are \textbf{constant} on
+        $M$}.
+    \end{aligned}
+  \end{equation*}
+  It is called \textbf{Macro-condition}
+%   \medskip
 %   \begin{definition}%[\textbf{\amarillo Regular macroelement} condition]
-%     We say \myframed{$M$ is \alert{\textbf{regular}}} for
-%     \FEthreeSpaces{\Uh}{\Vh}{\Ph}
-%     \quad (or \FEthreeSpaces{\Uh}{\Vh}{\Ph} is
-%     \alert{\textbf{regular}} in $M$) if:
+%     In this case, we say \myframed{$M$ is \alert{\textbf{regular}}}
+%     for \FEthreeSpaces{\Uh}{\Vh}{\Ph} \quad (or
+%     \FEthreeSpaces{\Uh}{\Vh}{\Ph} is \alert{\textbf{regular}})
 % %    \vspace{-1em}
-%     \begin{equation*}
-%       \begin{aligned}
-%         \text{The set $N_M=\left\{ p\in \PM \st \int_M
-%           \div(u,v)\;p=0, \ \forall (u,v)\in
-%           \UM\times\VM \right\}$}
-%       \\[0.66em]
-%       \text{only consists of the functions which are \textbf{constant} on
-%         $M$}.
-%       \end{aligned}
-%     \end{equation*}
 %   \end{definition}
-% \end{frame}
+\end{frame}
 
 
 % \begin{frame}{A sufficient condition for discrete Stokes inf-sup}
@@ -946,190 +865,193 @@ Two Inf-Sup conditions are suggested:
 % \end{frame}
 
 
-% % \begin{frame}{Structured and unstructured macroelements}
-% %   We have introduced some definitions:
-% %   \begin{definition}
-% %   A macroelement $M$, can be \structure{split by an hyperplane} $\Pi$
-% %   if there exists two other macroelements $M_1$ and $M_2$ such that:
-% %   \begin{center}
-% %     \llaveizq{$M_1\cup M_2=M$  and  \\
-% %       $M_1\cap M_2 \subset \Pi$}
-% %     \end{center}
-% %   \end{definition}
-
-% %   \begin{definition}
-% %     \begin{itemize}
-% %     \item A macroelement $M$ will be said \structure{\xStructured} if
-% %       it can be split by an hyperplane $x=C$, for some $C\in\Rset$
-% %       (i.e. \emph{orthogonal to $OX$ axis})
-% %     \item In  other case, it will be said \structure{\xUnstructured}
-% %     \end{itemize}
-% %   \end{definition}
-% %   \begin{itemize}
-% %   \item[$\star$] Analogue definitions for \structure\yUnstructured and
-% %     \structure\zUnstructured
-% %   \item[$\star$] For instance...
-% %   \end{itemize}
-% % \end{frame}
-
-% \newcommand{\bubbleMacro}{ % Bubble macroelement
-%   \begin{tikzpicture}
-%     \def\nv{5}
-%     \def\ix{2}\def\iy{1.8}
-%     \def\vertices{
-%       \coordinate (q0) at (0,0);
-%       \coordinate (q1) at  (-1.25*\ix,-0.25*\iy);
-%       \coordinate (q2) at  (-0.25*\ix,-\iy);
-%       \coordinate (q3) at  (0.75*\ix,-\iy);
-%       \coordinate (q4) at (\ix*1,0.5*\iy);
-%       \coordinate (q5) at (-\ix*0.25,\iy);
-%     }
-%     \def\showPoints{
-%       \foreach \i in {0,...,\nv}
-%       \fill [black] (q\i) circle (3pt);
-%     }
-%     \def\showLines{
-%       % Draw borders
-%       \draw (q1) -- (q2) -- (q3) -- (q4) -- (q5) -- cycle;
-%       % Draw interior edges
-%       \foreach \i in {1,...,\nv} {
-%         \draw (q\i) -- (q0);
-%       }
-%       \foreach \i in {1,...,\nv} {
-%         \draw [fill, lightgray] (x\i) circle (1.25pt);
-%         \draw (x\i) circle (2.25pt);
-%       }
-%     }
-%     \def\showTriangles{
-%       \node at ($ (q1)!.5!(q2) $) [label=230:\small${T_1}$] {};
-%       \node at ($ (q2)!.5!(q3) $) [label=-90:\small${T_2}$] {};
-%       \node at ($ (q3)!.5!(q4) $) [label=-15:\small${T_3}$] {};
-%       \node at ($ (q4)!.5!(q5) $) [label=90:\small${T_4}$] {};
-%       \node at ($ (q5)!.5!(q1) $) [label=130:\small${T_5}$] {};
-%     }
-%     \def\xPoints {
-%       \coordinate (x1) at ($ (q1)!.5!(q2)!.333!(q0) $);
-%       \coordinate (x2) at ($ (q2)!.5!(q3)!.333!(q0)  $);
-%       \coordinate (x3) at ($ (q3)!.5!(q4)!.333!(q0)  $);
-%       \coordinate (x4) at ($ (q4)!.5!(q5)!.333!(q0)  $);
-%       \coordinate (x5) at ($ (q1)!.5!(q5)!.333!(q0)  $);
-%     }
-%     \vertices
-%     \xPoints
-%     \showPoints
-%     \showLines
-%     \showTriangles
-%   \end{tikzpicture}
-% }
-
-
-% \newcommand{\unstableBubbleMacro}{ % Bubble macroelement where
-%   % P1b/P1/P1 is unstable
-%   \begin{tikzpicture}
-%     \def\nv{5}
-%     \def\ix{2}\def\iy{1.8}
-%     \def\vertices{
-%       \coordinate (q0) at (0,0);
-%       \coordinate (q1) at  (-\ix,0*\iy);
-%       \coordinate (q2) at  (-0.25*\ix,-\iy);
-%       \coordinate (q3) at  (0.75*\ix,-\iy);
-%       \coordinate (q4) at (\ix*1,0*\iy);
-%       \coordinate (q5) at (\ix*0.1,\iy);
-%     }
-%     \def\showPoints{
-%       \foreach \i in {0,...,\nv}
-%       \fill [black] (q\i) circle (3pt);
-%     }
-%     \def\showLines{
-%       % Draw borders
-%       \draw (q1) -- (q2) -- (q3) -- (q4) -- (q5) -- cycle;
-%       % Draw interior edges
-%       \foreach \i in {1,...,\nv} {
-%         \draw (q\i) -- (q0);
-%       }
-%       \foreach \i in {1,...,\nv} {
-%         \draw [fill, lightgray] (x\i) circle (1.25pt);
-%         \draw (x\i) circle (2.25pt);
-%       }
-%     }
-%     \def\showTriangles{
-%       \node at ($ (q1)!.5!(q2) $) [label=230:\small${T_1}$] {};
-%       \node at ($ (q2)!.5!(q3) $) [label=-90:\small${T_2}$] {};
-%       \node at ($ (q3)!.5!(q4) $) [label=-15:\small${T_3}$] {};
-%       \node at ($ (q4)!.5!(q5) $) [label=90:\small${T_4}$] {};
-%       \node at ($ (q5)!.5!(q1) $) [label=130:\small${T_5}$] {};
-%     }
-%     \def\xPoints {
-%       \coordinate (x1) at ($ (q1)!.5!(q2)!.333!(q0) $);
-%       \coordinate (x2) at ($ (q2)!.5!(q3)!.333!(q0)  $);
-%       \coordinate (x3) at ($ (q3)!.5!(q4)!.333!(q0)  $);
-%       \coordinate (x4) at ($ (q4)!.5!(q5)!.333!(q0)  $);
-%       \coordinate (x5) at ($ (q1)!.5!(q5)!.333!(q0)  $);
-%     }
-%     \vertices
-%     \xPoints
-%     \showPoints
-%     \showLines
-%     \showTriangles
-%     \node at ($ (q4)!.4!(q5)!-1!(q0) $) {};
-%     \node at ($ (q4)!.333!(q3)!-0.7!(q0) $) {};
-%   \end{tikzpicture}
-% }
-
-% \begin{frame}{{\amarillo\xStructured} and {\amarillo\xUnstructured} macroelements}
-%   \begin{columns}
-%     \column{0.5\linewidth}
-%     \unstableBubbleMacro
-%     \\
-%     \begin{itemize}
-%     \item \myframed{\textbf\xUnstructured}
-%        (it cannot be \structure{split} by any line
-%       orthogonal to $OX$ axis)
-%     \item \myframed{\textbf\yStructured}
-%       \ (can be \structure{split} by a line
-%       orthogonal to $OY$)
-%     \end{itemize}
-%     % --------
-%     \pause
-%     \column{0.5\linewidth}
-%     \bubbleMacro
-%     \\
-%     \begin{itemize}
-%     \item \textbf\xUnstructured\ macroelement
-%     \item Also \textbf\yUnstructured
-%     \end{itemize}
-%     \vspace{1.5em}~
-%    \end{columns}
-% \end{frame}
-
-% \begin{frame}{Regular macroelements for \FEthreeSpacesP{1,b}11}
-%   \begin{itemize}\itemsep1em
-%   \item The following result \colorUnderLine{relates
-%       \textbf{regularity} with \textbf{structure}}
-% \item In fact, it states that, in $\Macro\in\MhOneVertex$, ~\medskip
-%   \quad
-
-%   \begin{BlockNoTitle}
-%     \begin{center} \it bubbles can be
-%       \textbf{\itshape removed from one (only) component of velocity} \\
-%       \rotatebox{90}{$\Leftrightarrow$}
-%       \\
-%       $\Macro$ is \it \ \textbf{\itshape unstructured in corresponding
-%         direction}
+% \begin{frame}{Structured and unstructured macroelements}
+%   We have introduced some definitions:
+%   \begin{definition}
+%   A macroelement $M$, can be \structure{split by an hyperplane} $\Pi$
+%   if there exists two other macroelements $M_1$ and $M_2$ such that:
+%   \begin{center}
+%     \llaveizq{$M_1\cup M_2=M$  and  \\
+%       $M_1\cap M_2 \subset \Pi$}
 %     \end{center}
-%   \end{BlockNoTitle}
+%   \end{definition}
 
-% \item More specifically...
-%   \begin{theorem}
-%     Let $\Macro$ be a macroelement in $\MhOneVertex$.
-%     Then \colorUnderLine{\FEthreeSpacesP{1,b}{1}{1} is
-%       regular in $\Macro$}
-%     \emph{if and only} if $\Macro$ is \colorUnderLine{\yUnstructured}
-%   \end{theorem}
-%   % \item[$\star$] Analogue result for \FEthreeSpacesP{1}{1,b}{1}
-% \item[$\star$] For instance...
-% \end{itemize}
+%   \begin{definition}
+%     \begin{itemize}
+%     \item A macroelement $M$ will be said \structure{\xStructured} if
+%       it can be split by an hyperplane $x=C$, for some $C\in\Rset$
+%       (i.e. \emph{orthogonal to $OX$ axis})
+%     \item In  other case, it will be said \structure{\xUnstructured}
+%     \end{itemize}
+%   \end{definition}
+%   \begin{itemize}
+%   \item[$\star$] Analogue definitions for \structure\yUnstructured and
+%     \structure\zUnstructured
+%   \item[$\star$] For instance...
+%   \end{itemize}
 % \end{frame}
+
+\newcommand{\bubbleMacro}{ % Bubble macroelement
+  \begin{tikzpicture}
+    \def\nv{5}
+    \def\ix{2}\def\iy{1.8}
+    \def\vertices{
+      \coordinate (q0) at (0,0);
+      \coordinate (q1) at  (-1.25*\ix,-0.25*\iy);
+      \coordinate (q2) at  (-0.25*\ix,-\iy);
+      \coordinate (q3) at  (0.75*\ix,-\iy);
+      \coordinate (q4) at (\ix*1,0.5*\iy);
+      \coordinate (q5) at (-\ix*0.25,\iy);
+    }
+    \def\showPoints{
+      \foreach \i in {0,...,\nv}
+      \fill [black] (q\i) circle (3pt);
+    }
+    \def\showLines{
+      % Draw borders
+      \draw (q1) -- (q2) -- (q3) -- (q4) -- (q5) -- cycle;
+      % Draw interior edges
+      \foreach \i in {1,...,\nv} {
+        \draw (q\i) -- (q0);
+      }
+      \foreach \i in {1,...,\nv} {
+        \draw [fill, lightgray] (x\i) circle (1.25pt);
+        \draw (x\i) circle (2.25pt);
+      }
+    }
+    \def\showTriangles{
+      \node at ($ (q1)!.5!(q2) $) [label=230:\small${T_1}$] {};
+      \node at ($ (q2)!.5!(q3) $) [label=-90:\small${T_2}$] {};
+      \node at ($ (q3)!.5!(q4) $) [label=-15:\small${T_3}$] {};
+      \node at ($ (q4)!.5!(q5) $) [label=90:\small${T_4}$] {};
+      \node at ($ (q5)!.5!(q1) $) [label=130:\small${T_5}$] {};
+    }
+    \def\xPoints {
+      \coordinate (x1) at ($ (q1)!.5!(q2)!.333!(q0) $);
+      \coordinate (x2) at ($ (q2)!.5!(q3)!.333!(q0)  $);
+      \coordinate (x3) at ($ (q3)!.5!(q4)!.333!(q0)  $);
+      \coordinate (x4) at ($ (q4)!.5!(q5)!.333!(q0)  $);
+      \coordinate (x5) at ($ (q1)!.5!(q5)!.333!(q0)  $);
+    }
+    \vertices
+    \xPoints
+    \showPoints
+    \showLines
+    \showTriangles
+  \end{tikzpicture}
+}
+
+
+\newcommand{\unstableBubbleMacro}{ % Bubble macroelement where
+  % P1b/P1/P1 is unstable
+  \begin{tikzpicture}
+    \def\nv{5}
+    \def\ix{2}\def\iy{1.8}
+    \def\vertices{
+      \coordinate (q0) at (0,0);
+      \coordinate (q1) at  (-\ix,0*\iy);
+      \coordinate (q2) at  (-0.25*\ix,-\iy);
+      \coordinate (q3) at  (0.75*\ix,-\iy);
+      \coordinate (q4) at (\ix*1,0*\iy);
+      \coordinate (q5) at (\ix*0.1,\iy);
+    }
+    \def\showPoints{
+      \foreach \i in {0,...,\nv}
+      \fill [black] (q\i) circle (3pt);
+    }
+    \def\showLines{
+      % Draw borders
+      \draw (q1) -- (q2) -- (q3) -- (q4) -- (q5) -- cycle;
+      % Draw interior edges
+      \foreach \i in {1,...,\nv} {
+        \draw (q\i) -- (q0);
+      }
+      \foreach \i in {1,...,\nv} {
+        \draw [fill, lightgray] (x\i) circle (1.25pt);
+        \draw (x\i) circle (2.25pt);
+      }
+    }
+    \def\showTriangles{
+      \node at ($ (q1)!.5!(q2) $) [label=230:\small${T_1}$] {};
+      \node at ($ (q2)!.5!(q3) $) [label=-90:\small${T_2}$] {};
+      \node at ($ (q3)!.5!(q4) $) [label=-15:\small${T_3}$] {};
+      \node at ($ (q4)!.5!(q5) $) [label=90:\small${T_4}$] {};
+      \node at ($ (q5)!.5!(q1) $) [label=130:\small${T_5}$] {};
+    }
+    \def\xPoints {
+      \coordinate (x1) at ($ (q1)!.5!(q2)!.333!(q0) $);
+      \coordinate (x2) at ($ (q2)!.5!(q3)!.333!(q0)  $);
+      \coordinate (x3) at ($ (q3)!.5!(q4)!.333!(q0)  $);
+      \coordinate (x4) at ($ (q4)!.5!(q5)!.333!(q0)  $);
+      \coordinate (x5) at ($ (q1)!.5!(q5)!.333!(q0)  $);
+    }
+    \vertices
+    \xPoints
+    \showPoints
+    \showLines
+    \showTriangles
+    \node at ($ (q4)!.4!(q5)!-1!(q0) $) {};
+    \node at ($ (q4)!.333!(q3)!-0.7!(q0) $) {};
+  \end{tikzpicture}
+}
+
+\begin{frame}{{\amarillo\xStructured} and {\amarillo\xUnstructured} macroelements}
+  \begin{columns}
+    \column{0.5\linewidth}
+    \unstableBubbleMacro
+    \\
+    \begin{itemize}
+    \item \myframed{\textbf\xUnstructured}
+       (it cannot be \structure{split} by any line
+      orthogonal to $OX$ axis)
+    \item \myframed{\textbf\yStructured}
+      \ (can be \structure{split} by a line
+      orthogonal to $OY$)
+    \end{itemize}
+    % --------
+    \pause
+    \column{0.5\linewidth}
+    \bubbleMacro
+    \\
+    \begin{itemize}
+    \item \textbf\xUnstructured\ macroelement
+    \item Also \textbf\yUnstructured
+    \end{itemize}
+    \vspace{1.5em}~
+   \end{columns}
+\end{frame}
+
+\begin{frame}{Regular macroelements for \FEthreeSpacesP{1,b}11}
+  \begin{itemize}\itemsep1em
+  \item The following result \colorUnderLine{relates
+      \textbf{Macro-condition} with \textbf{structure}}
+\item In fact, it states that ~\medskip
+  \quad
+
+  \begin{BlockNoTitle}
+    \begin{center} \it bubbles can be
+      \textbf{\itshape removed from one (only) component of velocity} \\
+      \rotatebox{90}{$\Leftrightarrow$}
+      \\
+      $M$ is \it \ \textbf{\itshape unstructured in corresponding
+        direction}
+    \end{center}
+  \end{BlockNoTitle}
+
+\item More specifically...
+  \begin{theorem}
+    Let $M$ be a macroelement in $\MhOneVertex$.
+    Then
+    \begin{center}
+      \colorUnderLine{\FEthreeSpacesP{1,b}{1}{1} verifies
+        \textbf{Macro-condition} in $M$} $\Leftrightarrow$ $M$ is
+      \colorUnderLine{\textbf{\yUnstructured}}
+    \end{center}
+  \end{theorem}
+  \item[$\star$] Analogue result for \FEthreeSpacesP{1}{1,b}{1}
+% \item[$\star$] For instance...
+\end{itemize}
+\end{frame}
 
 % \begin{frame}{{\amarillo Regular} and {\amarillo not regular} macroelements}
 %   \small
@@ -1139,10 +1061,10 @@ Two Inf-Sup conditions are suggested:
 %     \\
 %     \begin{itemize}
 %     \item \xUnstructured $\Rightarrow$
-%       \par~ \hfill \myframed<1>{\FEthreeSpacesP1{1,b}1 is \textbf{regular}}
+%       \par~ \hfill \myframed<1>{\FEthreeSpacesP1{1,b}1 \textbf{Macro-cond.}}
 %     \item \yStructured $\Rightarrow$
-%       \par~ \hfill \myframed<1>{\FEthreeSpacesP{1,b}11 is \textbf{not
-%           regular}}
+%       \par~ \hfill \myframed<1>{\FEthreeSpacesP{1,b}11  \textbf{No
+%           Macro-cond.}}
 %     \end{itemize}
 %     \vfill~
 %     % --------
@@ -1152,398 +1074,30 @@ Two Inf-Sup conditions are suggested:
 %     \\
 %     \begin{itemize}
 %     \item \xUnstructured $\Rightarrow$
-%       \par~ \hfill \myframed<2>{\FEthreeSpacesP{1,b}11 is
-%         \textbf{regular}}
+%       \par~ \hfill \myframed<2>{\FEthreeSpacesP{1,b}11
+%         \textbf{Macro-cond}}
 %     \item \yUnstructured $\Rightarrow$
 %       % \FEthreeSpacesP1{1,b}1 is  \textbf{regular}
-%       \par~ \hfill \myframed{\FEthreeSpacesP1{1,b}1 is
-%         \textbf{regular}}
+%       \par~ \hfill \myframed{\FEthreeSpacesP1{1,b}1
+%         \textbf{Macro-cond}}
 %     \end{itemize}
 %     \vspace{0.9em}
 %    \end{columns}
 % \end{frame}
 
-% \newcommand{\macroelemBii}{
-%   \begin{tikzpicture}
-%     \def\nv{5}
-%     \def\ix{1.4}\def\iy{2}
-%     \def\vertices{
-%       \coordinate [label=220:\scriptsize $q_0$] (q0) at (0,0);
-%       \coordinate [label=-100:\scriptsize $q_1$] (q1) at  (-0.25*\ix,-\iy);
-%       \coordinate [label=-45:\scriptsize $q_2$] (q2) at  (0.75*\ix,-\iy);
-%       \coordinate [label=90:\scriptsize $q_3$] (q3) at (\ix*1,0.25*\iy);
-%       \coordinate [label=90:\scriptsize $q_4$] (q4) at (-\ix*0.25,\iy);
-%       \coordinate [label=150:\scriptsize $q_5$] (q5) at  (-\ix,0);
-%     }
-%     \def\showPoints{
-%       \foreach \i in {0,...,\nv}
-%         \fill [black] (q\i) circle (3pt);
-%     }
-%     \def\showLines{
-%       % Draw borders
-%       \draw (q1) -- (q2) -- (q3) -- (q4) -- (q5) -- cycle;
-%       % Draw interior edges
-%       \foreach \i in {1,...,\nv} {
-%         \draw (q\i) -- (q0);
-%       }
-%       \foreach \i in {1,...,\nv} {
-%         \draw [fill, lightgray] (x\i) circle (1.25pt);
-%         \draw (x\i) circle (2.25pt);
-%       }
-%     }
-%     \def\showTriangles{
-%       \node at ($ (q1)!.5!(q2)!-.3!(q0) $) {${T_1}$};
-%       \node at ($ (q2)!.5!(q3)!-.3!(q0) $) {${T_2}$};
-%       \node at ($ (q3)!.5!(q4)!-.3!(q0) $) {${T_3}$};
-%       \node at ($ (q4)!.5!(q5)!-.3!(q0) $) {${T_4}$};
-%       \node at ($ (q5)!.5!(q1)!-.3!(q0) $) {${T_5}$};
-%     }
-%     \def\xPoints {
-%       \coordinate (x1) at ($ (q1)!.5!(q2)!.333!(q0) $);
-%       \coordinate (x2) at ($ (q2)!.5!(q3)!.333!(q0)  $);
-%       \coordinate (x3) at ($ (q3)!.5!(q4)!.333!(q0)  $);
-%       \coordinate (x4) at ($ (q4)!.5!(q5)!.333!(q0)  $);
-%       \coordinate (x5) at ($ (q1)!.5!(q5)!.333!(q0)  $);
-%     }
-%     % \def\xPoints {
-%     %   \coordinate [label=215: \tiny $r_1$] (x1) at ($ (q1)!.5!(q2)!.333!(q0) $);
-%     %   \coordinate [label=-90: \tiny $r_2$] (x2) at ($ (q2)!.5!(q3)!.333!(q0)  $);
-%     %   \coordinate [label=-90: \tiny $r_3$] (x3) at ($ (q3)!.5!(q4)!.333!(q0)  $);
-%     %   \coordinate [label=0: \tiny $r_4$] (x4) at ($ (q4)!.5!(q5)!.333!(q0)  $);
-%     %   \coordinate [label=135: \tiny $r_5$] (x5) at ($ (q1)!.5!(q5)!.333!(q0)  $);
-%     % }
-%     \alert<2>{\vertices}
-%     \xPoints
-%     \showPoints
-%     \showLines
-%     \alert<1>\showTriangles
-%   \end{tikzpicture}
-% }
-
-% \newcommand{\macroelemBiii}{
-%   \begin{tikzpicture}
-%     \def\nv{5}
-%     \def\ix{1.4}\def\iy{2}
-%     \def\vertices{
-%       \coordinate [label=220:\scriptsize $q_0$] (q0) at (0,0);
-%       \coordinate [label=-100:\scriptsize $q_1$] (q1) at  (-0.25*\ix,-\iy);
-%       \coordinate [label=-45:\scriptsize $q_2$] (q2) at  (0.75*\ix,-\iy);
-%       \coordinate [label=90:\scriptsize $q_3$] (q3) at (\ix*1,0.25*\iy);
-%       \coordinate [label=90:\scriptsize $q_4$] (q4) at (-\ix*0.25,\iy);
-%       \coordinate [label=150:\scriptsize $q_5$] (q5) at  (-\ix,0);
-%     }
-%     \def\showPoints{
-%       \foreach \i in {0,...,\nv}
-%         \fill [black] (q\i) circle (3pt);
-%     }
-%     \def\showLines{
-%       % Draw borders
-%       \draw (q1) -- (q2) -- (q3) -- (q4) -- (q5) -- cycle;
-%       % Draw interior edges
-%       \foreach \i in {1,...,\nv} {
-%         \draw (q\i) -- (q0);
-%       }
-%     }
-%     \def\showTriangles{
-%       \node at ($ (q5)!.5!(q1)!-.3!(q0) $) {\small${T_1}$};
-%       \node at ($ (q1)!.5!(q2)!-.3!(q0) $) {\small${T_2}$};
-%       \node at ($ (q2)!.5!(q3)!-.3!(q0) $) {\small${T_3}$};
-%       \node at ($ (q3)!.5!(q4)!-.3!(q0) $) {\small${T_5}$};
-%       \node at ($ (q4)!.5!(q5)!-.3!(q0) $) {\small${T_5}$};
-%     }
-%     \vertices
-%     \showPoints
-%     \showLines
-%     \showTriangles
-
-%     % Highlight
-%     \node at ($ (q5)!.5!(q1)!0.3!(q0) $) (c1) {\alert{${c_1}$}};
-%     \node at ($ (q1)!.5!(q2)!0.3!(q0) $) (c2) {\alert{${c_2}$}};
-%     \node at ($ (q2)!.5!(q3)!0.3!(q0) $) (c3) {\alert{${c_3}$}};
-%     \node at ($ (q3)!.5!(q4)!0.3!(q0) $) (c4) {\alert{${c_4}$}};
-%     \node at ($ (q4)!.5!(q5)!0.3!(q0) $) (c5) {\alert{${c_5}$}};
-%     % Finally, redraw in blue $b_1$ and $b_5$
-%     % \onslide<8->\structure{
-%     %   \node at ($ (q1)!.5!(q2)!0.1!(q0) $) [label=90:${c_1}$] {};
-%     %   \node at ($ (q5)!.5!(q1)!-0.2!(q0) $) [label=-45:${c_1}$] {};
-%     % }
-%     \path<3->[myarrow3] (c1) edge [out=-90, in=180] (c2);
-%     \path<4->[myarrow3] (c2) edge [out=20, in=-100] (c3);
-%     \path<5->[myarrow3] (c3) edge [out=60, in=-30] (c4);
-%     \path<6->[myarrow3] (c4) edge [out=140, in=70] (c5);
-
-%   \end{tikzpicture}
-% }
-
-% \newcommand{\macroelemBiv}{
-%   \begin{tikzpicture}
-%     \def\nv{5}
-%     \def\ix{1.4}\def\iy{2}
-%     \def\vertices{
-%       \coordinate [label=220:\scriptsize $q_0$] (q0) at (0,0);
-%       \coordinate [label=-100:\scriptsize $q_1$] (q1) at  (-0.25*\ix,-\iy);
-%       \coordinate [label=-45:\scriptsize $q_2$] (q2) at  (0.75*\ix,-\iy);
-%       \coordinate [label=90:\scriptsize $q_3$] (q3) at (\ix*1,0);
-%       \coordinate [label=90:\scriptsize $q_4$] (q4) at (-\ix*0.25,\iy);
-%       \coordinate [label=150:\scriptsize $q_5$] (q5) at  (-\ix,0);
-%     }
-%     \def\showPoints{
-%       \foreach \i in {0,...,\nv}
-%         \fill [black] (q\i) circle (3pt);
-%     }
-%     \def\showLines{
-%       % Draw borders
-%       \draw (q1) -- (q2) -- (q3) -- (q4) -- (q5) -- cycle;
-%       % Draw interior edges
-%       \foreach \i in {1,...,\nv} {
-%         \draw (q\i) -- (q0);
-%       }
-%     }
-%     \def\showTriangles{
-%       \node at ($ (q5)!.5!(q1)!-.3!(q0) $) {\small${T_1}$};
-%       \node at ($ (q1)!.5!(q2)!-.3!(q0) $) {\small${T_2}$};
-%       \node at ($ (q2)!.5!(q3)!-.3!(q0) $) {\small${T_3}$};
-%       \node at ($ (q3)!.5!(q4)!-.3!(q0) $) {\small${T_5}$};
-%       \node at ($ (q4)!.5!(q5)!-.3!(q0) $) {\small${T_5}$};
-%     }
-%     \vertices
-%     \showPoints
-%     \showLines
-%     \showTriangles
-
-%     % Highlight
-%     \node at ($ (q5)!.5!(q1)!0.3!(q0) $) (c1) {\alert{${c_1}$}};
-%     \node at ($ (q1)!.5!(q2)!0.3!(q0) $) (c2) {\alert{${c_2}$}};
-%     \node at ($ (q2)!.5!(q3)!0.3!(q0) $) (c3) {\alert{${c_3}$}};
-%     \node at ($ (q3)!.5!(q4)!0.3!(q0) $) (c4) {\alert{${c_4}$}};
-%     \node at ($ (q4)!.5!(q5)!0.3!(q0) $) (c5) {\alert{${c_5}$}};
-%     % Finally, redraw in blue $b_1$ and $b_5$
-%     % \onslide<8->\structure{
-%     %   \node at ($ (q1)!.5!(q2)!0.1!(q0) $) [label=90:${c_1}$] {};
-%     %   \node at ($ (q5)!.5!(q1)!-0.2!(q0) $) [label=-45:${c_1}$] {};
-%     % }
-%     \path<3->[myarrow3] (c1) edge [out=-90, in=180] (c2);
-%     \path<4->[myarrow3] (c2) edge [out=20, in=-100] (c3);
-%     \path<5->[myarrow3] (c4) edge [out=120, in=70] (c5);
-
-%   \end{tikzpicture}
-% }
-
-% \SetEmptyBackground
-% \begin{frame}
-%   \medskip
-%   % -----------------------
-%   \textbf{Proof}
-%   \quad
-%   \begin{tabular}[t]{l}
-%     \myframed{$\Leftarrow$}
-%     % \\
-%     % \myframed{$\Macro$ is \yUnstructured $\Rightarrow$
-%     %   \FEthreeSpacesP{1,b}{1}{1} is regular in $\Macro$}
-%   \end{tabular}
-%   % -----------------------
-%   \par\bigskip
-%   Suppose $\Macro$ is \textbf{\yUnstructured}, defined by:
-%   % \bigskip
-%   % Let $n\in\Nset$ and let $M\in\MhOneVertex$, with:
-%   \begin{columns}
-%     \column[b]{0.66\linewidth}
-% %    \setlength{\leftmargini}{1em}
-%     \begin{itemize}[<+->]
-%     \item \alert<1>{$T_i$, \ $i=1,...,n$ elements}
-%     \item \alert<2>{$q_i$, \ $i=0,...,n$ vertices, ($q_0$ interior one)}
-%     % \item \alert<3>{$r_i$, $i=1,...,n$ midpoints in edges.}
-%     % ~\par\bigskip
-
-%     \item
-%     \onslide<3-> Let  $\pp\in N_M$\ /
-%     $$
-%     \int_M \div(u,v)\;p=0, \quad \forall (\uu,\vv) \sim \P2/\P1
-%     $$
-%     Question for regularity: \fbox{\textbf{is $\pp$ constant?}}
-%     \medskip
-%   \item
-%     As $\pp\sim \P1$, we can define\vspace{-0.3em}
-%     $$
-%     \pp|_{T_i}=a_i+b_ix+c_iy, \quad i=1,...,n.
-%     $$
-%   % \item\vspace{-0.5em}
-%     % We will see: \ \llaveizq{ $b_i=0$, $c_i=0$ $\forall i$ and
-%     %   \\[0.3em] $a_1=...=a_n$ (constant)}
-%     \end{itemize}
-%     %- - - - - - - - - - - -
-%     \column[b]{0.33\linewidth}
-%     %- - - - - - - - - - - -
-%     \onslide<1->\macroelemBii
-%     \vspace{0.1\textheight}
-%   \end{columns}
-%   \vfill
-% \end{frame}
-
-% \begin{frame}
-%   \begin{columns}
-%     %- - - - - - - - - - - -
-%     \column[b]{0.66\linewidth}
-%     %- - - - - - - - - - - -
-%     \begin{itemize}[<+->]
-%   \item Choosing \llaveizq{$\uu=1$ in $i$-th barycentre, \\ $\uu, \vv = 0$ in
-%       other nodes,}
-%     \begin{equation*}
-%       0 =\int_M \div(u,v)\;p =
-%       \int_{T_i}\dx\uu\ph = - b_{i} \int_{T_{i}}\uu
-%     \end{equation*}
-%     Hence \framedmath{b_i=0} \ $\forall i=1...n$
-%     \bigskip
-%   \item Imposing continuity in $q_0=(0,0)$:
-%     \par\medskip
-%     $$ \framedmath{a_1 = a_2 = ... = a_n =: a \in\Rset}$$
-%   \end{itemize}
-%     %- - - - - - - - - - - -
-%     \column[b]{0.33\linewidth}
-%     %- - - - - - - - - - - -
-%     \onslide<1->\macroelemBii
-%     % \vspace{0.3\textheight}
-%   \end{columns}
-% \end{frame}
-
-% \begin{frame}
-%   % Hence $\ph|_{T_i} = a + c_iy$, \ $\forall T_i\in\Macro$
-%   \begin{columns}
-%     %- - - - - - - - - - - -
-%     \column[b]{0.66\linewidth}
-%     %- - - - - - - - - - - -
-%     About \framedmath<1>{c_i}:
-%     \begin{itemize}\itemsep0.5em
-%     \item<1-> Imposing \textbf{continuity} of $\ph$ in interior edges,
-%       $\overline{q_0q_i}$:
-%         \begin{equation*}
-%           q_{i}^y(c_{i+1} -  c_i) = 0,
-%           \quad i=1,...,n,
-%         \end{equation*}
-%         where $q_i^y$: $y$--coordinate of $i$--th vertex
-%       \item<2-> Thus if $q_{i}^y\neq 0$, (i.e. if segment
-%         $\overline{q_0q_i}$ is \textbf{not horizontal}), then
-%         \framedmath<2-6>{c_i = c_{i+1}}
-%       \item<7-> Therefore   \framedmath<7>{c_1=...=c_n=:c\in\Rset}
-%       \item<8-> Finally, if \llaveizq{$\uu=0$, \\
-%           $\vv = 1$ in $q_0$ {\color{PHDgrayC}\scriptsize( $\vv=0$ on $q_i$  $i\neq 0$)}:}
-%         {\small
-%         \begin{equation*}
-%           0 = \int_\Macro \dy\vh \; \ph = - \sum_{i=1}^{\nv} \int_{T_i}\vh \dy\ph
-%           = -\sum_{i=1}^{n} c_i \frac{|T_i|}{3}
-%           \quad \text{\color{PHDgrayC} (quadrature formula)}
-%         \end{equation*}
-%         }
-%       \item<9-> Hence $c_i=0\ \forall i$, thus \myframed{$\ph=a$ \ (constant)}
-%     \end{itemize}
-%     %- - - - - - - - - - - -
-%     \column[b]{0.33\linewidth}
-%     %- - - - - - - - - - - -
-%     \onslide<1->\macroelemBiii
-%      \vspace{0.15\textheight}
-%   \end{columns}
-% \end{frame}
-
-% \begin{frame}
-%   % -----------------------
-%   % \textbf{Proof}
-%   % \quad
-%   % \begin{tabular}[t]{l}
-%     \myframed{$\Rightarrow$}
-%     % \\
-%     % \myframed{\FEthreeSpacesP{1,b}{1}{1} is regular in $\Macro$
-%     %   $\Rightarrow$
-%     %   $\Macro$ is \yUnstructured }
-%   % \end{tabular}
-%   % -----------------------
-% % \textbf{Proof} \ (\FEthreeSpacesP{1,b}{1}{1} is regular in
-% %   $\Macro$ $\Longleftrightarrow$ $\Macro$ is \yUnstructured)
-
-% %   \par\bigskip
-% %   % -----------------------
-% %   \framedmath{\Rightarrow}
-% %   % -----------------------
-%   \begin{columns}
-%     %- - - - - - - - - - - -
-%     \column[b]{0.66\linewidth}
-%     %- - - - - - - - - - - -
-%     \vspace{-0.5em}
-%   \begin{itemize}
-%   \item<1->
-%     Suppose $\Macro$ is \textbf{\yStructured}
-%   \item<1->
-%     For instance, $q_{j}$ and $q_\nv$ are
-%     horizontally aligned with $q_0=(0,0)$.
-%   \item <2->
-%     Repeating previous reasoning, for all $i$:
-%     \begin{align*}
-%       a_i&=a \in\Rset\\
-%       b_i&=0
-%     \end{align*}
-%     but now...
-%     \uncover<5->{ we only deduce:
-%     \begin{equation*}
-%       \begin{split}
-%         c_1&=c_2=...=c_{j}, \\
-%         c_{j+1}&=c_{j+2}=...=c_\nv,
-%       \end{split}
-%     \end{equation*}
-%     }\vspace{-1em}
-%   \item<6->
-%     Thus we cannot say $\ph$ is constant, just
-%     \begin{align*}
-%       \dy\ph(x,y) &=
-%       \begin{cases}
-%         c \quad \text{ if } y>0, \\
-%         \widetilde c \quad \text{ if } y\le 0,
-%       \end{cases}
-%       \\
-%       &\Rightarrow \text{\textbf{counterexample}\quad$\square$}
-%     \end{align*}
-%   % \item<7-> Following this idea a \textbf{counterexample} can be provided ~\hfill$\square$
-%   \end{itemize}
-%     %- - - - - - - - - - - -
-%     \column[b]{0.33\linewidth}
-%     %- - - - - - - - - - - -
-%     \onslide<1->\macroelemBiv
-%      \vspace{0.15\textheight}
-%   \end{columns}
-% \end{frame}
-
-% \SetDefaultBackground
-
-% \begin{frame}
-%   % {\myframedAlert{\FEthreeSpacesP{1,b}11},
-%   %   \myframedAlert{\FEthreeSpacesP1{1,b}1}
-%     {Sufficient condition for stability}
-%   \begin{theorem}[Global stability  of \FEthreeSpacesP{1,b}11 and
-%   \FEthreeSpacesP1{1,b}1]
-%   \begin{itemize}
-%   \item Let us consider a triangulation $\Th$ of a domain
-%     $\domain\subset\Rset^2$ verifying the hypothesis~(H).
-%   \item Let
-%     \MhOneVertex be its associated partition by macroelements with one
-%     only interior vertex.
-%     \begin{enumerate}\itemsep0.33em
-%     \item If \colorUnderLine{every $\Macro\in\MhOneVertex$ is
-%         \yUnstructured},
-%       \par\hfill then
-%       \colorUnderLine{inf-sup condition holds for
-%       \FEthreeSpacesP{1,b}11 elements}
-%   \item If \colorUnderLine{every $\Macro\in\MhOneVertex$ is
-%       \xUnstructured}, then
-%       \par\hfill
-%       \colorUnderLine{inf-sup condition holds for
-%         \FEthreeSpacesP1{1,b}1} elements.
-%     \end{enumerate}
-%   \end{itemize}
-
-% \end{theorem}
-% \textbf{Proof}: We have shown that regularity of every $\Macro\in
-% \MhOneVertex$ (hypothesis $(M_1)$) is sufficient for applying
-% Stenberg Theorem.  \hfill $\square$
-
-% \end{frame}
+\begin{frame}{Sufficient condition for stability}
+  \begin{corollary}
+    If a mesh is composed of \textbf{\yUnstructured macroelements}, then
+    \alert{inf-sup condition holds for \FEthreeSpacesP{1,b}11} elements
+  \end{corollary}
+  \begin{center}
+     \pgfimage[width=0.9\linewidth,height=7\baselineskip]{\imgdir/mesh-xStr-yUnstr}
+  \end{center}
+  \begin{itemize}\itemsep0.9em
+  \item \textbf{Proof}: Apply Stenberg's Theorem.
+  \item Analogue result for \FEthreeSpacesP1{1,b}1
+  \end{itemize}
+\end{frame}
 
 % \begin{frame}{\myframedAlert{\FEthreeSpacesP{1,b}11 (or Mini-mini-element)}: advantages}
 %   \begin{enumerate}[<+->]\itemsep0.5em
@@ -1567,7 +1121,7 @@ Two Inf-Sup conditions are suggested:
 %     \end{itemize}
 
 %   % \item Previous theorem is \alert{\textbf{not a necessary condition}}
-%   %   and inf-sup condition may be verified even if some $\Macro$ are
+%   %   and inf-sup condition may be verified even if some $M$ are
 %   %   structured
 %   \item In fact, \alert{\textbf{counterexamples where inf-sup
 %         condition is not verified}} have been found just in meshes having
@@ -1575,268 +1129,208 @@ Two Inf-Sup conditions are suggested:
 %   \end{enumerate}
 % \end{frame}
 
-% \begin{frame}{\myframedAlert{Stokes \FEthreeSpacesP{1,b}11}
-%     lid-driven cavity test, 1}
-%   \textbf{Unstructured mesh}
-%   \begin{tabular}{@{}c@{}c@{}c@{}}
-%     \pgfimage[width=0.32\linewidth]{\imgdir/unstructured-mesh}
-%     &
-%     \pgfimage[width=0.31\linewidth]{\imgdir/b1-1-v-uns}
-%     &
-%     \pgfimage[width=0.31\linewidth]{\imgdir/b1-1-p-uns}
-%   \end{tabular}
+\begin{frame}{\myframedAlert{Stokes \FEthreeSpacesP{1,b}11}
+    lid-driven cavity test, 1}
+  \begin{tabular}{@{}c@{}c@{}c@{}}
+    \pgfimage[width=0.32\linewidth]{\imgdir/unstruct-mesh}
+    &
+    \pgfimage[width=0.31\linewidth]{\imgdir/b1-1-v-uns}
+    &
+    \pgfimage[width=0.31\linewidth]{\imgdir/b1-1-p-uns}
+  \end{tabular}
+  \textbf{Unstructured mesh}
 
-%   \textbf{Structured mesh}
-%   \begin{tabular}{@{}c@{}c@{}c@{}}
-%     \pgfimage[width=0.32\linewidth]{\imgdir/structured-mesh}
-%     &
-%     \pgfimage[width=0.31\linewidth]{\imgdir/b1-1-v-str}
-%     &
-%     \pgfimage[width=0.31\linewidth]{\imgdir/b1-1-p-str}
-%   \end{tabular}
-%   \textbf{Structured mesh} %\FEthreeSpacesP{1,b}{1,b}1
-% \end{frame}
+  \begin{tabular}{@{}c@{}c@{}c@{}}
+    \pgfimage[width=0.32\linewidth]{\imgdir/struct-mesh}
+    &
+    \pgfimage[width=0.31\linewidth]{\imgdir/b1-1-v-str}
+    &
+    \pgfimage[width=0.31\linewidth]{\imgdir/b1-1-p-str}
+  \end{tabular}
+  \textbf{Structured mesh} %\FEthreeSpacesP{1,b}{1,b}1
+\end{frame}
 
 % \begin{frame}{Mesh structured in just 1 direction}
 %   Test in a $x$--structured but $y$--unstructured mesh
 %   \begin{center}
-%     \pgfimage[width=0.5\linewidth,height=5\baselineskip]{\imgdir/mesh-xStr-yUnstr}
-%     \\
-%     \begin{tabular}{@{}c@{}c@{}c@{}}
-%       \pgfimage[width=0.32\linewidth]{\imgdir/bb-1_x-struc_y_unstruct}
-%       &
-%       \pgfimage[width=0.32\linewidth]{\imgdir/b1-1_x-struc_y_unstruct}
-%       &
-%       \pgfimage[width=0.32\linewidth]{\imgdir/1b-1_x-struc_y_unstruct}
-%       \\
-%       \FEthreeSpacesP{1,b}{1,b}1
-%       &
-%       \FEthreeSpacesP{1,b}{1}1
-%       &
-%       \FEthreeSpacesP{1}{1,b}1
-%   \end{tabular}
+    % \pgfimage[width=0.5\linewidth,height=5\baselineskip]{\imgdir/mesh-xStr-yUnstr}
+    % \\
+  %   \begin{tabular}{@{}c@{}c@{}c@{}}
+  %     \pgfimage[width=0.32\linewidth]{\imgdir/bb-1_x-struc_y_unstruct}
+  %     &
+  %     \pgfimage[width=0.32\linewidth]{\imgdir/b1-1_x-struc_y_unstruct}
+  %     &
+  %     \pgfimage[width=0.32\linewidth]{\imgdir/1b-1_x-struc_y_unstruct}
+  %     \\
+  %     \FEthreeSpacesP{1,b}{1,b}1
+  %     &
+  %     \FEthreeSpacesP{1,b}{1}1
+  %     &
+  %     \FEthreeSpacesP{1}{1,b}1
+  % \end{tabular}
 %   \end{center}
 % \end{frame}
 
-% % \begin{frame}{\myframedAlert{\FEthreeSpacesP{1,b}11} \ Error orders}
-% %   \begin{itemize}
-% %   \item Poner aqu\'i las gr\'aficas de error
-% %   \item Comentar orden \'optimo, resultados muy similares al mini-elemento
-% %   \end{itemize}
-% % \end{frame}
-
-% \begin{frame}{\myframedAlert{\FEfourSpacesP1{1,b}{1,b}1} 3D
-%     finite elements}
-% \begin{theorem}
-%   \label{theorem:P1P1bP1b-P1:macroelem.3D}
-%   \begin{itemize}
-%   \item Let $\widehat M\in\MhOneVertex$. Then the combination
-%     \FEfourSpacesP{1}{1,b}{1,b}{1} is regular in $\widehat M$ if and
-%     only if $\widehat M$ is \xUnstructured.
-%   \item The cases \FEfourSpacesP{1,b}1{1,b}{1} and
-%     \FEfourSpacesP{1,b}{1,b}1{1} are symmetric.
-%   \end{itemize}
-% \end{theorem}
-% \begin{itemize}
-% \item \textbf{Interpretation}: like in 2D, we can remove bubble functions from a
-%   component of velocity if and only if the mesh is unstructured in the
-%   corresponding direction.
-% \end{itemize}
-% \bigskip
-% \textbf{Proof}: Similar to 2D \hfill $\square$
-% \end{frame}
 
 % \begin{frame}{\myframedAlert{\FEfourSpacesP11{1,b}1} 3D
 %     finite elements}
-
-% \begin{theorem}
-%   Let $\Macro\in\MhOneVertex$ with one only interior vertex, $q_0$. Let $r_0$ be the
-%   vertical straight line through $q_0$ and ${\cal F}$ the
-%   family of the (vertical) semi-planes with $r_0$ axis.
-%   \begin{enumerate}
-%   \item If $\Macro$ cannot be split by semi-planes of ${\cal F}$, then
-%     \FEfourSpacesP11{1b}1 is regular in $\Macro$.
-%   \item If $\Macro$ can be split by only  two semi-planes of ${\cal F}$, then
-%     \FEfourSpacesP11{1b}1 is regular in $\Macro$ if and only if these two
-%     semi-planes are not aligned (i.e.~they do not form a vertical
-%     plane splitting $\Macro$).
-%   \item If $\Macro$ can be split by more than two semi-planes of ${\cal F}$, then \FEfourSpacesP11{1b}1 is \emph{not} regular in $\Macro$.
-%   \end{enumerate}
-%   \label{theorem:P1P1P1b-P1:macroelem.3D}
-% \end{theorem}
-% \bigskip
-% \textbf{Proof}: Quite technical \hfill $\square$
+%   ¿Cual de las simulaciones 3D meto?
 % \end{frame}
 
+\begin{frame}{\myframedAlert{\FEthreeSpacesP{2}11}
+    stability}
+  \begin{enumerate}\itemsep0.66em
+  \item Methods and results: parallel to \FEthreeSpacesP{1,b}11
+    (although more technical)
+  \item We have also proved that \FEthreeSpacesP{2}11 is stable in
+    most unstructured 2D meshes
+  \end{enumerate}
+\end{frame}
 
-% % \begin{frame}{\myframedAlert{\FEfourSpacesP11{1,b}1} 3D
-% %     finite elements}
-% %   ¿Cual de las simulaciones 3D meto?
-% % \end{frame}
+\begin{frame}{Macro-condition for \FEthreeSpacesP{2}{1}{1}}
+  \begin{theorem}
+    Let $M$ be a macroelement in $\MhOneVertex$.
+    Then \textbf{Macro-condition} is verified for \colorUnderLine{\FEthreeSpacesP{2}{1}{1} is
+      in $M$}
+    $\Leftrightarrow$ $M$ is
+    \colorUnderLine{\textbf{\yUnstructured}} except...
 
-% \begin{frame}{\myframedAlert{\FEthreeSpacesP{2}11}
-%     stability}
-%   \begin{enumerate}\itemsep0.66em
-%   \item Methods and results: parallel to \FEthreeSpacesP{1,b}11
-%     (although more technical)
-%   \item We have also proved that \FEthreeSpacesP{2}11 is stable in
-%     most unstructured 2D meshes
-%   \end{enumerate}
+    \begin{quote}
+      $\nv$ is even and the following algebraic condition
+      holds \vspace{-0.6em} {\scriptsize
+        \begin{equation*}
+          \label{eq:ch1:instabilityMacroCondition}
+          \sum_{i=1}^\nv (-1)^{i} \cot(\sigma_i)\left(\frac1{|T_i|}+ \frac1{|T_{i+1}|} \right) = 0,
+        \end{equation*}
+      }
+      \vspace{-0.6em}
+      {\scriptsize
+        where $\sigma_i$: angle between positive horizontal
+        semiaxis from $q_0$ and  common edge of $T_i$ and $T_{i+1}$
+      }
+    \end{quote}
+  \end{theorem}
+
+
+\textbf{Proof}: Similar to \FEthreeSpacesP{1,b}{1}{1}, but
+more technical \hfill $\square$
+\par\mbox{}
+\end{frame}
+
+% \begin{frame}
+%   \begin{proof}
+%     \begin{itemize}
+%     \item Es m\'as complicada que \FEthreeSpacesP{1,b}11
+%     \item Idea: Usar la de  mi charla para el grupo de Tom\'as
+%       (repasarla)
+%     \end{itemize}
+%   \end{proof}
 % \end{frame}
 
-% \begin{frame}{Characterization of regular macroelements}
-%   \begin{theorem}
-%     \label{theorem:P2P1P1:macroelem}
-%     Let $\Macro\in\MhOneVertex$ be a macroelement which can be written
-%     as union of $\nv$ elements which share exactly one interior common
-%     vertex, $q_0$.
-%     \begin{enumerate}
-%     \item If $\Macro$ is \yStructured (i.e.~there are two vertices
-%       horizontally aligned to $q_0$), then \FEthreeSpacesP{2}{1}{1} is
-%       not regular in $\Macro$.
-%     \item If there is just one vertex in $\Macro$ horizontally aligned
-%       with $q_0$, then \FEthreeSpacesP{2}{1}{1} is regular in $M$.
-%     \item If there is no vertex horizontally aligned with $q_0$:
-%       \begin{enumerate}
-%       \item If $\nv$ is odd, then \FEthreeSpacesP{2}{1}{1} is regular
-%         in $\Macro$.
-%       \item If $\nv$ is even, then \FEthreeSpacesP{2}{1}{1} is regular
-%         in $\Macro$ if and only if the following algebraic condition
-%         does \textbf{not hold}:
-%         \vspace{-0.6em}
-%         {\scriptsize
-%         \begin{equation*}
-%           \label{eq:ch1:instabilityMacroCondition}
-%           \sum_{i=1}^\nv (-1)^{i} \cot(\sigma_i)\left(\frac1{|T_i|}+ \frac1{|T_{i+1}|} \right) = 0,
-%         \end{equation*}
-%         }
-%       \end{enumerate}
-%       \vspace{-0.6em}
-%       {\scriptsize
-%         where $\sigma_i$: angle between positive horizontal
-%         semiaxis from $q_0$ and  common edge of $T_i$ and $T_{i+1}$
-%       }
-%     \end{enumerate}
-%   \end{theorem}
-% \scriptsize\textbf{Proof}: Similar to \FEthreeSpacesP{1,b}{1}{1}, but
-% more technical \hfill $\square$
-% \par\mbox{}
-% \end{frame}
-
-% % \begin{frame}
-% %   \begin{proof}
-% %     \begin{itemize}
-% %     \item Es m\'as complicada que \FEthreeSpacesP{1,b}11
-% %     \item Idea: Usar la de  mi charla para el grupo de Tom\'as
-% %       (repasarla)
-% %     \end{itemize}
-% %   \end{proof}
-% % \end{frame}
-
-%   \newcommand{\macroelemD}{
-%     \begin{tikzpicture}
-%       \def\nv{6}
-%       \def\ix{1.75}\def\iy{1.25}
-%       \def\vertices{
-%         \coordinate [label=-45:$q_0$] (q0) at (0,0);
-%         \coordinate [label=right: $q_1$] (q1) at (\ix*1,0);
-%         \coordinate [label=+45: $q_2$] (q2) at (\ix,\iy);
-%         \coordinate [label=+135: $q_3$] (q3) at  (0,\iy);
-%         \coordinate [label=+135: $q_4$] (q4) at   (-\ix,0);
-%         \coordinate [label=225: $q_5$] (q5) at (-\ix,-\iy);
-%         \coordinate [label=-45: $q_6$] (q6) at (0,-\iy);
-%       }
-%       \def\xPoints {
-%         \coordinate (x1) at ($ (q1)!.5!(q0) $);
-%         \coordinate (x2) at ($ (q2)!.5!(q0) $);
-%         \coordinate (x3) at ($ (q3)!.5!(q0) $);
-%         \coordinate (x4) at ($ (q4)!.5!(q0) $);
-%         \coordinate (x5) at ($ (q5)!.5!(q0) $);
-%         \coordinate (x6) at ($ (q6)!.5!(q0) $);
-%       }
-%       \def\showPoints{
-%         \foreach \i in {0,...,\nv}
-%         \fill [black] (q\i) circle (3pt);
-%         \foreach \i in {1,...,\nv} {
-%           \draw [fill, lightgray] (x\i) circle (2.25pt);
-%           \draw (x\i) circle (2.25pt);
-%         }
-%       }
-%       \def\showLines{
-%         % Draw borders
-%         \draw (q1)--(q2) -- (q3) -- (q4) -- (q5) -- (q6) -- cycle;
-%         % Draw interior edges
-%         \foreach \i in {1,...,\nv} {
-%           \draw (q\i) -- (q0);
-%         }
-%       }
-%       \def\showTriangles{
-%         \node at ($ (q6)!.5!(q1) $) [label=-45:${T_6}$] {};
-%         \node at ($ (q1)!.5!(q2) $) [label=0:${T_1}$] {};
-%         \node at ($ (q2)!.5!(q3) $) [label=90:${T_2}$] {};
-%         \node at ($ (q3)!.5!(q4) $) [label=135:${T_3}$] {};
-%         \node at ($ (q4)!.5!(q5) $) [label=180:${T_4}$] {};
-%         \node at ($ (q5)!.5!(q6) $) [label=-45:${T_5}$] {};
-%       }
-%       \vertices
-%       \xPoints
-%       \showPoints
-%       \showLines
-%       \showTriangles
-%     \end{tikzpicture}
-%   }
-%   \newcommand{\macroelemE}{
-%     \begin{tikzpicture}
-%       \def\nv{6}
-%       \def\ix{1.75}\def\iy{0.75}
-%       \def\vertices{
-%         \coordinate [label=-45:$q_0$] (q0) at (0,0);
-%         \coordinate [label=right: $q_1$] (q1) at (\ix,\iy);
-%         \coordinate [label=+45: $q_2$] (q2) at (0,2*\iy);
-%         \coordinate [label=+135: $q_3$] (q3) at  (-\ix,\iy);
-%         \coordinate [label=+135: $q_4$] (q4) at   (-\ix,-\iy);
-%         \coordinate [label=225: $q_5$] (q5) at (0,-2*\iy);
-%         \coordinate [label=-45: $q_6$] (q6) at (\ix,-\iy);
-%       }
-%       \def\xPoints {
-%         \coordinate (x1) at ($ (q1)!.5!(q0) $);
-%         \coordinate (x2) at ($ (q2)!.5!(q0) $);
-%         \coordinate (x3) at ($ (q3)!.5!(q0) $);
-%         \coordinate (x4) at ($ (q4)!.5!(q0) $);
-%         \coordinate (x5) at ($ (q5)!.5!(q0) $);
-%         \coordinate (x6) at ($ (q6)!.5!(q0) $);
-%       }
-%       \def\showPoints{
-%         \foreach \i in {0,...,\nv}
-%         \fill [black] (q\i) circle (3pt);
-%         \foreach \i in {1,...,\nv} {
-%           \draw [fill, lightgray] (x\i) circle (2.25pt);
-%           \draw (x\i) circle (2.25pt);
-%         }
-%       }
-%       \def\showLines{
-%         % Draw borders
-%         \draw (q1)--(q2) -- (q3) -- (q4) -- (q5) -- (q6) -- cycle;
-%         % Draw interior edges
-%         \foreach \i in {1,...,\nv} {
-%           \draw (q\i) -- (q0);
-%         }
-%       }
-%       \def\showTriangles{
-%         \node at ($ (q6)!.5!(q1) $) [label=-45:${T_1}$] {};
-%         \node at ($ (q1)!.5!(q2) $) [label=0:${T_2}$] {};
-%         \node at ($ (q2)!.5!(q3) $) [label=90:${T_3}$] {};
-%         \node at ($ (q3)!.5!(q4) $) [label=135:${T_4}$] {};
-%         \node at ($ (q4)!.5!(q5) $) [label=180:${T_5}$] {};
-%         \node at ($ (q5)!.5!(q6) $) [label=-45:${T_6}$] {};
-%       }
-%       \vertices
-%       \xPoints
-%       \showPoints
-%       \showLines
-%       \showTriangles
-%     \end{tikzpicture}
-%   }
+  \newcommand{\macroelemD}{
+    \begin{tikzpicture}
+      \def\nv{6}
+      \def\ix{1.75}\def\iy{1.25}
+      \def\vertices{
+        \coordinate [label=-45:$q_0$] (q0) at (0,0);
+        \coordinate [label=right: $q_1$] (q1) at (\ix*1,0);
+        \coordinate [label=+45: $q_2$] (q2) at (\ix,\iy);
+        \coordinate [label=+135: $q_3$] (q3) at  (0,\iy);
+        \coordinate [label=+135: $q_4$] (q4) at   (-\ix,0);
+        \coordinate [label=225: $q_5$] (q5) at (-\ix,-\iy);
+        \coordinate [label=-45: $q_6$] (q6) at (0,-\iy);
+      }
+      \def\xPoints {
+        \coordinate (x1) at ($ (q1)!.5!(q0) $);
+        \coordinate (x2) at ($ (q2)!.5!(q0) $);
+        \coordinate (x3) at ($ (q3)!.5!(q0) $);
+        \coordinate (x4) at ($ (q4)!.5!(q0) $);
+        \coordinate (x5) at ($ (q5)!.5!(q0) $);
+        \coordinate (x6) at ($ (q6)!.5!(q0) $);
+      }
+      \def\showPoints{
+        \foreach \i in {0,...,\nv}
+        \fill [black] (q\i) circle (3pt);
+        \foreach \i in {1,...,\nv} {
+          \draw [fill, lightgray] (x\i) circle (2.25pt);
+          \draw (x\i) circle (2.25pt);
+        }
+      }
+      \def\showLines{
+        % Draw borders
+        \draw (q1)--(q2) -- (q3) -- (q4) -- (q5) -- (q6) -- cycle;
+        % Draw interior edges
+        \foreach \i in {1,...,\nv} {
+          \draw (q\i) -- (q0);
+        }
+      }
+      \def\showTriangles{
+        \node at ($ (q6)!.5!(q1) $) [label=-45:${T_6}$] {};
+        \node at ($ (q1)!.5!(q2) $) [label=0:${T_1}$] {};
+        \node at ($ (q2)!.5!(q3) $) [label=90:${T_2}$] {};
+        \node at ($ (q3)!.5!(q4) $) [label=135:${T_3}$] {};
+        \node at ($ (q4)!.5!(q5) $) [label=180:${T_4}$] {};
+        \node at ($ (q5)!.5!(q6) $) [label=-45:${T_5}$] {};
+      }
+      \vertices
+      \xPoints
+      \showPoints
+      \showLines
+      \showTriangles
+    \end{tikzpicture}
+  }
+  \newcommand{\macroelemE}{
+    \begin{tikzpicture}
+      \def\nv{6}
+      \def\ix{1.75}\def\iy{0.75}
+      \def\vertices{
+        \coordinate [label=-45:$q_0$] (q0) at (0,0);
+        \coordinate [label=right: $q_1$] (q1) at (\ix,\iy);
+        \coordinate [label=+45: $q_2$] (q2) at (0,2*\iy);
+        \coordinate [label=+135: $q_3$] (q3) at  (-\ix,\iy);
+        \coordinate [label=+135: $q_4$] (q4) at   (-\ix,-\iy);
+        \coordinate [label=225: $q_5$] (q5) at (0,-2*\iy);
+        \coordinate [label=-45: $q_6$] (q6) at (\ix,-\iy);
+      }
+      \def\xPoints {
+        \coordinate (x1) at ($ (q1)!.5!(q0) $);
+        \coordinate (x2) at ($ (q2)!.5!(q0) $);
+        \coordinate (x3) at ($ (q3)!.5!(q0) $);
+        \coordinate (x4) at ($ (q4)!.5!(q0) $);
+        \coordinate (x5) at ($ (q5)!.5!(q0) $);
+        \coordinate (x6) at ($ (q6)!.5!(q0) $);
+      }
+      \def\showPoints{
+        \foreach \i in {0,...,\nv}
+        \fill [black] (q\i) circle (3pt);
+        \foreach \i in {1,...,\nv} {
+          \draw [fill, lightgray] (x\i) circle (2.25pt);
+          \draw (x\i) circle (2.25pt);
+        }
+      }
+      \def\showLines{
+        % Draw borders
+        \draw (q1)--(q2) -- (q3) -- (q4) -- (q5) -- (q6) -- cycle;
+        % Draw interior edges
+        \foreach \i in {1,...,\nv} {
+          \draw (q\i) -- (q0);
+        }
+      }
+      \def\showTriangles{
+        \node at ($ (q6)!.5!(q1) $) [label=-45:${T_1}$] {};
+        \node at ($ (q1)!.5!(q2) $) [label=0:${T_2}$] {};
+        \node at ($ (q2)!.5!(q3) $) [label=90:${T_3}$] {};
+        \node at ($ (q3)!.5!(q4) $) [label=135:${T_4}$] {};
+        \node at ($ (q4)!.5!(q5) $) [label=180:${T_5}$] {};
+        \node at ($ (q5)!.5!(q6) $) [label=-45:${T_6}$] {};
+      }
+      \vertices
+      \xPoints
+      \showPoints
+      \showLines
+      \showTriangles
+    \end{tikzpicture}
+  }
 
 
 % \begin{frame}{{\amarillo Not regular} \FEthreeSpacesP211 macroelements}
@@ -1864,143 +1358,165 @@ Two Inf-Sup conditions are suggested:
 %   \end{columns}
 % \end{frame}
 
-% \begin{frame}{\myframedAlert{Stokes \FEthreeSpacesP{2}11}
-%     lid-driven cavity test}
-%   \begin{center}
-%     \begin{tabular}{rr}
-%       \pgfimage[width=0.2\linewidth]{\imgdir/unstructured-mesh}
-%       &
-%       \pgfimage[width=0.2\linewidth]{\imgdir/structured-mesh}
-%       \\[-0.2em]
-%       \pgfimage[width=0.458\linewidth]{\imgdir/21-1-p-uns}
-%       &
-%       \pgfimage[width=0.45\linewidth]{\imgdir/21-1-p-str}
-%       \\
-%       \scriptsize Unstructured mesh pressure & \scriptsize Structured mesh pressure
-%     \end{tabular}
-%     \par\mbox{}
-%   \end{center}
-% \end{frame}
+\begin{frame}{\myframedAlert{Stokes \FEthreeSpacesP{2}11}
+    lid-driven cavity test}
+  \begin{center}
+    \begin{tabular}{rr}
+      \pgfimage[width=0.2\linewidth]{\imgdir/unstruct-mesh}
+      &
+      \pgfimage[width=0.2\linewidth]{\imgdir/struct-mesh}
+      \\[-0.2em]
+      \pgfimage[width=0.458\linewidth]{\imgdir/21-1-p-uns}
+      &
+      \pgfimage[width=0.45\linewidth]{\imgdir/21-1-p-str}
+      \\
+      \scriptsize Unstructured mesh pressure \quad & \scriptsize Structured mesh pressure\quad
+    \end{tabular}
+    \par\mbox{}
+  \end{center}
+\end{frame}
 
-% \begin{frame}{Stokes \FEthreeSpacesP{2}11 error orders}
-%   \small
-%   \begin{columns}
-%     % - - - - - - - - - - - - -
-%     \column{0.50\linewidth}
-%     % - - - - - - - - - - - - -
-%     Orders in energy norms:
-%     \begin{itemize}
-%     \item<2-> \myframed<2>{$\OO(h^{\mathbf{2}})$ for $\uu$ and $\vv$
-%         in $\|\cdot\|_{L^2}$}
-%           \tikz[na] \coordinate(uv-l2-error-L);
-%     \item<3-> \myframed<3>{$\OO(h^{\mathbf{1}})$ for $\uu$ and $\vv$
-%         in $\|\cdot\|_{H^1}$}
-%           \tikz[na] \coordinate(uv-h1-error-L);
-%         \item<4-> \myframed<4>{$\OO(h^{\mathbf{1}})$ for $\pp$ in $\|\cdot\|_{L^2}$}
-%           \tikz[na] \coordinate(p-l2-error-L);
-%       \par\medskip
-%     % \item Note: Order $\OO(h^3)$ not reached for $\uu\sim\P2$ due to
-%     %   influence of $\vv\sim\P1$
-%     \end{itemize}
-%     % - - - - - - - - - - - - -
-%     \column{0.49\linewidth}
-%     % - - - - - - - - - - - - -
-%    \begin{tikzpicture}
-%       \node [inner sep=0pt,above right]{
-%         \pgfimage[width=\linewidth]{\imgdir/21-1-errors-loglog}
-%       };
-%       \path (2,2.1) coordinate (u-error-img);
-%       \path (2,3) coordinate (v-h1z-error-img);
-%       \path (2,1.8) coordinate (v-l2-error-img);
-%     \end{tikzpicture}
-%   \end{columns}
-%   % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-%   \vspace{-1em}
-%   \begin{overprint}
-%     \begin{center}
-%       \scriptsize
-%       \begin{tabular}{l@{\qquad}r@{\qquad}rrrrrr}
-%         \toprule
-%         $h_{\max}$ & & $2^{-3}$ & $2^{-4}$ & $2^{-5}$ & $2^{-6}$ & $2^{-7}$
-%         & $2^{-8}$
-%         \\ \otoprule
-%         \multirow{2}*{$\uu$}
-%         & $\|u-u_h\|_{L^2}$ &
-%         \rowalert{2} {2.185  }{ 2.291  }{ 2.008} {
-%           \tikz[na]  \node(u-l2-error-R) {2.029  };
-%         }{2.031  }{ 2.066}
-%         \\ \cmidrule{2-8}
-%         & $\|u-u_h\|_{H^1_0}$ &
-%         \rowalert{3} {1.758  }{ 1.774  }{ 0.986} {
-%           \tikz[na]  \node(u-h1-error-R) {1.212};
-%         }{1.067  }{ 1.237}
-%         \\ \midrule
-%         \multirow{2}*{$\vv$}
-%         & $\|v-v_h\|_{L^2}$ &
-%         \rowalert{2} {2.056  }{ 2.116  }{ 2.028} { \tikz[na]
-%           \node(v-l2-error-R) {1.980};  }{ 2.068  }{ 2.040}
-%         \\ \cmidrule{2-8}
-%         & $\|\dz v-\dz v_h\|_{L_2}$ &
-%         \rowalert{3} {0.977  }{ 1.044  }{ 1.017}{ \tikz[na]
-%           \node(v-h1z-error-R){0.990}; }{1.022  }{ 1.019}
-%         \\ \midrule
-%         $\pp$
-%         & $\|p-p_h\|_{L^2}$ &
-%         \rowalert{4} {1.070  }{ 2.101  }{ 0.798}{ \tikz[na]
-%           \node(p-l2-error-R){1.419};}{0.599  }{ 0.820}
-%         \\ \bottomrule
-%       \end{tabular}
-%     \end{center}
-%   \end{overprint}
-%   \begin{tikzpicture}[overlay]
-%     \path<2>[myarrow]
-%     (u-l2-error-R) edge [in=0,out=155] (uv-l2-error-L);
-%     % \path<2>[myarrow2]
-%     % (u-error-L) edge [out=0, in=170] (u-error-img);
-%     %
-%     \path<2>[myarrow]
-%     (v-l2-error-R) edge [in=0,out=155] (uv-l2-error-L);
-%     % \path<3>[myarrow2]
-%     % (v-h1z-error-L) edge [out=0, in=170] (v-h1z-error-img);
-%     % ------------------------------------------------------
-%     \path<3>[myarrow]
-%     (u-h1-error-R) edge [out=155, in=0] (uv-h1-error-L);
-%     %
-%     % \path<2>[myarrow2]
-%     % (u-error-L) edge [out=0, in=170] (u-error-img);
-%     \path<3>[myarrow]
-%     (v-h1z-error-R) edge [out=155, in=0] (uv-h1-error-L);
-%     % \path<3>[myarrow2]
-%     % (v-h1z-error-L) edge [out=0, in=170] (v-h1z-error-img);
-%     % ------------------------------------------------------
-%     \path<4>[myarrow]
-%     (p-l2-error-R) edge [out=155, in=0] (p-l2-error-L);
-%     % \path<4>[myarrow2]
-%     % (p-l2-error-L) edge [out=0, in=155] (v-l2-error-img);
-%   \end{tikzpicture}
-% \end{frame}
+\begin{frame}{Stokes \FEthreeSpacesP{2}11 error orders}
+  \small
+  \begin{columns}
+    % - - - - - - - - - - - - -
+    \column{0.50\linewidth}
+    % - - - - - - - - - - - - -
+    Orders in energy norms:
+    \begin{itemize}
+    \item<2-> \myframed<2>{$\OO(h^{\mathbf{2}})$ for $\uu$ and $\vv$
+        in $\|\cdot\|_{L^2}$}
+          \tikz[na] \coordinate(uv-l2-error-L);
+    \item<3-> \myframed<3>{$\OO(h^{\mathbf{1}})$ for $\uu$ and $\vv$
+        in $\|\cdot\|_{H^1}$}
+          \tikz[na] \coordinate(uv-h1-error-L);
+        \item<4-> \myframed<4>{$\OO(h^{\mathbf{1}})$ for $\pp$ in $\|\cdot\|_{L^2}$}
+          \tikz[na] \coordinate(p-l2-error-L);
+      \par\medskip
+    % \item Note: Order $\OO(h^3)$ not reached for $\uu\sim\P2$ due to
+    %   influence of $\vv\sim\P1$
+    \end{itemize}
+    % - - - - - - - - - - - - -
+    \column{0.49\linewidth}
+    % - - - - - - - - - - - - -
+   \begin{tikzpicture}
+      \node [inner sep=0pt,above right]{
+        \pgfimage[width=\linewidth]{\imgdir/21-1-errors-loglog}
+      };
+      \path (2,2.1) coordinate (u-error-img);
+      \path (2,3) coordinate (v-h1z-error-img);
+      \path (2,1.8) coordinate (v-l2-error-img);
+    \end{tikzpicture}
+  \end{columns}
+  % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  \vspace{-1em}
+  \begin{overprint}
+    \begin{center}
+      \scriptsize
+      \begin{tabular}{l@{\qquad}r@{\qquad}rrrrrr}
+        \toprule
+        $h_{\max}$ & & $2^{-3}$ & $2^{-4}$ & $2^{-5}$ & $2^{-6}$ & $2^{-7}$
+        & $2^{-8}$
+        \\ \otoprule
+        \multirow{2}*{$\uu$}
+        & $\|u-u_h\|_{L^2}$ &
+        \rowalert{2} {2.185  }{ 2.291  }{ 2.008} {
+          \tikz[na]  \node(u-l2-error-R) {2.029  };
+        }{2.031  }{ 2.066}
+        \\ \cmidrule{2-8}
+        & $\|u-u_h\|_{H^1_0}$ &
+        \rowalert{3} {1.758  }{ 1.774  }{ 0.986} {
+          \tikz[na]  \node(u-h1-error-R) {1.212};
+        }{1.067  }{ 1.237}
+        \\ \midrule
+        \multirow{2}*{$\vv$}
+        & $\|v-v_h\|_{L^2}$ &
+        \rowalert{2} {2.056  }{ 2.116  }{ 2.028} { \tikz[na]
+          \node(v-l2-error-R) {1.980};  }{ 2.068  }{ 2.040}
+        \\ \cmidrule{2-8}
+        & $\|\dz v-\dz v_h\|_{L_2}$ &
+        \rowalert{3} {0.977  }{ 1.044  }{ 1.017}{ \tikz[na]
+          \node(v-h1z-error-R){0.990}; }{1.022  }{ 1.019}
+        \\ \midrule
+        $\pp$
+        & $\|p-p_h\|_{L^2}$ &
+        \rowalert{4} {1.070  }{ 2.101  }{ 0.798}{ \tikz[na]
+          \node(p-l2-error-R){1.419};}{0.599  }{ 0.820}
+        \\ \bottomrule
+      \end{tabular}
+    \end{center}
+  \end{overprint}
+  \begin{tikzpicture}[overlay]
+    \path<2>[myarrow]
+    (u-l2-error-R) edge [in=0,out=155] (uv-l2-error-L);
+    % \path<2>[myarrow2]
+    % (u-error-L) edge [out=0, in=170] (u-error-img);
+    %
+    \path<2>[myarrow]
+    (v-l2-error-R) edge [in=0,out=155] (uv-l2-error-L);
+    % \path<3>[myarrow2]
+    % (v-h1z-error-L) edge [out=0, in=170] (v-h1z-error-img);
+    % ------------------------------------------------------
+    \path<3>[myarrow]
+    (u-h1-error-R) edge [out=155, in=0] (uv-h1-error-L);
+    %
+    % \path<2>[myarrow2]
+    % (u-error-L) edge [out=0, in=170] (u-error-img);
+    \path<3>[myarrow]
+    (v-h1z-error-R) edge [out=155, in=0] (uv-h1-error-L);
+    % \path<3>[myarrow2]
+    % (v-h1z-error-L) edge [out=0, in=170] (v-h1z-error-img);
+    % ------------------------------------------------------
+    \path<4>[myarrow]
+    (p-l2-error-R) edge [out=155, in=0] (p-l2-error-L);
+    % \path<4>[myarrow2]
+    % (p-l2-error-L) edge [out=0, in=155] (v-l2-error-img);
+  \end{tikzpicture}
+\end{frame}
 
-% \begin{frame}{3D numerical cavity tests}
-%   \textbf{Structured mesh}
-%   \begin{tabular}{ccc}
-%     \pgfimage[width=0.3\linewidth]{\imgdir/222-1-str}
-%     &
-%     \pgfimage[width=0.3\linewidth]{\imgdir/221-1-str}
-%     &
-%     \pgfimage[width=0.3\linewidth]{\imgdir/211-1-str}
-%   \end{tabular}
-%   \textbf{Unstructured mesh}
-%   \begin{tabular}{ccc}
-%     \pgfimage[width=0.3\linewidth]{\imgdir/222-1-uns}
-%     &
-%     \pgfimage[width=0.3\linewidth]{\imgdir/221-1-uns}
-%     &
-%     \pgfimage[width=0.3\linewidth]{\imgdir/211-1-uns}
-%     \\[-0.3em]
-%     \small\FEfourSpacesP2221 & \small\FEfourSpacesP2211 &
-%     \small\FEfourSpacesP2111
-%   \end{tabular}
-% \end{frame}
+
+\begin{frame}{3D finite elements}
+
+  Similar results are shown in \textbf{3D} when one delete \textbf{bubbles}...
+  \begin{itemize}\itemsep0.7em
+  \item \FEfourSpacesP{1,b}{1,b}{1}{1}
+  \item \FEfourSpacesP{1,b}{1}{1}{1}
+  \end{itemize}
+
+  \medskip
+  And also when one delete degrees of freedom in \textbf{3D Taylor-Hood} elements
+  \begin{itemize}\itemsep0.7em
+  \item  \FEfourSpacesP{2}{2}{1}{1}
+  \item \FEfourSpacesP{2}{1}{1}{1}
+  \end{itemize}
+  \bigskip
+  \textbf{Proof}: Similar 2D but quite technical in some cases \hfill $\square$
+\end{frame}
+
+\begin{frame}{3D tests (lid-driven cavity tests)}
+
+  \textbf{Structured mesh}
+  \begin{tabular}{ccc}
+    \pgfimage[width=0.3\linewidth]{\imgdir/222-1-str}
+    &
+    \pgfimage[width=0.3\linewidth]{\imgdir/221-1-str}
+    &
+    \pgfimage[width=0.3\linewidth]{\imgdir/211-1-str}
+  \end{tabular}
+  \textbf{Unstructured mesh}
+  \begin{tabular}{ccc}
+    \pgfimage[width=0.3\linewidth]{\imgdir/222-1-uns}
+    &
+    \pgfimage[width=0.3\linewidth]{\imgdir/221-1-uns}
+    &
+    \pgfimage[width=0.3\linewidth]{\imgdir/211-1-uns}
+    \\[-0.3em]
+    \small\FEfourSpacesP2221 & \small\FEfourSpacesP2211 &
+    \small\FEfourSpacesP2111
+  \end{tabular}
+\end{frame}
+
+
 
 %%% Local Variables:
 %%% coding: utf-8
