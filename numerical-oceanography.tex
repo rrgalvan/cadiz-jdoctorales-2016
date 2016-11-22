@@ -64,61 +64,6 @@
 \usepackage{tabularx}
 \usepackage{array, multirow, booktabs, rotating} % booktabs: toprule, midrule...
 
-% Define a special style at begining of sections
-\newcommand{\SetEmptyBackground}{
-  \setbeamertemplate{background}{}
-  \setbeamertemplate{footline}[default]
-}
-\newcommand{\SetDefaultBackground}{
-  \setbeamertemplate{background}
-  {\includegraphics[width=\paperwidth,height=\paperheight]{slide_bg}}
-  \setbeamertemplate{footline}[PHDtheme]
-}
-\newenvironment{sectionframe}{%
-  \SetEmptyBackground\begin{frame}
-%    \par\noindent\structure{\rule{\linewidth}{1pt}}\par
-%    \vskip+0.6em
-    \vskip1.6em
-    Section \thesection.  \itshape\insertsection
-    \vskip-0.7em
-    \par\noindent\structure{\rule{\linewidth}{1pt}}\par
-  }{%
-  \end{frame}\SetDefaultBackground}
-
-\newenvironment{smallblock}[1]{%
-  % Block with horizontal top title
-  \begin{block}{\small #1}
-    \vspace{-0.9\baselineskip}
-    \small
-  }{\vspace{-1.2\baselineskip}\end{block}}
-
-\newenvironment{smallblockTurn}[1]{%
-  \begin{block}{}
-    \vspace{-0.4\baselineskip}
-    \small
-    \begin{tabular}{@{}l|>{$}r<{$}>{$}l<{$}@{}}
-      \multirow{3}{*}{
-        \begin{turn}{40}
-          #1
-        \end{turn}}&
-      \begin{minipage}{0.8\linewidth}
-      }{\vspace{-1.0\baselineskip}%
-      \end{minipage}\end{tabular}\end{block}}
-
-\newenvironment{BlockNoTitle}{%
-  \HideBlockTitle%
-  \begin{block}{}}{%
-  \end{block}%
-  \ResetBlockTitle}
-
-\newenvironment{BoxWithVerticalLabel}[2]{%
-%  \begin{tabular}{@{\quad}r@{ }l@{}}
-  \mbox{}\quad
-  \begin{rotate}{90}
-    \color{black}\small\fbox{#1}
-  \end{rotate}}%&}
-{}
-%{\end{tabular}}
 
 \newcommand{\heatProblem}{(Heat-Problem)\xspace}
 \newcommand{\poissonProblem}{(Poisson-Problem)\xspace}
@@ -208,9 +153,11 @@
 \setbeamertemplate{bibliography entry note}{}
 
 \includeonly{
-  % sec-intro
-  % ,
+  sec-intro
+  ,
   sec-ocean-models
+  ,
+  sec-paper1
  }
 
 %\includeonly{sec-stokes}
@@ -299,11 +246,12 @@
 \end{sectionframe}
 \include{sec-ocean-models}
 
-% %%,---------------------------------------------------------------------
-% %%| Hydrostatic Stokes Stability
-% %%`---------------------------------------------------------------------
-% \section{Hydrostatic Stokes Stability}
-% \include{sec-hydrstokes-stability}
+%%,---------------------------------------------------------------------
+%%| Stokes Hydrostatic Stable FE combinations}
+%%`---------------------------------------------------------------------
+\section{New Stokes FE which are Hydrostatic--Stable}
+\label{sec:hydr-stable-fe}
+\include{sec-paper1}
 
 % %%,---------------------------------------------------------------------
 % %%| Stokes with Unequal FE for Velocity

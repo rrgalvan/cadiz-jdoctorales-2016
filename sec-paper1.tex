@@ -1,0 +1,2010 @@
+
+\begin{sectionframe}
+  \vfill
+  \begin{abstract}
+    \begin{enumerate}
+    \item Analysis of \textbf{Hydrostatic Stokes} equations show that
+      they are \alert{not stable for ``classical'' Stokes LBB-stable FE
+      combinations}. The reason is:
+      \begin{itemize}
+      \item An additional inf-sup condition is required
+      \item It imposes richer FE spaces for horizontal velocity than
+        vertical one
+        % \begin{enumerate}
+        % \item Usual Stokes LBB inf-sup condition
+        % \item An additional ``hydrostatic'' inf-sup condition
+        % \end{enumerate}
+      \end{itemize}
+    \item Stability analysis of \alert{classical Stokes} equations when
+      unequal FE spaces are used for each component of the  velocity
+    \item We provide some \textbf{new elements} which are
+      \alert{stable for Hydrostatic Stokes} Equations
+    \end{enumerate}
+  \end{abstract}
+\end{sectionframe}
+
+% \subsection{Stability of Hydrostatic Stokes}
+% %----------------------------------------------------------------------
+
+% \begin{sectionframe}
+%   \vfill
+%   \begin{abstract}
+%     \begin{enumerate}
+%     \item<alert@*> Analysis of \textbf{Hydrostatic Stokes} equations.
+%       They are \alert{not stable for ``classical'' Stokes LBB-stable FE
+%       combinations}. The reason is:
+%       \begin{itemize}
+%       \item An additional inf-sup condition is required
+%       \item It imposes richer FE spaces for horizontal velocity than
+%         vertical one
+%         % \begin{enumerate}
+%         % \item Usual Stokes LBB inf-sup condition
+%         % \item An additional ``hydrostatic'' inf-sup condition
+%         % \end{enumerate}
+%       \end{itemize}
+%       \pgfsetfillopacity{0.33}
+%     \item {\textbf{Stability analysis of classical Stokes} equations when
+%       unequal FE spaces are used for each component of the  velocity}
+%     \item We provide some \textbf{new elements which are
+%       stable} for the Hydrostatic Stokes Equations
+%     \end{enumerate}
+%   \end{abstract}
+% \end{sectionframe}
+
+\begin{frame}{Numerical Experiment}
+  \textbf{Stable FE approximations for Stokes} equations in a domain
+  $$\alert{\Omega_{\epsilon}} = (0,1)\times(0,\alert{\varepsilon}) \subset \Rset^2$$
+  \begin{itemize}
+  \item Standard \structure{lid-driven cavity test}: Boundary conditions\dots
+    \begin{itemize}
+    \item $u=1$, $v=0$ on $\Gamma_S$ (top boundary)
+    \item $u=0$, $v=0$ on other boundaries
+    \end{itemize}
+  \item What happens if \structure{$\varepsilon \to 0$}? \hfill Test:
+    $\varepsilon=1,10^{-1},10^{-2},\dots,10^{-5}$).
+  \end{itemize}
+  \textbf{Equivalently}: solving \aniStokes in the \textbf{unit square}
+  $$\alert{\Omega} = (0,1)\times(0,1) \subset \Rset^2$$
+  \vspace{-1.5em}
+  \begin{BlockNoTitle}
+    \begin{tabular}{@{}l|>{$}r<{$}>{$}l<{$}@{}}
+      \multirow{3}{*}{
+        \begin{turn}{30}
+          \small\aniStokes
+        \end{turn}
+        }
+        &
+        - \Delta u + \gradx \pp &= 0 \quad \text{ in } \Omega
+        \\[0.2em]&
+        -\varepsilon^2
+        \Delta v + \dz \pp &= 0 \quad \text{ in } \Omega
+        \\[0.2em]&
+        \divx u + \dz\vv &= 0 \quad \text{ in } \Omega
+      \vspace{-1.4\baselineskip}
+    \end{tabular}
+  \end{BlockNoTitle}
+\end{frame}
+
+\begin{frame}{Usual FE are not valid for \aniNS when $\varepsilon\to 0$}
+  \vspace*{0.25em}
+  \begin{itemize}\itemsep0.33em
+  \item Example: \P2-\P1 cavity test when $\varepsilon\to 0$
+    \hfill{\small $\varepsilon=1,...,10^{-5}$)}
+  \item \myframed{\textbf{Instabilities} when $\varepsilon\lesssim
+      10^{-3}$ \hspace{5.2em}..due to vertical velocity}
+    \note{Instabilities are due to anisotropy in domain (or in equations)}
+  \end{itemize}
+  \vspace*{0.25em}
+  \begin{columns}
+    ~\hspace{2em}
+    \column{0.6\linewidth}
+    \PlayVideoWithLabel[0.9\linewidth][0.85\linewidth][Streamlines]{%
+      video/eps-to-zero-P2-P1-streamlines-20s.avi}
+    \column{0.4\linewidth}
+    \centering\PlayVideoWithLabel[0.62\linewidth][0.62\linewidth][Horizontal
+    \ $\uu$]{%
+      video/eps-to-zero-P2-P1-u-20s.avi}
+    \\[0.3em]
+%    \par\vskip-0.62em
+    \centering\PlayVideoWithLabel[0.62\linewidth][0.62\linewidth][Vertical
+    \ $\vv$]{%
+      video/eps-to-zero-P2-P1-v-20s.avi}
+    \end{columns}
+  % \begin{center}
+  %   \PlayVideoWithLabel[0.5\linewidth][0.5\linewidth][Streamlines]
+  %   {video/eps-to-zero-P2-P1-streamlines.avi}
+  % \end{center}
+  \begin{flushright}
+  \end{flushright}
+\end{frame}
+
+
+\begin{frame}{The linear stationary \textit{Hydrostatic Stokes} problem}
+\framesubtitle{A first approach}
+
+\alert{\textbf{Target: to analyze previous instability}}
+
+\begin{itemize}\itemsep0.66em
+\item We attack the most unfavorable case: $\varepsilon=0$ (linear,
+  steady, in first sections)
+
+\item Let us define the spaces (which reflect \textit{boundary conditions}):
+  \begin{equation*}
+    \UU=\Uspace,\quad \VV=\Vspace,\quad \PP=\Pspace.
+    \label{eq:spaces}
+  \end{equation*}
+\item And consider the (linear steady) hydrostatic
+  Stokes problem:%
+  \note{See that it's the kind of problem that arises when
+    performing time discretizations of \hydNS}%
+  % (``adequate spaces'') such that: = \Uspace\times
+  % \Vspace\times\Pspace$ s.t.
+  \begin{align*}
+    &\text{Find } (\uu,v,p) \in U\times V \times P,
+    \\
+%  \qquad\qquad
+  &\text{\hydStokes}
+  \left\{
+    \begin{aligned}
+      - \visc_\xx\Delta\uu + \gradx\pp &= \ff_\xx &
+      \begin{overprint}
+        \onslide<2> \llaveizq{
+          \alert{$\uu$: only primal variable}\\
+          \alert{$\pp, \vv$: Lagrange multipliers}}
+        \onslide<3>$\leftarrow \times\ \alert{\bar \uu \in \Uspace}$
+      \end{overprint}
+      \\ \dz\pp & =0 &
+      \begin{overprint}
+        \onslide<2>$\leftarrow \alert{\text{2nd. restriction}}$
+        \onslide<3>$\leftarrow \times\ \alert{\bar v \in \Vspace}$
+      \end{overprint}
+      \\[0.1em]
+      \divx\uu + \dz\vv &= 0 &
+      \begin{overprint}
+        \onslide<2>$\leftarrow \alert{\text{1st. restriction}}$
+        \onslide<3>$\leftarrow \times \ \alert{\bar p \in \Pspace}$
+      \end{overprint}
+      \\
+      +\ &\text{b. c.}
+    \end{aligned}
+  \right.
+\end{align*}
+\end{itemize}
+\end{frame}
+
+
+
+\begin{frame}{Analysis of the continuous problem}
+% Find $(\uu,v,p) \in U\times V \times P =
+% \Uspace\times\Vspace\times\Pspace$,
+Weak formulation:
+\begin{equation*}
+  \left\{
+    \begin{aligned}
+      \visc_\xx\big(\grad u,\grad\bu\big)
+      -\big(\divx\bu, p\big) &= \big(\ff_\xx,\bu\big) && \forall
+      \bu\in \UU=\Uspace,
+      \\
+      \big(\divx \uu + \dz v,\bp\big) & \alert<2>{= 0} &&
+      \forall\bp\in \PP=\Pspace
+      \\
+      \big(\dz \bv, p\big) & =0 &&
+      \forall\bv\in \VV=\Vspace
+    \end{aligned}
+  \right.
+\end{equation*}
+\pause
+Two Inf-Sup conditions are suggested:
+\begin{alignat*}{4}
+  \label{eq:ISp}
+  \tag*{\ensuremath{(IS)^\PP}\xspace}
+  &\quad&
+  \sup_{0\neq(\uu,\vv)\in \UU \times \VV}
+  \frac{(\div(\uu,\vv),\pp)}{\|\grad \uu,\dz \vv\|}
+  &\ge \ConstISp \|\pp\|
+  &\quad&
+  \forall \pp \in \PP,
+  \\
+  \label{eq:ISv}
+  \tag*{\ensuremath{(IS)^\VV}\xspace}
+  &\quad &
+  \sup_{0\neq \pp \in \PP}
+  \frac{(\dz \vv,\pp)}{\|\pp\|}
+  &\ge \ConstISv \|\dz\vv\|
+  &\quad&
+  \forall \vv\in \VV
+\end{alignat*}
+
+\begin{remark}
+  \begin{itemize}
+  \item \ISp: similar to Stokes LBB
+    inf-sup condition (weaker?)~\cite{Brezzi-Fortin:91}
+  \item \ISv: a new condition, first introduced by
+    \textbf{P.~Azerad}~\cite{Azerad:1994,Azerad:PhD:96}
+  \end{itemize}
+\end{remark}
+\bigskip~
+% \begin{equation*}
+%   \begin{aligned}
+%     \ISp\ & \alert<2>{
+%       \sup_{0\neq( \uu, v)\in U\times V}
+%       \frac{\big(\divx \uu +\dz v, p\big)}{||\grad \uu||_0 + ||\dz v||_0}
+%       \ge
+%       \beta_1 ||p||_0 \quad \forall p \in P
+%     }
+%     \\
+%     \uncover<3->{
+%       \ISv\ & \alert<3>{
+%         \sup_{0\neq p\in P}
+%         \frac{(\dz v, p)}{||p||_0}
+%         \ge
+%         \beta_2
+%         ||\dz v||_0 \quad \forall v \in V
+%       }
+%     }
+%   \end{aligned}
+% \end{equation*}
+\end{frame}
+
+\begin{frame}{Existence, uniqueness and energy estimates}
+
+  \begin{lemma}
+    \ISp and \ISv are satisfied
+  \end{lemma}
+  \textbf{Proof}:
+  \begin{itemize}
+  \item \ISp $\Leftarrow$ Stokes inf-sup.
+  \item \ISv for $v\in \Vspace$, take $p=\dz v\in \Pspace$
+  \end{itemize}
+
+
+  % Thanks \ISp and \ISv, we can provide an existence result,
+  % \textit{not based on the reduced formulation} of \hydStokes:
+
+\vfill
+
+\begin{theorem}
+  \begin{itemize}
+  \item There exists an unique weak solution $(\uu,v,p)\in
+    \UU\times\VV\times\PP$ of \hydStokes.
+  \item
+    Moreover, the following continuous dependence estimates hold:
+    \begin{equation*}
+      \label{eq:stability.estimates}
+      \begin{aligned}
+        ||\grad\uu||_0 \le ||\ff||_{-1}, && ||\dz\vv||_0 \le
+        \frac{1}{\beta_2}||\ff||_{-1}, && ||p||_0 \le \frac{2}
+        {\beta_1}||\ff||_{-1}
+      \end{aligned}
+    \end{equation*}
+  \end{itemize}
+  \label{theorem:1}
+\end{theorem}
+\end{frame}
+
+\SetEmptyBackground
+\begin{frame}
+  \begin{proof}[Proof (P. Azerad~\cite{Azerad:PhD:96})]
+    \begin{itemize}
+    \item \structure{\textit{Step 1}}.
+      Consider
+      $\XX=\UU\times\VV\times\PP$ and, for each
+      $\cc=(\uu,\vv,\pp)\in \XX$ and $\bc = (\bu, \bv, \bp)\in
+      \XX$, \textit{define the forms}:
+      \begin{align}
+        \AA(\cc,\bc) & = \product{\grad \uu, \grad\bu} -
+        \product{p,\div(\bu, \bv)} - \product{\div(\uu,v),\bp},
+        \label{eq:HSoperator}
+        \\
+        \LL(\cc) & = \langle f,\bu \rangle,
+        \label{eq:HSlinearform}
+      \end{align}
+      \begin{flushleft}
+        \color{PHDgray}{
+        \small \quad  $\hookrightarrow$ \textit{Notation}:
+        $(\cdot,\cdot) \equiv  L^2(\domain)$ product, \
+        $\langle\cdot,\cdot\rangle \equiv \UU^{-1}\times\UU$
+        }
+      duality.
+      \end{flushleft}
+
+      Then the weak formulation
+      \hydStokes\ can be written as:
+      \begin{equation}
+        \label{eq:HS.weak.formulation}
+        \text{Find}\ \cc\in \XX \quad\text{such that}\quad
+        \AA(\cc,\bc) = \LL(\bc),
+        \quad \forall \bc \in \XX.
+      \end{equation}
+
+    \item \structure{\textit{Step 2}}.
+      Then, \ISp + \ISv $\Rightarrow$ ``\textit{generalized coercivity}'' for
+      $\AA$ $\Rightarrow$ existence, uniqueness and bounds.
+    \end{itemize}
+  \end{proof}
+\end{frame}
+\SetDefaultBackground
+
+
+\SetEmptyBackground
+\begin{frame}
+  \begin{proof}[A new proof  (via the \emph{saddle point}
+     framework)]
+%  Saddle point theory
+  \begin{itemize}
+  \item Let $\WW=\UU\times\VV$ endowed with
+    $\|\ww\|_\WW=\|\nabla\uu,\dz\vv\|$
+  \item Hydrostatic Stokes Problem $\equiv$ find $\ww \in \WW$
+    and $\pp\in\PP$ such that
+    \begin{align}
+      \label{eq:saddle.point.proof.1}
+      a(\ww,\bw) + b(\bw, p) &= \langle (\ff,0)^t,\bw \rangle_{\WW',\WW}  \quad\forall \bw \in \WW,
+      \\
+      \label{eq:saddle.point.proof.2}
+      b(\ww,\bp) &=0  \quad\forall \bp\in \PP,
+    \end{align}
+    where, for each $\ww=(\uu,v)$ and $\bw = (\bu,\bv) \in \WW$:
+    \begin{equation*}
+      \begin{aligned}
+        &a:\WW \times \WW \to \Rset, && a(\ww,\bw ) = \product{\grad
+          \uu, \grad\bu} \leftarrow\text{\alert{\bf\itshape Not
+            coercive} on } \UU\times\VV\exclamation
+        \\
+        &b:\WW \times \PP \to \Rset, && b(\ww,p) = -\product{\divx\uu
+          + \dz\vv, p}
+      \end{aligned}
+    \end{equation*}
+    \item But for well-posedness
+      of~(\ref{eq:saddle.point.proof.1})--(\ref{eq:saddle.point.proof.2})
+      it is sufficient$^*$ (see~\cite{Brezzi-Fortin:91}):
+      \vspace{0.4em}
+      \begin{enumerate}\itemsep0.4em
+      \item $\displaystyle
+          \sup_{\ww\in \WW}
+          \frac{b(\ww,p)}{||\ww||_\WW} \ge \beta_0 ||p||_{P/\ker B^t},
+          \quad\forall\pp\in\PP$
+          \hfill $\leftarrow$ \ISp \qquad~
+        \item $a(\cdot,\cdot)$ is \alert{\textbf{\itshape coercive on} $\ker B$}
+          \hfill
+        $\leftarrow$ \ISv \qquad~
+      \end{enumerate}
+    \end{itemize}
+    \scriptsize{$^*$\color{PHDgrayB}{where $B: \WW \to \PP',\ \product{B\ww,p} =
+          b(\ww,p) =\product{\ww,B^t p}$}}%
+\end{proof}
+\end{frame}
+\SetDefaultBackground
+
+\begin{frame}{The discrete problem}
+  \begin{itemize}
+  \item Let $\Uh$, $\Vh$, $\Ph$
+    be conforming $\Uspace$, $\Vspace$, $\Pspace$ \
+    finite element spaces
+    on a (possibly unstructured) mesh ${\cal T}_h$
+  \item Discrete problem: find $(\uu,v,p) \in \Uh\times \Vh \times \Ph$
+    such that
+\begin{equation*}
+  \hydStokesDiscr
+  \left\{
+    \begin{aligned}
+      \visc_\xx\product{\grad \uu,\grad\bu}
+      -\product{\divx\bu, p} &= \product{f_\xx,\bu} && \forall
+      \bu\in U_h,
+      \\
+      \product{\dz \bv, p} & =0 &&
+      \forall\bv\in V_h,
+      \\
+      \product{\divx \uu + \dz v,\bp} & = 0 &&
+      \forall\bp\in P_h.
+    \end{aligned}
+  \right.
+\end{equation*}
+
+  \item Let us define the discrete inf-sup conditions:
+\begin{alignat*}{4}
+  \tag*{\ensuremath{(IS)^\PP_h}\xspace}
+  \label{eq:ISph}
+  &\quad&
+  \sup_{0\neq(\uh,\vh)\in \Uh \times \Vh}
+  \frac{(\div(\uh,\vh),\ph)}{\|\grad \uh,\dz \vh\|}
+  &\ge \ConstISph \|\ph\|
+  &\quad&
+  \forall \ph \in \Ph,
+  \\
+  \tag*{\ensuremath{(IS)^\VV_h}\xspace}
+  \label{eq:ISvh}
+  &\quad &
+  \sup_{0\neq \ph \in \Ph}
+  \frac{(\ph,\dz \vh)}{\|\ph\|}
+  &\ge \ConstISvh \|\dz\vh\|
+  &\quad&
+  \forall \vh\in \Vh,
+\end{alignat*}
+%    \begin{equation*}
+%   \begin{aligned}
+%     \ISph\ &
+%       \sup_{0\neq( \uu, v)\in U_h\times V_h}
+%       \frac{\product{\divx \uu +\dz v, p}}{||\grad \uu||_0 + ||\dz v||_0}
+%       \ge
+%       \gamma_1 ||p||_0 \quad \forall p \in P_h
+%     \\
+%       \ISvh\ &
+%         \sup_{0\neq p\in P_h}
+%         \frac{\product{\dz v, p}}{||p||_0}
+%         \ge
+%         \gamma_2
+%         ||\dz v||_0 \quad \forall v \in V_h
+%   \end{aligned}
+% \end{equation*}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Existence and uniqueness of the discrete problem}
+  \begin{theorem}
+    The following conditions are equivalent:
+    \begin{enumerate}
+    \item The spaces $\Uh$, $\Vh$, $\Ph$ verify \ISph and \ISvh.
+    \item $\boldsymbol{\exists!} \ (\uu,v,p)\in
+      U_h\times V_h \times P_h \ \text{solution of \hydStokesDiscr}$.
+    \end{enumerate}
+    \medskip
+    Furthermore, in this case: \vspace{-0.8em}
+  \begin{equation*}
+    \begin{aligned}
+      ||\grad \uu||_0 \le C ||f||_{-1}, &&
+      ||\dz v||_0  \le \frac C {\gamma_2}||f||_{-1}, &&
+      ||p||_0  \le \frac{2C} {\gamma_1}||f||_{-1}
+    \end{aligned}
+  \end{equation*}
+  \end{theorem}
+  \medskip
+  {\gris \textbf{Proof}: Similar to the continuous case. \hfill $\square$}
+  \medskip
+  \vfill
+  \begin{block}{Hydrostatic stabilty}
+    \begin{itemize}
+    \item We say \FEthreeSpaces\Uh\Vh\Ph\xspace is \structure{\em
+        hydrostatic stable} if both \ISph and \ISvh hold
+    \item Hence \textbf{hydrostatic stability is more restrictive}
+      than usual Stokes stability (where only ``$\ISph$''
+      is necessary)
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+\begin{frame}{A pragmatic sufficient condition for \ISph}
+
+  \begin{lemma}[\textbf{Sufficient} condition for \ISph]
+  \label{lemma:sufficient.condition.stokes.IS2}
+  Assume that there exists $\Vstokes\subset\Vh\cap H_0^1(\Omega)$ such
+  that the combination $\FEthreeSpaces{\Uh}{\Vstokes}{\Ph}$ is
+  \colorUnderLine[PHDyellow]{Stokes-stable}\xspace (or LBB-stable), that is
+    \begin{equation*}
+      \sup_{0\neq (\uh,\vh)\in\Uh\times\Vstokes}
+      \frac{(\div(\uh,\vh),\ph)}{||\grad\uh||_0+||\grad\vh||_0}
+      \ge C ||\ph||_0 \quad\forall\pp\in\Ph.
+    \end{equation*}
+    Then the combination \FEthreeSpaces\Uh\Vh\Ph satisfy \ISph.
+  \end{lemma}
+
+  \textbf{Proof}: It is straightforward \hfill $\square$
+
+  \begin{remark}[An open question]
+    Is this condition necessary?,
+    \\[0.3em]
+    I.e., is there any combination \FEthreeSpaces\Uh\Vh\Ph which
+    verifies \ISph and does not come from a Stokes-stable
+    combination?
+  \end{remark}
+\end{frame}
+
+\begin{frame}{Necessary conditions for hydrostatic stability}
+\begin{lemma}[\textbf{Necessary} conditions for \ISph and \ISvh]
+  \label{lemma:neccesary.conditions.IS1.and.IS2}
+  \begin{enumerate}
+  \item If $\ISph$ holds then \colorUnderLine[PHDyellow]{$\dim\Ph \le \dim\Uh + \dim\Vh$}.
+  \item If $\ISvh$ holds then \colorUnderLine[PHDyellow]{$\dim\Vh \le \dim\Ph$}.
+  \end{enumerate}
+\end{lemma}
+
+\begin{overprint}
+ \onslide<2>
+ \small \textbf{Proof}: Based on the analysis of $\ker{B^t}$ and a
+  dimensional study of the structure of the \textit{underlying
+    finite-dimensional linear system}. \hfill $\square$
+  \onslide<3>
+  \begin{corollary}
+    The following ``classical'' elements are
+    \colorUnderLine{\alert{\textbf{not stable}} for~\hydStokes}:
+    \begin{enumerate}\itemsep0.33em
+    \item \myframed{Taylor-Hood \FEtwoSpacesP21}
+    \item \myframed{Mini-element \FEtwoSpacesP{1,b}1}
+    \end{enumerate}
+  \end{corollary}
+  % \begin{proof}
+  \medskip
+  \textbf{Proof}:\vspace{-2em}
+    \begin{center}
+      \small
+      \begin{tabular}{cc@{ / }c@{ -- }cccc}
+        \mbox{FE} & $\Uh$ & $\Vh$ & $\Ph$ & \ISph & \ISvh & Stability
+        \\ \otoprule
+        $\FEtwoSpacesP21$ & \P2 & \P2 & \P1 & \good &
+        \bad & \bad
+        \\ \midrule
+        $\FEtwoSpacesP{1,b}1$ & \P{1,b} & \P{1,b} & \P1 & \good &
+        \bad & \bad
+        \\ \bottomrule
+      \end{tabular}
+    \end{center}
+%  \end{proof}
+  \onslide<4>
+  \begin{corollary}
+    The following ``classical'' elements are
+    \colorUnderLine{\alert{\textbf{not stable}} for~\hydStokes}:
+    \begin{enumerate}\itemsep0.33em
+    \item \myframed{Taylor-Hood \FEtwoSpacesP21}
+    \item \myframed{Mini-element \FEtwoSpacesP{1,b}1}
+    \end{enumerate}
+  \end{corollary}
+  \begin{remark}
+    \begin{itemize}
+    \item These combinations are neither stable for \aniNS when
+      $\varepsilon\to 0$
+    \item This is the \colorUnderLine{reason of the instabilities in previous animation}
+    \end{itemize}
+  \end{remark}
+ \onslide<5>
+  \bigskip
+  But...
+  how to find \textbf{\itshape \alert{stable combinations of FE}} for \hydStokes?
+  \bigskip
+%  \begin{remark}
+    \begin{itemize}\itemsep1em
+    \item Interesting equilibrium:
+      \begin{itemize}\itemsep0.66em
+      \item \colorUnderLine[PHDyellow]{$\dim(\Uh) + \dim(\Vh)$
+          \textbf{must be big}} \hfill \color{PHDgrayC} ( $\ge\
+        \dim(\Ph)$)\qquad~\mbox{ }
+      \item \colorUnderLine[PHDyellow]{$\dim(\Vh)$ \textbf{must be
+            small}} \hfill \color{PHDgrayC}( $\le \
+        \dim(\Ph)$)\qquad~\mbox{ }
+      \end{itemize}
+    \item Natural answer: take \textbf{unequal approximations} for $\Uh$ and
+      $\Vh$: %, so that% $\FEthreeSpaces\Uh\Vh\Ph$ with
+      \begin{itemize}\itemsep0.66em
+      \item \myframed{$\dim\Uh$  ``big''}
+      \item \myframed{$\dim\Vh$ ``small''}
+      \end{itemize}
+    \end{itemize}
+%  \end{remark}
+\end{overprint}
+\end{frame}
+
+
+\input{definitions2D.sty}
+\begin{frame}{Example 1: \FEthreeSpacesP210 is hydrostatic stable}
+  \begin{itemize}\itemsep0.33em
+  \item Let us consider the 2D combination \FEthreeSpaces\Uh\Vh\Ph
+    $\sim$ \FEthreeSpacesP210\medskip
+    \begin{itemize}\itemsep0.3em
+    \item It is  Stokes-stable {\em\color{PHDgrayC}(see~\cite{Stenberg:90})}...
+      \par\hfill
+      ...hence it verifies \ISph\ {\em\color{PHDgrayC} (due to former
+          sufficient conditon)}
+    \item It also verifies \ISvh\ {\em\color{PHDgrayC}(because
+        $\dz\Vh\subset\Ph$)}
+    \end{itemize}
+  \item Therefore \FEthreeSpacesP210 is stable for \hydStokes
+  \item Numerical tests confirm this fact...
+  \end{itemize}
+%  \bigskip
+  \begin{center}
+    \centering\begin{tabular}{cc}
+      \pgfimage[width=0.33\textwidth]{img/210-v-eps-0-uns} &
+      \pgfimage[width=0.33\textwidth]{img/210-p-eps-0-uns}
+      \\
+      \small Streamlines & \small Pressure
+    \end{tabular}
+    \\%[0.5em]
+    \scriptsize\itshape\color{PHDgrayC} Cavity test ($\varepsilon=0$),
+    unstructured mesh with $h\simeq 1/40$
+  \end{center}
+\end{frame}
+
+
+\begin{frame}{\FEthreeSpacesP210: error orders for \hydStokes}
+  \small
+  \newcolumntype{R}{>{\raggedleft\arraybackslash}X}%
+  \begin{tabularx}{\textwidth}{ XR }
+    \parbox[b]{\linewidth}{\begin{itemize}
+    \item $\OO(h^2)$ for $(\uu,\vv)$ in $\|\cdot\|_{L^2}$
+    \item $\OO(h)$ for $\pp$ in $\|\cdot\|_{L^2}$
+    \item Note that, although $\uu\sim\P2$, optimal order $\OO(h^3)$
+      is not reached (due to the influence of $\vv\sim\P1$)
+    \end{itemize}
+  ~}
+    &
+    \pgfimage[width=0.43\textwidth]{img/210-errors-loglog}
+  \end{tabularx}
+  \vspace{-1em}
+  \begin{center}
+    \scriptsize
+    \begin{tabular}{l@{\qquad}r@{\qquad}rrrrrr}
+      \\ \toprule
+      $h$ &
+      & $2^{-3}$ & $2^{-4}$ & $2^{-5}$ & $2^{-6}$ & $2^{-7}$  & $2^{-8}$
+      \\ \otoprule
+      \multirow{2}*{$\uu$}
+      & $\|u-u_h\|_{L^2}$ & 1.099  & 1.709  & 1.952  & 1.876  & 1.988  & 2.019
+      \\ \cmidrule{2-8}
+      & $\|u-u_h\|_{H^1_0}$ & 0.580  & 0.838  & 1.018  & 0.926  & 0.989  & 1.093
+      \\ \midrule
+      \multirow{2}*{$\vv$}
+      & $\|v-v_h\|_{L^2}$ & 1.156  & 1.500  & 1.924  & 1.476  & 1.457  & 2.072
+      \\ \cmidrule{2-8}
+      & $\|\dz v-\dz v_h\|_{L_2}$ & 0.770  & 0.894  & 1.032  & 0.941  & 1.004  & 1.081
+      \\ \midrule
+      $\pp$
+      & $\|p-p_h\|_{L^2}$ & 0.479  & 0.790  & 1.022  & 0.905  & 0.977  & 1.110
+      \\ \bottomrule
+    \end{tabular}
+  \end{center}
+  % {Velocity and pressure errors for \FEthreeSpacesP 210
+  %   Hydrostatic Stokes}
+\end{frame}
+
+\input{definitions3D.sty}
+% \begin{frame}{Example 2. The ``Hydrostatic Finite Element''}
+%   \begin{itemize}
+%   \item Introduced by P.~Azerad~\cite{Azerad:PhD:96}
+%   \item Defined by tensorial products of finite elements:
+%     \begin{align*}
+%       \uh &\ \sim\ \left({\cal R}_{1,h/2}(x,y) \times
+%         {\cal P}_{1,h/2}(z)\right)^2, \\
+%       \vh &\ \sim\ {\cal R}_{1,h}(x,y) \times {\cal P}_{1,h}(z), \\
+%       \ph &\ \sim\ {\cal R}_{1,h}(x,y) \times {\cal P}_{0,h}(z),
+%     \end{align*}
+%     where ${\cal R}_{k,h}$ designs $\P k$ or $\Q k$ elements in a mesh
+%     with size $h$
+%   \item It needs a vertical structured mesh (prisms or
+%     hexahedrals)
+%   \end{itemize}
+% \end{frame}
+
+\begin{frame}{More hydrostatic stable elements?}
+  About stability of \hydStokes in usual structured
+  meshes:\bigskip
+  \begin{itemize}\itemsep1em
+  \item \FEthreeSpacesP210 \ \good
+  \item \FEthreeSpacesP{1,b}10 \ \question
+  \item \FEthreeSpacesP{1,b}11 \ \question
+  \item \FEthreeSpacesP211 \ \question
+  \end{itemize}
+  \bigskip
+  For each combination, we need testing both
+  \begin{itemize}
+  \item \ISph $\leftarrow$ \myframed{Stokes inf-sup}
+  \item \ISvh
+  \end{itemize}
+\end{frame}
+
+
+\newcommand{\nv}{n}
+\renewcommand{\imgdir}{img/}
+
+\begin{sectionframe}
+  \vfill
+  \begin{abstract}
+    \begin{enumerate}
+    \item
+      \pgfsetfillopacity{0.33}
+      \textbf{Stability analysis of Hydrostatic Stokes} equations.
+      They are not stable for ``classical'' Stokes LBB-stable FE
+      combinations. The reason is:
+      \begin{itemize}
+      \item An additional inf-sup condition is required
+      \item It imposes richer FE spaces for horizontal velocity than
+        vertical one
+        % \begin{enumerate}
+        % \item Usual Stokes LBB inf-sup condition
+        % \item An additional ``hydrostatic'' inf-sup condition
+        % \end{enumerate}
+      \end{itemize}
+    \item<alert@*>
+      \pgfsetfillopacity{1.0}
+      {\textbf{Stability analysis of classical Stokes} equations when
+      unequal FE spaces are used for each component of the  velocity}
+    \item
+      \pgfsetfillopacity{0.33}
+      We provide some \textbf{new elements which are
+      stable} for the Hydrostatic Stokes Equations
+    \end{enumerate}
+  \end{abstract}
+\end{sectionframe}
+
+% \input{definitions2D.sty}
+% \begin{frame}{Introduction}
+%   \begin{itemize}\itemsep0.66em
+%   \item Classical Stokes stability with unequal FE spaces for \Uh and
+%     \Vh: not sufficently studied in literature
+%     \begin{itemize}
+%     \item With the exception of \FEthreeSpacesP210
+%     \end{itemize}
+%   \item But it is required for hydrostatic stability
+%   \item \textbf{We provide some new combinations}
+%     \FEthreeSpaces\Uh\Vh\Ph (with unequal approximation for \Uh
+%     and \Vh) \textbf{for which Stokes stability is shown}, i.e they
+%     verfy the following inf-sup or LBB condition:
+%     \begin{equation}
+%       \label{eq:stokes-inf-sup}
+%       \tag*{(IS)}
+%       ||\ph||_{L^2} \le \beta \sup_{0\neq(\uh,\vh)\in\Uh\times\Vh}
+%       \frac{\int_\Omega \div\big(\uh,\vh\big)\;
+%         \ph}{||(\uh,\vh)||_{H^1}} \quad
+%       \forall\ph\in\Ph,
+%     \end{equation}
+%     where we denote
+%     \begin{equation*}
+%       \div\big(\uh,\vh\big) = \divx\uh + \dz\vh
+%     \end{equation*}
+%   \item In these results, it will be important the structure of the mesh
+%   \end{itemize}
+% \end{frame}
+
+\begin{frame}{\myframedAlert{\FEthreeSpacesP{1,b}10} is not Stokes--stable}
+  \begin{itemize}\itemsep0.66em
+  \item Let us consider the discrete \textbf{2D} Stokes problem and
+    the spaces:
+    \begin{equation*}
+      \Uh \sim \P{1,b}, \qquad
+      \Vh \sim \P1, \qquad
+      \Ph \sim \P0
+    \end{equation*}
+  \item
+    If $\uh\in\Uh$ then $\uh=\uh^0+b$, where $\uh^0$ is $\P1$ and
+    $b$ is sum of bubbles
+  \item As \colorUnderLine{integrals of derivates of bubbles
+      vanish}, $\exists C>0$ s.t.
+    \begin{equation*}
+      \label{eq:b10.not.stability}
+      \frac{\int_\Omega(\divx\uh+\dy\vh)\ph}{||(\uh,\vh)||_{H^1}}
+      \le C
+      \frac{\int_\Omega(\divx\uh^0+\dy\vh)\ph}{||(\uh^0,\vh)||_{H^1}}
+    \end{equation*}
+  \item And as \colorUnderLine{$\FEthreeSpacesP110$ is not stable}
+    (excepting some meshes~\cita{QinZhang:07}):
+    \begin{equation*}
+      \forall\beta>0,\ \exists\pp\in\Ph:\quad
+      \beta\sup_{0\neq(\uh,\vh)\in\Uh\times\Vh}
+      \frac{\int_\Omega \div\big(\uh,\vh\big)\;
+        \ph}{||(\uh,\vh)||_{H^1}} < \norm[L^2]\pp
+    \end{equation*}
+ % supreme
+ %    of~(\ref{eq:b10.not.stability}) less than $\norm\pp$
+  \end{itemize}
+\end{frame}
+
+
+\begin{frame}{\myframedAlert{\FEthreeSpacesP{1,b}11}
+    \ Stokes--stability}
+  \begin{enumerate}\itemsep0.66em
+  \item We have proved that \FEthreeSpacesP{1,b}11 is stable in most
+    unstructured 2D meshes
+  \item This theory has been extended to 3D
+  \item The tool employed: macroelements technique (R.~Stenberg~\cite{Stenberg:84,Stenberg:90}
+  \end{enumerate}
+\end{frame}
+
+
+% \newcommand{\macroCondition}{\emph{macro-condition}\xspace}
+% \newcommand{\macroelemA}[2]{
+%   \def\yCoordA{#1}
+%   \def\yCoordB{#2}
+%   \begin{tikzpicture}
+%     \def\nv{4}
+%     \def\ix{1.6}\def\iy{1}
+%     \def\vertices{
+%       \coordinate (q0) at (0,0) [label=120:\scriptsize$q_0$];
+%       \coordinate (q1) at (-\ix*0.25,\iy);
+% %      \coordinate  (q2) at (-\ix*0.5,\iy);
+%       \coordinate  (q2) at  (-\ix,-0.25*\iy);
+%       \coordinate  (q3) at  (0.75*\ix,-\iy);
+%       \coordinate  (q4) at (\ix*1,0.25*\iy);
+%     }
+%     \def\showPoints{
+%       \foreach \i in {0,...,\nv}
+%         \fill [black] (q\i) circle (3pt);
+%     }
+%     \def\showLines{
+%       % Draw borders
+%       \draw (q1) -- (q2) -- (q3) -- (q4) -- cycle;
+%       % Draw interior edges
+%       \foreach \i in {1,...,\nv} {
+%         \draw (q\i) -- (q0);
+%       }
+%     }
+%     \def\showTriangles{
+%       \node at ($ (q0)!.5!(q1) $) [label=0:\scriptsize${T_1}$] {};
+%       \node at ($ (q0)!.5!(q2) $) [label=90:\scriptsize${T_2}$] {};
+%       \node at ($ (q0)!.5!(q3) $) [label=180:\scriptsize${T_3}$] {};
+%       \node at ($ (q0)!.5!(q4) $) [label=-90:\scriptsize${T_4}$] {};
+%     }
+%     \vertices
+%     \showPoints
+%     \showLines
+%     \showTriangles
+%   \end{tikzpicture}
+% }
+
+% \begin{frame}{Macroelements}
+
+%   \begin{columns}
+%     \column{0.7\linewidth}
+%     %---------------------
+%     \begin{itemize}\itemsep0.66em
+%       % \item Let $\Uh\sim\Pb$, $\Vh\sim\P1$, $\Ph\sim\P1$ continuous
+%       %   finite element spaces.
+%     \item Let $\Th$ a triangulation of $\domain\subset\Rset^2$
+%     \item Let $\Mh$ a \textbf{macroelement} partition of $\Th$
+%       \begin{flushright}\scriptsize
+%         (i.e. a family of connected sets which are union of at least
+%         two elements of $\Th$).
+%       \end{flushright}
+%     \end{itemize}
+%     \column{0.3\linewidth}
+%     %---------------------
+%     \vtop{\null\hbox{\macroelemA{-0.3}{-0.5}}}
+%   \end{columns}
+%   \bigskip
+%   \begin{definition}%[\textbf{\amarillo Regular macroelement} condition]
+%     We say \myframed{$M$ is \alert{\textbf{regular}}} for
+%     \FEthreeSpaces{\Uh}{\Vh}{\Ph}
+%     \quad (or \FEthreeSpaces{\Uh}{\Vh}{\Ph} is
+%     \alert{\textbf{regular}} in $M$) if:
+% %    \vspace{-1em}
+%     \begin{equation*}
+%       \begin{aligned}
+%         \text{The set $N_M=\left\{ p\in \PM \st \int_M
+%           \div(u,v)\;p=0, \ \forall (u,v)\in
+%           \UM\times\VM \right\}$}
+%       \\[0.66em]
+%       \text{only consists of the functions which are \textbf{constant} on
+%         $M$}.
+%       \end{aligned}
+%     \end{equation*}
+%   \end{definition}
+% \end{frame}
+
+
+% \begin{frame}{A sufficient condition for discrete Stokes inf-sup}
+% %  Let's define:
+%   We will use the well known result:
+%   \vfill
+%   \begin{theorem}[Stenberg'90]
+%     Suppose that there is a fixed set of equivalence classes $E_i$ ,
+%     $i = 1, 2, ..., l$, of macroelements and a positive integer $L$
+%     such that:
+%     \begin{description}
+%     \item[$(M_1)$] \myframed{Each $M\in E_i$, $i = 1, 2, ..., l$,
+%         \textbf{is regular}}
+%     \item[$(M_2)$] Each $M \in M_h$ belongs to one of the classes $E_i$ , $i = 1, 2, ..., l$.
+%     \item[$(M_3)$] Each interior edge of $\Th$ is interior to at least one and not more than $L$
+%     macroelements of $M_h$
+%     \end{description}
+%     Then Stokes \alert{\textbf{inf-sup condition}} holds.
+%   \end{theorem}
+% \end{frame}
+
+
+% \begin{frame}{Macroelements with one only interior vertex}
+%   \begin{itemize}\itemsep0.5em
+%     \item<1-> We will assume the following \alert{slightly restrictive} hypothesis on \Th:
+%       {\it
+%       \begin{itemize}
+%       \item Each $T\in\Th$ has at least one vertex interior to
+%         $\domain$
+%       \item $\exists N\in\Nset$ (independ. $h$) s.t. each vertex of
+%         $\Th$ is at most in $N$ elements
+%       \end{itemize}
+%     }
+%   \item<2-> Then we will denote by \framedmath<2>{\MhOneVertex} to the macroelement
+%     partition defined as follows:
+%     \par\vspace{-2em}
+%     \begin{tabular*}{0.5\linewidth}{@{\quad}p{0.5\linewidth}p{0.4\linewidth}}
+%       \it~\par\vspace{1.5em}  Each $\Macro\in \MhOneVertex$ is union of elements
+%       sharing \textbf{one vertex},
+%       \framedmath<2>{q_0}
+%       \tikz[na] \coordinate(intVertex);
+%       &
+%       \vtop{\null\hbox{\macroelemA{-0.3}{-0.5}}}
+%     \end{tabular*}
+%     \vspace{-2em}
+%     % \begin{quote}
+%     %   Each $\Macro\in \MhOneVertex$ is the union of all the elements
+%     %   of $\Th$ sharing one vertex which is interior to $\domain$
+%     % \end{quote}
+%   \end{itemize}
+%   \uncover<3>{
+%   \begin{lemma}
+%     \label{lemma:macroelements.with.one.interior.vertex}
+%     The macroelement partition \MhOneVertex verifies $(M_2)$ and $(M_3)$.
+%   \end{lemma}
+% %  \smallskip
+%   \begin{corollary}
+%     If \Th is composed by \textbf{\alert{regular
+%       macroelements}} of $\MhOneVertex$
+%     % (i.e, $M_1$ \macroCondition holds $\forall
+%     % M\in\MhOneVertex$),
+%     then
+%     \par\hfill\textbf{\alert{inf-sup condition}} holds
+%   \end{corollary}
+%   }
+%   \begin{tikzpicture}[overlay]
+%     \path<2>[myarrow] (intVertex) edge [out=0, in=230] (q0);
+%   \end{tikzpicture}
+% \end{frame}
+
+
+% % \begin{frame}{Structured and unstructured macroelements}
+% %   We have introduced some definitions:
+% %   \begin{definition}
+% %   A macroelement $M$, can be \structure{split by an hyperplane} $\Pi$
+% %   if there exists two other macroelements $M_1$ and $M_2$ such that:
+% %   \begin{center}
+% %     \llaveizq{$M_1\cup M_2=M$  and  \\
+% %       $M_1\cap M_2 \subset \Pi$}
+% %     \end{center}
+% %   \end{definition}
+
+% %   \begin{definition}
+% %     \begin{itemize}
+% %     \item A macroelement $M$ will be said \structure{\xStructured} if
+% %       it can be split by an hyperplane $x=C$, for some $C\in\Rset$
+% %       (i.e. \emph{orthogonal to $OX$ axis})
+% %     \item In  other case, it will be said \structure{\xUnstructured}
+% %     \end{itemize}
+% %   \end{definition}
+% %   \begin{itemize}
+% %   \item[$\star$] Analogue definitions for \structure\yUnstructured and
+% %     \structure\zUnstructured
+% %   \item[$\star$] For instance...
+% %   \end{itemize}
+% % \end{frame}
+
+% \newcommand{\bubbleMacro}{ % Bubble macroelement
+%   \begin{tikzpicture}
+%     \def\nv{5}
+%     \def\ix{2}\def\iy{1.8}
+%     \def\vertices{
+%       \coordinate (q0) at (0,0);
+%       \coordinate (q1) at  (-1.25*\ix,-0.25*\iy);
+%       \coordinate (q2) at  (-0.25*\ix,-\iy);
+%       \coordinate (q3) at  (0.75*\ix,-\iy);
+%       \coordinate (q4) at (\ix*1,0.5*\iy);
+%       \coordinate (q5) at (-\ix*0.25,\iy);
+%     }
+%     \def\showPoints{
+%       \foreach \i in {0,...,\nv}
+%       \fill [black] (q\i) circle (3pt);
+%     }
+%     \def\showLines{
+%       % Draw borders
+%       \draw (q1) -- (q2) -- (q3) -- (q4) -- (q5) -- cycle;
+%       % Draw interior edges
+%       \foreach \i in {1,...,\nv} {
+%         \draw (q\i) -- (q0);
+%       }
+%       \foreach \i in {1,...,\nv} {
+%         \draw [fill, lightgray] (x\i) circle (1.25pt);
+%         \draw (x\i) circle (2.25pt);
+%       }
+%     }
+%     \def\showTriangles{
+%       \node at ($ (q1)!.5!(q2) $) [label=230:\small${T_1}$] {};
+%       \node at ($ (q2)!.5!(q3) $) [label=-90:\small${T_2}$] {};
+%       \node at ($ (q3)!.5!(q4) $) [label=-15:\small${T_3}$] {};
+%       \node at ($ (q4)!.5!(q5) $) [label=90:\small${T_4}$] {};
+%       \node at ($ (q5)!.5!(q1) $) [label=130:\small${T_5}$] {};
+%     }
+%     \def\xPoints {
+%       \coordinate (x1) at ($ (q1)!.5!(q2)!.333!(q0) $);
+%       \coordinate (x2) at ($ (q2)!.5!(q3)!.333!(q0)  $);
+%       \coordinate (x3) at ($ (q3)!.5!(q4)!.333!(q0)  $);
+%       \coordinate (x4) at ($ (q4)!.5!(q5)!.333!(q0)  $);
+%       \coordinate (x5) at ($ (q1)!.5!(q5)!.333!(q0)  $);
+%     }
+%     \vertices
+%     \xPoints
+%     \showPoints
+%     \showLines
+%     \showTriangles
+%   \end{tikzpicture}
+% }
+
+
+% \newcommand{\unstableBubbleMacro}{ % Bubble macroelement where
+%   % P1b/P1/P1 is unstable
+%   \begin{tikzpicture}
+%     \def\nv{5}
+%     \def\ix{2}\def\iy{1.8}
+%     \def\vertices{
+%       \coordinate (q0) at (0,0);
+%       \coordinate (q1) at  (-\ix,0*\iy);
+%       \coordinate (q2) at  (-0.25*\ix,-\iy);
+%       \coordinate (q3) at  (0.75*\ix,-\iy);
+%       \coordinate (q4) at (\ix*1,0*\iy);
+%       \coordinate (q5) at (\ix*0.1,\iy);
+%     }
+%     \def\showPoints{
+%       \foreach \i in {0,...,\nv}
+%       \fill [black] (q\i) circle (3pt);
+%     }
+%     \def\showLines{
+%       % Draw borders
+%       \draw (q1) -- (q2) -- (q3) -- (q4) -- (q5) -- cycle;
+%       % Draw interior edges
+%       \foreach \i in {1,...,\nv} {
+%         \draw (q\i) -- (q0);
+%       }
+%       \foreach \i in {1,...,\nv} {
+%         \draw [fill, lightgray] (x\i) circle (1.25pt);
+%         \draw (x\i) circle (2.25pt);
+%       }
+%     }
+%     \def\showTriangles{
+%       \node at ($ (q1)!.5!(q2) $) [label=230:\small${T_1}$] {};
+%       \node at ($ (q2)!.5!(q3) $) [label=-90:\small${T_2}$] {};
+%       \node at ($ (q3)!.5!(q4) $) [label=-15:\small${T_3}$] {};
+%       \node at ($ (q4)!.5!(q5) $) [label=90:\small${T_4}$] {};
+%       \node at ($ (q5)!.5!(q1) $) [label=130:\small${T_5}$] {};
+%     }
+%     \def\xPoints {
+%       \coordinate (x1) at ($ (q1)!.5!(q2)!.333!(q0) $);
+%       \coordinate (x2) at ($ (q2)!.5!(q3)!.333!(q0)  $);
+%       \coordinate (x3) at ($ (q3)!.5!(q4)!.333!(q0)  $);
+%       \coordinate (x4) at ($ (q4)!.5!(q5)!.333!(q0)  $);
+%       \coordinate (x5) at ($ (q1)!.5!(q5)!.333!(q0)  $);
+%     }
+%     \vertices
+%     \xPoints
+%     \showPoints
+%     \showLines
+%     \showTriangles
+%     \node at ($ (q4)!.4!(q5)!-1!(q0) $) {};
+%     \node at ($ (q4)!.333!(q3)!-0.7!(q0) $) {};
+%   \end{tikzpicture}
+% }
+
+% \begin{frame}{{\amarillo\xStructured} and {\amarillo\xUnstructured} macroelements}
+%   \begin{columns}
+%     \column{0.5\linewidth}
+%     \unstableBubbleMacro
+%     \\
+%     \begin{itemize}
+%     \item \myframed{\textbf\xUnstructured}
+%        (it cannot be \structure{split} by any line
+%       orthogonal to $OX$ axis)
+%     \item \myframed{\textbf\yStructured}
+%       \ (can be \structure{split} by a line
+%       orthogonal to $OY$)
+%     \end{itemize}
+%     % --------
+%     \pause
+%     \column{0.5\linewidth}
+%     \bubbleMacro
+%     \\
+%     \begin{itemize}
+%     \item \textbf\xUnstructured\ macroelement
+%     \item Also \textbf\yUnstructured
+%     \end{itemize}
+%     \vspace{1.5em}~
+%    \end{columns}
+% \end{frame}
+
+% \begin{frame}{Regular macroelements for \FEthreeSpacesP{1,b}11}
+%   \begin{itemize}\itemsep1em
+%   \item The following result \colorUnderLine{relates
+%       \textbf{regularity} with \textbf{structure}}
+% \item In fact, it states that, in $\Macro\in\MhOneVertex$, ~\medskip
+%   \quad
+
+%   \begin{BlockNoTitle}
+%     \begin{center} \it bubbles can be
+%       \textbf{\itshape removed from one (only) component of velocity} \\
+%       \rotatebox{90}{$\Leftrightarrow$}
+%       \\
+%       $\Macro$ is \it \ \textbf{\itshape unstructured in corresponding
+%         direction}
+%     \end{center}
+%   \end{BlockNoTitle}
+
+% \item More specifically...
+%   \begin{theorem}
+%     Let $\Macro$ be a macroelement in $\MhOneVertex$.
+%     Then \colorUnderLine{\FEthreeSpacesP{1,b}{1}{1} is
+%       regular in $\Macro$}
+%     \emph{if and only} if $\Macro$ is \colorUnderLine{\yUnstructured}
+%   \end{theorem}
+%   % \item[$\star$] Analogue result for \FEthreeSpacesP{1}{1,b}{1}
+% \item[$\star$] For instance...
+% \end{itemize}
+% \end{frame}
+
+% \begin{frame}{{\amarillo Regular} and {\amarillo not regular} macroelements}
+%   \small
+%   \begin{columns}
+%     \column{0.5\linewidth}
+%     \unstableBubbleMacro
+%     \\
+%     \begin{itemize}
+%     \item \xUnstructured $\Rightarrow$
+%       \par~ \hfill \myframed<1>{\FEthreeSpacesP1{1,b}1 is \textbf{regular}}
+%     \item \yStructured $\Rightarrow$
+%       \par~ \hfill \myframed<1>{\FEthreeSpacesP{1,b}11 is \textbf{not
+%           regular}}
+%     \end{itemize}
+%     \vfill~
+%     % --------
+%     \pause
+%     \column{0.5\linewidth}
+%     \bubbleMacro
+%     \\
+%     \begin{itemize}
+%     \item \xUnstructured $\Rightarrow$
+%       \par~ \hfill \myframed<2>{\FEthreeSpacesP{1,b}11 is
+%         \textbf{regular}}
+%     \item \yUnstructured $\Rightarrow$
+%       % \FEthreeSpacesP1{1,b}1 is  \textbf{regular}
+%       \par~ \hfill \myframed{\FEthreeSpacesP1{1,b}1 is
+%         \textbf{regular}}
+%     \end{itemize}
+%     \vspace{0.9em}
+%    \end{columns}
+% \end{frame}
+
+% \newcommand{\macroelemBii}{
+%   \begin{tikzpicture}
+%     \def\nv{5}
+%     \def\ix{1.4}\def\iy{2}
+%     \def\vertices{
+%       \coordinate [label=220:\scriptsize $q_0$] (q0) at (0,0);
+%       \coordinate [label=-100:\scriptsize $q_1$] (q1) at  (-0.25*\ix,-\iy);
+%       \coordinate [label=-45:\scriptsize $q_2$] (q2) at  (0.75*\ix,-\iy);
+%       \coordinate [label=90:\scriptsize $q_3$] (q3) at (\ix*1,0.25*\iy);
+%       \coordinate [label=90:\scriptsize $q_4$] (q4) at (-\ix*0.25,\iy);
+%       \coordinate [label=150:\scriptsize $q_5$] (q5) at  (-\ix,0);
+%     }
+%     \def\showPoints{
+%       \foreach \i in {0,...,\nv}
+%         \fill [black] (q\i) circle (3pt);
+%     }
+%     \def\showLines{
+%       % Draw borders
+%       \draw (q1) -- (q2) -- (q3) -- (q4) -- (q5) -- cycle;
+%       % Draw interior edges
+%       \foreach \i in {1,...,\nv} {
+%         \draw (q\i) -- (q0);
+%       }
+%       \foreach \i in {1,...,\nv} {
+%         \draw [fill, lightgray] (x\i) circle (1.25pt);
+%         \draw (x\i) circle (2.25pt);
+%       }
+%     }
+%     \def\showTriangles{
+%       \node at ($ (q1)!.5!(q2)!-.3!(q0) $) {${T_1}$};
+%       \node at ($ (q2)!.5!(q3)!-.3!(q0) $) {${T_2}$};
+%       \node at ($ (q3)!.5!(q4)!-.3!(q0) $) {${T_3}$};
+%       \node at ($ (q4)!.5!(q5)!-.3!(q0) $) {${T_4}$};
+%       \node at ($ (q5)!.5!(q1)!-.3!(q0) $) {${T_5}$};
+%     }
+%     \def\xPoints {
+%       \coordinate (x1) at ($ (q1)!.5!(q2)!.333!(q0) $);
+%       \coordinate (x2) at ($ (q2)!.5!(q3)!.333!(q0)  $);
+%       \coordinate (x3) at ($ (q3)!.5!(q4)!.333!(q0)  $);
+%       \coordinate (x4) at ($ (q4)!.5!(q5)!.333!(q0)  $);
+%       \coordinate (x5) at ($ (q1)!.5!(q5)!.333!(q0)  $);
+%     }
+%     % \def\xPoints {
+%     %   \coordinate [label=215: \tiny $r_1$] (x1) at ($ (q1)!.5!(q2)!.333!(q0) $);
+%     %   \coordinate [label=-90: \tiny $r_2$] (x2) at ($ (q2)!.5!(q3)!.333!(q0)  $);
+%     %   \coordinate [label=-90: \tiny $r_3$] (x3) at ($ (q3)!.5!(q4)!.333!(q0)  $);
+%     %   \coordinate [label=0: \tiny $r_4$] (x4) at ($ (q4)!.5!(q5)!.333!(q0)  $);
+%     %   \coordinate [label=135: \tiny $r_5$] (x5) at ($ (q1)!.5!(q5)!.333!(q0)  $);
+%     % }
+%     \alert<2>{\vertices}
+%     \xPoints
+%     \showPoints
+%     \showLines
+%     \alert<1>\showTriangles
+%   \end{tikzpicture}
+% }
+
+% \newcommand{\macroelemBiii}{
+%   \begin{tikzpicture}
+%     \def\nv{5}
+%     \def\ix{1.4}\def\iy{2}
+%     \def\vertices{
+%       \coordinate [label=220:\scriptsize $q_0$] (q0) at (0,0);
+%       \coordinate [label=-100:\scriptsize $q_1$] (q1) at  (-0.25*\ix,-\iy);
+%       \coordinate [label=-45:\scriptsize $q_2$] (q2) at  (0.75*\ix,-\iy);
+%       \coordinate [label=90:\scriptsize $q_3$] (q3) at (\ix*1,0.25*\iy);
+%       \coordinate [label=90:\scriptsize $q_4$] (q4) at (-\ix*0.25,\iy);
+%       \coordinate [label=150:\scriptsize $q_5$] (q5) at  (-\ix,0);
+%     }
+%     \def\showPoints{
+%       \foreach \i in {0,...,\nv}
+%         \fill [black] (q\i) circle (3pt);
+%     }
+%     \def\showLines{
+%       % Draw borders
+%       \draw (q1) -- (q2) -- (q3) -- (q4) -- (q5) -- cycle;
+%       % Draw interior edges
+%       \foreach \i in {1,...,\nv} {
+%         \draw (q\i) -- (q0);
+%       }
+%     }
+%     \def\showTriangles{
+%       \node at ($ (q5)!.5!(q1)!-.3!(q0) $) {\small${T_1}$};
+%       \node at ($ (q1)!.5!(q2)!-.3!(q0) $) {\small${T_2}$};
+%       \node at ($ (q2)!.5!(q3)!-.3!(q0) $) {\small${T_3}$};
+%       \node at ($ (q3)!.5!(q4)!-.3!(q0) $) {\small${T_5}$};
+%       \node at ($ (q4)!.5!(q5)!-.3!(q0) $) {\small${T_5}$};
+%     }
+%     \vertices
+%     \showPoints
+%     \showLines
+%     \showTriangles
+
+%     % Highlight
+%     \node at ($ (q5)!.5!(q1)!0.3!(q0) $) (c1) {\alert{${c_1}$}};
+%     \node at ($ (q1)!.5!(q2)!0.3!(q0) $) (c2) {\alert{${c_2}$}};
+%     \node at ($ (q2)!.5!(q3)!0.3!(q0) $) (c3) {\alert{${c_3}$}};
+%     \node at ($ (q3)!.5!(q4)!0.3!(q0) $) (c4) {\alert{${c_4}$}};
+%     \node at ($ (q4)!.5!(q5)!0.3!(q0) $) (c5) {\alert{${c_5}$}};
+%     % Finally, redraw in blue $b_1$ and $b_5$
+%     % \onslide<8->\structure{
+%     %   \node at ($ (q1)!.5!(q2)!0.1!(q0) $) [label=90:${c_1}$] {};
+%     %   \node at ($ (q5)!.5!(q1)!-0.2!(q0) $) [label=-45:${c_1}$] {};
+%     % }
+%     \path<3->[myarrow3] (c1) edge [out=-90, in=180] (c2);
+%     \path<4->[myarrow3] (c2) edge [out=20, in=-100] (c3);
+%     \path<5->[myarrow3] (c3) edge [out=60, in=-30] (c4);
+%     \path<6->[myarrow3] (c4) edge [out=140, in=70] (c5);
+
+%   \end{tikzpicture}
+% }
+
+% \newcommand{\macroelemBiv}{
+%   \begin{tikzpicture}
+%     \def\nv{5}
+%     \def\ix{1.4}\def\iy{2}
+%     \def\vertices{
+%       \coordinate [label=220:\scriptsize $q_0$] (q0) at (0,0);
+%       \coordinate [label=-100:\scriptsize $q_1$] (q1) at  (-0.25*\ix,-\iy);
+%       \coordinate [label=-45:\scriptsize $q_2$] (q2) at  (0.75*\ix,-\iy);
+%       \coordinate [label=90:\scriptsize $q_3$] (q3) at (\ix*1,0);
+%       \coordinate [label=90:\scriptsize $q_4$] (q4) at (-\ix*0.25,\iy);
+%       \coordinate [label=150:\scriptsize $q_5$] (q5) at  (-\ix,0);
+%     }
+%     \def\showPoints{
+%       \foreach \i in {0,...,\nv}
+%         \fill [black] (q\i) circle (3pt);
+%     }
+%     \def\showLines{
+%       % Draw borders
+%       \draw (q1) -- (q2) -- (q3) -- (q4) -- (q5) -- cycle;
+%       % Draw interior edges
+%       \foreach \i in {1,...,\nv} {
+%         \draw (q\i) -- (q0);
+%       }
+%     }
+%     \def\showTriangles{
+%       \node at ($ (q5)!.5!(q1)!-.3!(q0) $) {\small${T_1}$};
+%       \node at ($ (q1)!.5!(q2)!-.3!(q0) $) {\small${T_2}$};
+%       \node at ($ (q2)!.5!(q3)!-.3!(q0) $) {\small${T_3}$};
+%       \node at ($ (q3)!.5!(q4)!-.3!(q0) $) {\small${T_5}$};
+%       \node at ($ (q4)!.5!(q5)!-.3!(q0) $) {\small${T_5}$};
+%     }
+%     \vertices
+%     \showPoints
+%     \showLines
+%     \showTriangles
+
+%     % Highlight
+%     \node at ($ (q5)!.5!(q1)!0.3!(q0) $) (c1) {\alert{${c_1}$}};
+%     \node at ($ (q1)!.5!(q2)!0.3!(q0) $) (c2) {\alert{${c_2}$}};
+%     \node at ($ (q2)!.5!(q3)!0.3!(q0) $) (c3) {\alert{${c_3}$}};
+%     \node at ($ (q3)!.5!(q4)!0.3!(q0) $) (c4) {\alert{${c_4}$}};
+%     \node at ($ (q4)!.5!(q5)!0.3!(q0) $) (c5) {\alert{${c_5}$}};
+%     % Finally, redraw in blue $b_1$ and $b_5$
+%     % \onslide<8->\structure{
+%     %   \node at ($ (q1)!.5!(q2)!0.1!(q0) $) [label=90:${c_1}$] {};
+%     %   \node at ($ (q5)!.5!(q1)!-0.2!(q0) $) [label=-45:${c_1}$] {};
+%     % }
+%     \path<3->[myarrow3] (c1) edge [out=-90, in=180] (c2);
+%     \path<4->[myarrow3] (c2) edge [out=20, in=-100] (c3);
+%     \path<5->[myarrow3] (c4) edge [out=120, in=70] (c5);
+
+%   \end{tikzpicture}
+% }
+
+% \SetEmptyBackground
+% \begin{frame}
+%   \medskip
+%   % -----------------------
+%   \textbf{Proof}
+%   \quad
+%   \begin{tabular}[t]{l}
+%     \myframed{$\Leftarrow$}
+%     % \\
+%     % \myframed{$\Macro$ is \yUnstructured $\Rightarrow$
+%     %   \FEthreeSpacesP{1,b}{1}{1} is regular in $\Macro$}
+%   \end{tabular}
+%   % -----------------------
+%   \par\bigskip
+%   Suppose $\Macro$ is \textbf{\yUnstructured}, defined by:
+%   % \bigskip
+%   % Let $n\in\Nset$ and let $M\in\MhOneVertex$, with:
+%   \begin{columns}
+%     \column[b]{0.66\linewidth}
+% %    \setlength{\leftmargini}{1em}
+%     \begin{itemize}[<+->]
+%     \item \alert<1>{$T_i$, \ $i=1,...,n$ elements}
+%     \item \alert<2>{$q_i$, \ $i=0,...,n$ vertices, ($q_0$ interior one)}
+%     % \item \alert<3>{$r_i$, $i=1,...,n$ midpoints in edges.}
+%     % ~\par\bigskip
+
+%     \item
+%     \onslide<3-> Let  $\pp\in N_M$\ /
+%     $$
+%     \int_M \div(u,v)\;p=0, \quad \forall (\uu,\vv) \sim \P2/\P1
+%     $$
+%     Question for regularity: \fbox{\textbf{is $\pp$ constant?}}
+%     \medskip
+%   \item
+%     As $\pp\sim \P1$, we can define\vspace{-0.3em}
+%     $$
+%     \pp|_{T_i}=a_i+b_ix+c_iy, \quad i=1,...,n.
+%     $$
+%   % \item\vspace{-0.5em}
+%     % We will see: \ \llaveizq{ $b_i=0$, $c_i=0$ $\forall i$ and
+%     %   \\[0.3em] $a_1=...=a_n$ (constant)}
+%     \end{itemize}
+%     %- - - - - - - - - - - -
+%     \column[b]{0.33\linewidth}
+%     %- - - - - - - - - - - -
+%     \onslide<1->\macroelemBii
+%     \vspace{0.1\textheight}
+%   \end{columns}
+%   \vfill
+% \end{frame}
+
+% \begin{frame}
+%   \begin{columns}
+%     %- - - - - - - - - - - -
+%     \column[b]{0.66\linewidth}
+%     %- - - - - - - - - - - -
+%     \begin{itemize}[<+->]
+%   \item Choosing \llaveizq{$\uu=1$ in $i$-th barycentre, \\ $\uu, \vv = 0$ in
+%       other nodes,}
+%     \begin{equation*}
+%       0 =\int_M \div(u,v)\;p =
+%       \int_{T_i}\dx\uu\ph = - b_{i} \int_{T_{i}}\uu
+%     \end{equation*}
+%     Hence \framedmath{b_i=0} \ $\forall i=1...n$
+%     \bigskip
+%   \item Imposing continuity in $q_0=(0,0)$:
+%     \par\medskip
+%     $$ \framedmath{a_1 = a_2 = ... = a_n =: a \in\Rset}$$
+%   \end{itemize}
+%     %- - - - - - - - - - - -
+%     \column[b]{0.33\linewidth}
+%     %- - - - - - - - - - - -
+%     \onslide<1->\macroelemBii
+%     % \vspace{0.3\textheight}
+%   \end{columns}
+% \end{frame}
+
+% \begin{frame}
+%   % Hence $\ph|_{T_i} = a + c_iy$, \ $\forall T_i\in\Macro$
+%   \begin{columns}
+%     %- - - - - - - - - - - -
+%     \column[b]{0.66\linewidth}
+%     %- - - - - - - - - - - -
+%     About \framedmath<1>{c_i}:
+%     \begin{itemize}\itemsep0.5em
+%     \item<1-> Imposing \textbf{continuity} of $\ph$ in interior edges,
+%       $\overline{q_0q_i}$:
+%         \begin{equation*}
+%           q_{i}^y(c_{i+1} -  c_i) = 0,
+%           \quad i=1,...,n,
+%         \end{equation*}
+%         where $q_i^y$: $y$--coordinate of $i$--th vertex
+%       \item<2-> Thus if $q_{i}^y\neq 0$, (i.e. if segment
+%         $\overline{q_0q_i}$ is \textbf{not horizontal}), then
+%         \framedmath<2-6>{c_i = c_{i+1}}
+%       \item<7-> Therefore   \framedmath<7>{c_1=...=c_n=:c\in\Rset}
+%       \item<8-> Finally, if \llaveizq{$\uu=0$, \\
+%           $\vv = 1$ in $q_0$ {\color{PHDgrayC}\scriptsize( $\vv=0$ on $q_i$  $i\neq 0$)}:}
+%         {\small
+%         \begin{equation*}
+%           0 = \int_\Macro \dy\vh \; \ph = - \sum_{i=1}^{\nv} \int_{T_i}\vh \dy\ph
+%           = -\sum_{i=1}^{n} c_i \frac{|T_i|}{3}
+%           \quad \text{\color{PHDgrayC} (quadrature formula)}
+%         \end{equation*}
+%         }
+%       \item<9-> Hence $c_i=0\ \forall i$, thus \myframed{$\ph=a$ \ (constant)}
+%     \end{itemize}
+%     %- - - - - - - - - - - -
+%     \column[b]{0.33\linewidth}
+%     %- - - - - - - - - - - -
+%     \onslide<1->\macroelemBiii
+%      \vspace{0.15\textheight}
+%   \end{columns}
+% \end{frame}
+
+% \begin{frame}
+%   % -----------------------
+%   % \textbf{Proof}
+%   % \quad
+%   % \begin{tabular}[t]{l}
+%     \myframed{$\Rightarrow$}
+%     % \\
+%     % \myframed{\FEthreeSpacesP{1,b}{1}{1} is regular in $\Macro$
+%     %   $\Rightarrow$
+%     %   $\Macro$ is \yUnstructured }
+%   % \end{tabular}
+%   % -----------------------
+% % \textbf{Proof} \ (\FEthreeSpacesP{1,b}{1}{1} is regular in
+% %   $\Macro$ $\Longleftrightarrow$ $\Macro$ is \yUnstructured)
+
+% %   \par\bigskip
+% %   % -----------------------
+% %   \framedmath{\Rightarrow}
+% %   % -----------------------
+%   \begin{columns}
+%     %- - - - - - - - - - - -
+%     \column[b]{0.66\linewidth}
+%     %- - - - - - - - - - - -
+%     \vspace{-0.5em}
+%   \begin{itemize}
+%   \item<1->
+%     Suppose $\Macro$ is \textbf{\yStructured}
+%   \item<1->
+%     For instance, $q_{j}$ and $q_\nv$ are
+%     horizontally aligned with $q_0=(0,0)$.
+%   \item <2->
+%     Repeating previous reasoning, for all $i$:
+%     \begin{align*}
+%       a_i&=a \in\Rset\\
+%       b_i&=0
+%     \end{align*}
+%     but now...
+%     \uncover<5->{ we only deduce:
+%     \begin{equation*}
+%       \begin{split}
+%         c_1&=c_2=...=c_{j}, \\
+%         c_{j+1}&=c_{j+2}=...=c_\nv,
+%       \end{split}
+%     \end{equation*}
+%     }\vspace{-1em}
+%   \item<6->
+%     Thus we cannot say $\ph$ is constant, just
+%     \begin{align*}
+%       \dy\ph(x,y) &=
+%       \begin{cases}
+%         c \quad \text{ if } y>0, \\
+%         \widetilde c \quad \text{ if } y\le 0,
+%       \end{cases}
+%       \\
+%       &\Rightarrow \text{\textbf{counterexample}\quad$\square$}
+%     \end{align*}
+%   % \item<7-> Following this idea a \textbf{counterexample} can be provided ~\hfill$\square$
+%   \end{itemize}
+%     %- - - - - - - - - - - -
+%     \column[b]{0.33\linewidth}
+%     %- - - - - - - - - - - -
+%     \onslide<1->\macroelemBiv
+%      \vspace{0.15\textheight}
+%   \end{columns}
+% \end{frame}
+
+% \SetDefaultBackground
+
+% \begin{frame}
+%   % {\myframedAlert{\FEthreeSpacesP{1,b}11},
+%   %   \myframedAlert{\FEthreeSpacesP1{1,b}1}
+%     {Sufficient condition for stability}
+%   \begin{theorem}[Global stability  of \FEthreeSpacesP{1,b}11 and
+%   \FEthreeSpacesP1{1,b}1]
+%   \begin{itemize}
+%   \item Let us consider a triangulation $\Th$ of a domain
+%     $\domain\subset\Rset^2$ verifying the hypothesis~(H).
+%   \item Let
+%     \MhOneVertex be its associated partition by macroelements with one
+%     only interior vertex.
+%     \begin{enumerate}\itemsep0.33em
+%     \item If \colorUnderLine{every $\Macro\in\MhOneVertex$ is
+%         \yUnstructured},
+%       \par\hfill then
+%       \colorUnderLine{inf-sup condition holds for
+%       \FEthreeSpacesP{1,b}11 elements}
+%   \item If \colorUnderLine{every $\Macro\in\MhOneVertex$ is
+%       \xUnstructured}, then
+%       \par\hfill
+%       \colorUnderLine{inf-sup condition holds for
+%         \FEthreeSpacesP1{1,b}1} elements.
+%     \end{enumerate}
+%   \end{itemize}
+
+% \end{theorem}
+% \textbf{Proof}: We have shown that regularity of every $\Macro\in
+% \MhOneVertex$ (hypothesis $(M_1)$) is sufficient for applying
+% Stenberg Theorem.  \hfill $\square$
+
+% \end{frame}
+
+% \begin{frame}{\myframedAlert{\FEthreeSpacesP{1,b}11 (or Mini-mini-element)}: advantages}
+%   \begin{enumerate}[<+->]\itemsep0.5em
+%   \item In practice, one can hope \textbf{\alert{inf-sup condition is
+%         verified in most meshes}}, specifically those build by
+%     \textbf{usual mesh generators}. Our \textbf{numerical tests
+%       confirm} this fact
+%   \item It can be shown the following \alert{\textbf{optimal error
+%         estimates}}:
+%     \begin{equation*}
+%       \|\ww - \ww_h\|_{H^1} + \| p - p_h\|_{L^2} \le C\, h\quad \hbox{and}\quad
+%       \|\ww - \ww_h\|_{L^2} \le C\, h^2
+%     \end{equation*}
+%     They agree with our \textbf{numerical tests}
+%   \item We have found a ``\myframed<3>{\alert{\textbf{\itshape
+%           Mini-mini-element}}}'': element
+%     \begin{itemize}
+%     \item with less d.o.f. than the mini element,
+%     \item with optimal order and
+%     \item stable in most meshes
+%     \end{itemize}
+
+%   % \item Previous theorem is \alert{\textbf{not a necessary condition}}
+%   %   and inf-sup condition may be verified even if some $\Macro$ are
+%   %   structured
+%   \item In fact, \alert{\textbf{counterexamples where inf-sup
+%         condition is not verified}} have been found just in meshes having
+%     \textbf{both a strong $x$-structure and $y$-structure}
+%   \end{enumerate}
+% \end{frame}
+
+% \begin{frame}{\myframedAlert{Stokes \FEthreeSpacesP{1,b}11}
+%     lid-driven cavity test, 1}
+%   \textbf{Unstructured mesh}
+%   \begin{tabular}{@{}c@{}c@{}c@{}}
+%     \pgfimage[width=0.32\linewidth]{\imgdir/unstructured-mesh}
+%     &
+%     \pgfimage[width=0.31\linewidth]{\imgdir/b1-1-v-uns}
+%     &
+%     \pgfimage[width=0.31\linewidth]{\imgdir/b1-1-p-uns}
+%   \end{tabular}
+
+%   \textbf{Structured mesh}
+%   \begin{tabular}{@{}c@{}c@{}c@{}}
+%     \pgfimage[width=0.32\linewidth]{\imgdir/structured-mesh}
+%     &
+%     \pgfimage[width=0.31\linewidth]{\imgdir/b1-1-v-str}
+%     &
+%     \pgfimage[width=0.31\linewidth]{\imgdir/b1-1-p-str}
+%   \end{tabular}
+%   \textbf{Structured mesh} %\FEthreeSpacesP{1,b}{1,b}1
+% \end{frame}
+
+% \begin{frame}{Mesh structured in just 1 direction}
+%   Test in a $x$--structured but $y$--unstructured mesh
+%   \begin{center}
+%     \pgfimage[width=0.5\linewidth,height=5\baselineskip]{\imgdir/mesh-xStr-yUnstr}
+%     \\
+%     \begin{tabular}{@{}c@{}c@{}c@{}}
+%       \pgfimage[width=0.32\linewidth]{\imgdir/bb-1_x-struc_y_unstruct}
+%       &
+%       \pgfimage[width=0.32\linewidth]{\imgdir/b1-1_x-struc_y_unstruct}
+%       &
+%       \pgfimage[width=0.32\linewidth]{\imgdir/1b-1_x-struc_y_unstruct}
+%       \\
+%       \FEthreeSpacesP{1,b}{1,b}1
+%       &
+%       \FEthreeSpacesP{1,b}{1}1
+%       &
+%       \FEthreeSpacesP{1}{1,b}1
+%   \end{tabular}
+%   \end{center}
+% \end{frame}
+
+% % \begin{frame}{\myframedAlert{\FEthreeSpacesP{1,b}11} \ Error orders}
+% %   \begin{itemize}
+% %   \item Poner aqu\'i las gr\'aficas de error
+% %   \item Comentar orden \'optimo, resultados muy similares al mini-elemento
+% %   \end{itemize}
+% % \end{frame}
+
+% \begin{frame}{\myframedAlert{\FEfourSpacesP1{1,b}{1,b}1} 3D
+%     finite elements}
+% \begin{theorem}
+%   \label{theorem:P1P1bP1b-P1:macroelem.3D}
+%   \begin{itemize}
+%   \item Let $\widehat M\in\MhOneVertex$. Then the combination
+%     \FEfourSpacesP{1}{1,b}{1,b}{1} is regular in $\widehat M$ if and
+%     only if $\widehat M$ is \xUnstructured.
+%   \item The cases \FEfourSpacesP{1,b}1{1,b}{1} and
+%     \FEfourSpacesP{1,b}{1,b}1{1} are symmetric.
+%   \end{itemize}
+% \end{theorem}
+% \begin{itemize}
+% \item \textbf{Interpretation}: like in 2D, we can remove bubble functions from a
+%   component of velocity if and only if the mesh is unstructured in the
+%   corresponding direction.
+% \end{itemize}
+% \bigskip
+% \textbf{Proof}: Similar to 2D \hfill $\square$
+% \end{frame}
+
+% \begin{frame}{\myframedAlert{\FEfourSpacesP11{1,b}1} 3D
+%     finite elements}
+
+% \begin{theorem}
+%   Let $\Macro\in\MhOneVertex$ with one only interior vertex, $q_0$. Let $r_0$ be the
+%   vertical straight line through $q_0$ and ${\cal F}$ the
+%   family of the (vertical) semi-planes with $r_0$ axis.
+%   \begin{enumerate}
+%   \item If $\Macro$ cannot be split by semi-planes of ${\cal F}$, then
+%     \FEfourSpacesP11{1b}1 is regular in $\Macro$.
+%   \item If $\Macro$ can be split by only  two semi-planes of ${\cal F}$, then
+%     \FEfourSpacesP11{1b}1 is regular in $\Macro$ if and only if these two
+%     semi-planes are not aligned (i.e.~they do not form a vertical
+%     plane splitting $\Macro$).
+%   \item If $\Macro$ can be split by more than two semi-planes of ${\cal F}$, then \FEfourSpacesP11{1b}1 is \emph{not} regular in $\Macro$.
+%   \end{enumerate}
+%   \label{theorem:P1P1P1b-P1:macroelem.3D}
+% \end{theorem}
+% \bigskip
+% \textbf{Proof}: Quite technical \hfill $\square$
+% \end{frame}
+
+
+% % \begin{frame}{\myframedAlert{\FEfourSpacesP11{1,b}1} 3D
+% %     finite elements}
+% %   ¿Cual de las simulaciones 3D meto?
+% % \end{frame}
+
+% \begin{frame}{\myframedAlert{\FEthreeSpacesP{2}11}
+%     stability}
+%   \begin{enumerate}\itemsep0.66em
+%   \item Methods and results: parallel to \FEthreeSpacesP{1,b}11
+%     (although more technical)
+%   \item We have also proved that \FEthreeSpacesP{2}11 is stable in
+%     most unstructured 2D meshes
+%   \end{enumerate}
+% \end{frame}
+
+% \begin{frame}{Characterization of regular macroelements}
+%   \begin{theorem}
+%     \label{theorem:P2P1P1:macroelem}
+%     Let $\Macro\in\MhOneVertex$ be a macroelement which can be written
+%     as union of $\nv$ elements which share exactly one interior common
+%     vertex, $q_0$.
+%     \begin{enumerate}
+%     \item If $\Macro$ is \yStructured (i.e.~there are two vertices
+%       horizontally aligned to $q_0$), then \FEthreeSpacesP{2}{1}{1} is
+%       not regular in $\Macro$.
+%     \item If there is just one vertex in $\Macro$ horizontally aligned
+%       with $q_0$, then \FEthreeSpacesP{2}{1}{1} is regular in $M$.
+%     \item If there is no vertex horizontally aligned with $q_0$:
+%       \begin{enumerate}
+%       \item If $\nv$ is odd, then \FEthreeSpacesP{2}{1}{1} is regular
+%         in $\Macro$.
+%       \item If $\nv$ is even, then \FEthreeSpacesP{2}{1}{1} is regular
+%         in $\Macro$ if and only if the following algebraic condition
+%         does \textbf{not hold}:
+%         \vspace{-0.6em}
+%         {\scriptsize
+%         \begin{equation*}
+%           \label{eq:ch1:instabilityMacroCondition}
+%           \sum_{i=1}^\nv (-1)^{i} \cot(\sigma_i)\left(\frac1{|T_i|}+ \frac1{|T_{i+1}|} \right) = 0,
+%         \end{equation*}
+%         }
+%       \end{enumerate}
+%       \vspace{-0.6em}
+%       {\scriptsize
+%         where $\sigma_i$: angle between positive horizontal
+%         semiaxis from $q_0$ and  common edge of $T_i$ and $T_{i+1}$
+%       }
+%     \end{enumerate}
+%   \end{theorem}
+% \scriptsize\textbf{Proof}: Similar to \FEthreeSpacesP{1,b}{1}{1}, but
+% more technical \hfill $\square$
+% \par\mbox{}
+% \end{frame}
+
+% % \begin{frame}
+% %   \begin{proof}
+% %     \begin{itemize}
+% %     \item Es m\'as complicada que \FEthreeSpacesP{1,b}11
+% %     \item Idea: Usar la de  mi charla para el grupo de Tom\'as
+% %       (repasarla)
+% %     \end{itemize}
+% %   \end{proof}
+% % \end{frame}
+
+%   \newcommand{\macroelemD}{
+%     \begin{tikzpicture}
+%       \def\nv{6}
+%       \def\ix{1.75}\def\iy{1.25}
+%       \def\vertices{
+%         \coordinate [label=-45:$q_0$] (q0) at (0,0);
+%         \coordinate [label=right: $q_1$] (q1) at (\ix*1,0);
+%         \coordinate [label=+45: $q_2$] (q2) at (\ix,\iy);
+%         \coordinate [label=+135: $q_3$] (q3) at  (0,\iy);
+%         \coordinate [label=+135: $q_4$] (q4) at   (-\ix,0);
+%         \coordinate [label=225: $q_5$] (q5) at (-\ix,-\iy);
+%         \coordinate [label=-45: $q_6$] (q6) at (0,-\iy);
+%       }
+%       \def\xPoints {
+%         \coordinate (x1) at ($ (q1)!.5!(q0) $);
+%         \coordinate (x2) at ($ (q2)!.5!(q0) $);
+%         \coordinate (x3) at ($ (q3)!.5!(q0) $);
+%         \coordinate (x4) at ($ (q4)!.5!(q0) $);
+%         \coordinate (x5) at ($ (q5)!.5!(q0) $);
+%         \coordinate (x6) at ($ (q6)!.5!(q0) $);
+%       }
+%       \def\showPoints{
+%         \foreach \i in {0,...,\nv}
+%         \fill [black] (q\i) circle (3pt);
+%         \foreach \i in {1,...,\nv} {
+%           \draw [fill, lightgray] (x\i) circle (2.25pt);
+%           \draw (x\i) circle (2.25pt);
+%         }
+%       }
+%       \def\showLines{
+%         % Draw borders
+%         \draw (q1)--(q2) -- (q3) -- (q4) -- (q5) -- (q6) -- cycle;
+%         % Draw interior edges
+%         \foreach \i in {1,...,\nv} {
+%           \draw (q\i) -- (q0);
+%         }
+%       }
+%       \def\showTriangles{
+%         \node at ($ (q6)!.5!(q1) $) [label=-45:${T_6}$] {};
+%         \node at ($ (q1)!.5!(q2) $) [label=0:${T_1}$] {};
+%         \node at ($ (q2)!.5!(q3) $) [label=90:${T_2}$] {};
+%         \node at ($ (q3)!.5!(q4) $) [label=135:${T_3}$] {};
+%         \node at ($ (q4)!.5!(q5) $) [label=180:${T_4}$] {};
+%         \node at ($ (q5)!.5!(q6) $) [label=-45:${T_5}$] {};
+%       }
+%       \vertices
+%       \xPoints
+%       \showPoints
+%       \showLines
+%       \showTriangles
+%     \end{tikzpicture}
+%   }
+%   \newcommand{\macroelemE}{
+%     \begin{tikzpicture}
+%       \def\nv{6}
+%       \def\ix{1.75}\def\iy{0.75}
+%       \def\vertices{
+%         \coordinate [label=-45:$q_0$] (q0) at (0,0);
+%         \coordinate [label=right: $q_1$] (q1) at (\ix,\iy);
+%         \coordinate [label=+45: $q_2$] (q2) at (0,2*\iy);
+%         \coordinate [label=+135: $q_3$] (q3) at  (-\ix,\iy);
+%         \coordinate [label=+135: $q_4$] (q4) at   (-\ix,-\iy);
+%         \coordinate [label=225: $q_5$] (q5) at (0,-2*\iy);
+%         \coordinate [label=-45: $q_6$] (q6) at (\ix,-\iy);
+%       }
+%       \def\xPoints {
+%         \coordinate (x1) at ($ (q1)!.5!(q0) $);
+%         \coordinate (x2) at ($ (q2)!.5!(q0) $);
+%         \coordinate (x3) at ($ (q3)!.5!(q0) $);
+%         \coordinate (x4) at ($ (q4)!.5!(q0) $);
+%         \coordinate (x5) at ($ (q5)!.5!(q0) $);
+%         \coordinate (x6) at ($ (q6)!.5!(q0) $);
+%       }
+%       \def\showPoints{
+%         \foreach \i in {0,...,\nv}
+%         \fill [black] (q\i) circle (3pt);
+%         \foreach \i in {1,...,\nv} {
+%           \draw [fill, lightgray] (x\i) circle (2.25pt);
+%           \draw (x\i) circle (2.25pt);
+%         }
+%       }
+%       \def\showLines{
+%         % Draw borders
+%         \draw (q1)--(q2) -- (q3) -- (q4) -- (q5) -- (q6) -- cycle;
+%         % Draw interior edges
+%         \foreach \i in {1,...,\nv} {
+%           \draw (q\i) -- (q0);
+%         }
+%       }
+%       \def\showTriangles{
+%         \node at ($ (q6)!.5!(q1) $) [label=-45:${T_1}$] {};
+%         \node at ($ (q1)!.5!(q2) $) [label=0:${T_2}$] {};
+%         \node at ($ (q2)!.5!(q3) $) [label=90:${T_3}$] {};
+%         \node at ($ (q3)!.5!(q4) $) [label=135:${T_4}$] {};
+%         \node at ($ (q4)!.5!(q5) $) [label=180:${T_5}$] {};
+%         \node at ($ (q5)!.5!(q6) $) [label=-45:${T_6}$] {};
+%       }
+%       \vertices
+%       \xPoints
+%       \showPoints
+%       \showLines
+%       \showTriangles
+%     \end{tikzpicture}
+%   }
+
+
+% \begin{frame}{{\amarillo Not regular} \FEthreeSpacesP211 macroelements}
+%   \begin{columns}
+%     %- - - - - - - - - - - -
+%     \column[t]{0.49\linewidth}
+%     %- - - - - - - - - - - -
+%     % \subfloat[Two vertices
+%     % horizontally aligned with $q_0$.]{
+%     \macroelemD
+%     \begin{flushleft}
+%       \quad\alert{(a)}\quad \myframed{\yStructured}
+%     \end{flushleft}
+%     % \subfloat[No vertex horizontally aligned, but $n$ is even
+%     % and~(\ref{eq:ch1:instabilityMacroCondition}) holds.]{
+%     %- - - - - - - - - - - -
+%     \column[t]{0.49\linewidth}
+%     %- - - - - - - - - - - -
+%     \macroelemE
+%     \begin{figure}
+%       \alert{(b)}\quad \myframed{\yUnstructured}
+%       \\[0.66em]
+%       (``\textit{weak}'' $y$--structure)
+%     \end{figure}
+%   \end{columns}
+% \end{frame}
+
+% \begin{frame}{\myframedAlert{Stokes \FEthreeSpacesP{2}11}
+%     lid-driven cavity test}
+%   \begin{center}
+%     \begin{tabular}{rr}
+%       \pgfimage[width=0.2\linewidth]{\imgdir/unstructured-mesh}
+%       &
+%       \pgfimage[width=0.2\linewidth]{\imgdir/structured-mesh}
+%       \\[-0.2em]
+%       \pgfimage[width=0.458\linewidth]{\imgdir/21-1-p-uns}
+%       &
+%       \pgfimage[width=0.45\linewidth]{\imgdir/21-1-p-str}
+%       \\
+%       \scriptsize Unstructured mesh pressure & \scriptsize Structured mesh pressure
+%     \end{tabular}
+%     \par\mbox{}
+%   \end{center}
+% \end{frame}
+
+% \begin{frame}{Stokes \FEthreeSpacesP{2}11 error orders}
+%   \small
+%   \begin{columns}
+%     % - - - - - - - - - - - - -
+%     \column{0.50\linewidth}
+%     % - - - - - - - - - - - - -
+%     Orders in energy norms:
+%     \begin{itemize}
+%     \item<2-> \myframed<2>{$\OO(h^{\mathbf{2}})$ for $\uu$ and $\vv$
+%         in $\|\cdot\|_{L^2}$}
+%           \tikz[na] \coordinate(uv-l2-error-L);
+%     \item<3-> \myframed<3>{$\OO(h^{\mathbf{1}})$ for $\uu$ and $\vv$
+%         in $\|\cdot\|_{H^1}$}
+%           \tikz[na] \coordinate(uv-h1-error-L);
+%         \item<4-> \myframed<4>{$\OO(h^{\mathbf{1}})$ for $\pp$ in $\|\cdot\|_{L^2}$}
+%           \tikz[na] \coordinate(p-l2-error-L);
+%       \par\medskip
+%     % \item Note: Order $\OO(h^3)$ not reached for $\uu\sim\P2$ due to
+%     %   influence of $\vv\sim\P1$
+%     \end{itemize}
+%     % - - - - - - - - - - - - -
+%     \column{0.49\linewidth}
+%     % - - - - - - - - - - - - -
+%    \begin{tikzpicture}
+%       \node [inner sep=0pt,above right]{
+%         \pgfimage[width=\linewidth]{\imgdir/21-1-errors-loglog}
+%       };
+%       \path (2,2.1) coordinate (u-error-img);
+%       \path (2,3) coordinate (v-h1z-error-img);
+%       \path (2,1.8) coordinate (v-l2-error-img);
+%     \end{tikzpicture}
+%   \end{columns}
+%   % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+%   \vspace{-1em}
+%   \begin{overprint}
+%     \begin{center}
+%       \scriptsize
+%       \begin{tabular}{l@{\qquad}r@{\qquad}rrrrrr}
+%         \toprule
+%         $h_{\max}$ & & $2^{-3}$ & $2^{-4}$ & $2^{-5}$ & $2^{-6}$ & $2^{-7}$
+%         & $2^{-8}$
+%         \\ \otoprule
+%         \multirow{2}*{$\uu$}
+%         & $\|u-u_h\|_{L^2}$ &
+%         \rowalert{2} {2.185  }{ 2.291  }{ 2.008} {
+%           \tikz[na]  \node(u-l2-error-R) {2.029  };
+%         }{2.031  }{ 2.066}
+%         \\ \cmidrule{2-8}
+%         & $\|u-u_h\|_{H^1_0}$ &
+%         \rowalert{3} {1.758  }{ 1.774  }{ 0.986} {
+%           \tikz[na]  \node(u-h1-error-R) {1.212};
+%         }{1.067  }{ 1.237}
+%         \\ \midrule
+%         \multirow{2}*{$\vv$}
+%         & $\|v-v_h\|_{L^2}$ &
+%         \rowalert{2} {2.056  }{ 2.116  }{ 2.028} { \tikz[na]
+%           \node(v-l2-error-R) {1.980};  }{ 2.068  }{ 2.040}
+%         \\ \cmidrule{2-8}
+%         & $\|\dz v-\dz v_h\|_{L_2}$ &
+%         \rowalert{3} {0.977  }{ 1.044  }{ 1.017}{ \tikz[na]
+%           \node(v-h1z-error-R){0.990}; }{1.022  }{ 1.019}
+%         \\ \midrule
+%         $\pp$
+%         & $\|p-p_h\|_{L^2}$ &
+%         \rowalert{4} {1.070  }{ 2.101  }{ 0.798}{ \tikz[na]
+%           \node(p-l2-error-R){1.419};}{0.599  }{ 0.820}
+%         \\ \bottomrule
+%       \end{tabular}
+%     \end{center}
+%   \end{overprint}
+%   \begin{tikzpicture}[overlay]
+%     \path<2>[myarrow]
+%     (u-l2-error-R) edge [in=0,out=155] (uv-l2-error-L);
+%     % \path<2>[myarrow2]
+%     % (u-error-L) edge [out=0, in=170] (u-error-img);
+%     %
+%     \path<2>[myarrow]
+%     (v-l2-error-R) edge [in=0,out=155] (uv-l2-error-L);
+%     % \path<3>[myarrow2]
+%     % (v-h1z-error-L) edge [out=0, in=170] (v-h1z-error-img);
+%     % ------------------------------------------------------
+%     \path<3>[myarrow]
+%     (u-h1-error-R) edge [out=155, in=0] (uv-h1-error-L);
+%     %
+%     % \path<2>[myarrow2]
+%     % (u-error-L) edge [out=0, in=170] (u-error-img);
+%     \path<3>[myarrow]
+%     (v-h1z-error-R) edge [out=155, in=0] (uv-h1-error-L);
+%     % \path<3>[myarrow2]
+%     % (v-h1z-error-L) edge [out=0, in=170] (v-h1z-error-img);
+%     % ------------------------------------------------------
+%     \path<4>[myarrow]
+%     (p-l2-error-R) edge [out=155, in=0] (p-l2-error-L);
+%     % \path<4>[myarrow2]
+%     % (p-l2-error-L) edge [out=0, in=155] (v-l2-error-img);
+%   \end{tikzpicture}
+% \end{frame}
+
+% \begin{frame}{3D numerical cavity tests}
+%   \textbf{Structured mesh}
+%   \begin{tabular}{ccc}
+%     \pgfimage[width=0.3\linewidth]{\imgdir/222-1-str}
+%     &
+%     \pgfimage[width=0.3\linewidth]{\imgdir/221-1-str}
+%     &
+%     \pgfimage[width=0.3\linewidth]{\imgdir/211-1-str}
+%   \end{tabular}
+%   \textbf{Unstructured mesh}
+%   \begin{tabular}{ccc}
+%     \pgfimage[width=0.3\linewidth]{\imgdir/222-1-uns}
+%     &
+%     \pgfimage[width=0.3\linewidth]{\imgdir/221-1-uns}
+%     &
+%     \pgfimage[width=0.3\linewidth]{\imgdir/211-1-uns}
+%     \\[-0.3em]
+%     \small\FEfourSpacesP2221 & \small\FEfourSpacesP2211 &
+%     \small\FEfourSpacesP2111
+%   \end{tabular}
+% \end{frame}
+
+%%% Local Variables:
+%%% coding: utf-8
+%%% TeX-master: "numerical-oceanography"
+%%% mode: latex
+%%% ispell-local-dictionary: "english"
+%%% End:
