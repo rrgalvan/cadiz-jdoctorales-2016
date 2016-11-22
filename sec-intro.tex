@@ -401,53 +401,53 @@
     analysis}, see e.g.~\cite{brezis:2017,allaire:2007}.
 \end{frame}
 
-%--------------------------------------------------------------------------
-\begin{frame}{Numerical Simulation}
-%--------------------------------------------------------------------------
+% %--------------------------------------------------------------------------
+% \begin{frame}{Numerical Simulation}
+% %--------------------------------------------------------------------------
 
-Construction of any numerical method for solving a (steady) PDE requires to consider:
+% Construction of any numerical method for solving a (steady) PDE requires to consider:
 
-\bigskip
+% \bigskip
 
-\begin{enumerate}
-  \setlength\itemsep{1.2em}
-\item How to represent the solution $u(\xx,t)$ by an
-  \textit{approximate solution} $u_h(\xx,t)$?
-\item In which sense the approximate solution $u_h (\xx,t)$
-  satisfies the PDE?
-\end{enumerate}
-\end{frame}
+% \begin{enumerate}
+%   \setlength\itemsep{1.2em}
+% \item How to represent the solution $u(\xx,t)$ by an
+%   \textit{approximate solution} $u_h(\xx,t)$?
+% \item In which sense the approximate solution $u_h (\xx,t)$
+%   satisfies the PDE?
+% \end{enumerate}
+% \end{frame}
 
-%--------------------------------------------------------------------------
-\begin{frame}{Finite Difference Method}
-%--------------------------------------------------------------------------
-Simpler numerical method for PDE
+% %--------------------------------------------------------------------------
+% \begin{frame}{Finite Difference Method}
+% %--------------------------------------------------------------------------
+% Simpler numerical method for PDE
 
-Example: the \alert{Poisson problem} in
-$\Omega=(0,1)\times (0,1) \subset\Rset^2$:
+% Example: the \alert{Poisson problem} in
+% $\Omega=(0,1)\times (0,1) \subset\Rset^2$:
 
-\begin{enumerate}
-  \setlength\itemsep{1.1em}
-\item We consider the mesh \structure{$\overline \Omega_h = \{ (x_i,y_j)=(ih,jh) \st 0 \le i,j \le M \} $}
-and \alert{define $u_h(\xx)$ by} \soften{piecewise interpolation of the approximations}
-$$
-\alert{u^h_{ij}\simeq u(x_i,y_j)}.
-$$
-\item Partial derivatives are approximated \structure{on each interior node $(x_i,y_j)$} as incremental quotients:
-  \begin{BlockNoTitle}
-    \vspace{-1.5em}
-    \begin{multline*}
-      -\Delta u(x_i,y_j) = -\partial^2_{xx}u(x_i,y_j)
-      -\partial^2_{yy}u(x_i,y_j)\simeq
-      \\
-      -\frac{u_{i-1,j}-2u_{ij}+u_{i+1,j}}{h^2}
-      -\frac{u_{i,j-1}-2u_{ij}+u_{i,j+1}}{h^2} = f(x_i,x_j).
-    \end{multline*}
-  \end{BlockNoTitle}
-  + B.C. $\Rightarrow$ \textbf{linear equations system}, $(M-1)^2$ equations and unknowns.
-\end{enumerate}
+% \begin{enumerate}
+%   \setlength\itemsep{1.1em}
+% \item We consider the mesh \structure{$\overline \Omega_h = \{ (x_i,y_j)=(ih,jh) \st 0 \le i,j \le M \} $}
+% and \alert{define $u_h(\xx)$ by} \soften{piecewise interpolation of the approximations}
+% $$
+% \alert{u^h_{ij}\simeq u(x_i,y_j)}.
+% $$
+% \item Partial derivatives are approximated \structure{on each interior node $(x_i,y_j)$} as incremental quotients:
+%   \begin{BlockNoTitle}
+%     \vspace{-1.5em}
+%     \begin{multline*}
+%       -\Delta u(x_i,y_j) = -\partial^2_{xx}u(x_i,y_j)
+%       -\partial^2_{yy}u(x_i,y_j)\simeq
+%       \\
+%       -\frac{u_{i-1,j}-2u_{ij}+u_{i+1,j}}{h^2}
+%       -\frac{u_{i,j-1}-2u_{ij}+u_{i,j+1}}{h^2} = f(x_i,x_j).
+%     \end{multline*}
+%   \end{BlockNoTitle}
+%   + B.C. $\Rightarrow$ \textbf{linear equations system}, $(M-1)^2$ equations and unknowns.
+% \end{enumerate}
 
-\end{frame}
+% \end{frame}
 
 %--------------------------------------------------------------------------
 \begin{frame}{Finite Element Method (FEM)}
