@@ -154,7 +154,7 @@
 \begin{frame}{Whole set of Equations}
   %----------------------------------------------------------------------
 %  \vspace{-0.2em}
-  \note{Comment briefly the main difficulties of Navier-Stokes equations}
+  \note{Comment briefly the main difficulties of Navier--Stokes equations}
   \begin{overprint}
     \onslide<1>
     In the adimensional domain:
@@ -266,7 +266,7 @@
       \vspace{-1.3\baselineskip}
       \begin{align*}
         \dt \uu + \uu\cdot\gradx\uu + \vv\,\dz\uu - \Delta_\visc\uu +
-        \frac 1 \rho_\star \gradx \pp= \fU
+        \gradx \pp= \fU
         \\
         \varepsilon^2 \Big( \dt \vv
         + \uu\cdot\gradx\vv + \vv\,\dz\vv - \Delta_\visc\vv \Big)
@@ -285,7 +285,7 @@
       \vspace{-1.3\baselineskip}
       \begin{align*}
         \dt \uu + \uu\cdot\gradx\uu + \vv\,\dz\uu - \Delta_\visc\uu +
-        \frac 1 \rho_\star \gradx \pp= \fU
+        \gradx \pp= \fU
         \\
         \varepsilon^2 \Big( \dt \vv + \uu\cdot\gradx\vv + \vv\,\dz\vv -
         \Delta_\visc\vv \Big)
@@ -310,7 +310,7 @@
   \end{tikzpicture}
  \end{frame}
 
-\begin{frame}{Anisotropic Navier-Stokes equations}
+\begin{frame}{Anisotropic Navier--Stokes equations}
   %----------------------------------------------------------------------
   % \vspace*{0.5em}
   \begin{BlockNoTitle}
@@ -321,10 +321,10 @@
         \end{turn}
         }
         &
-        \dt \uu + \uu\cdot\gradx\uu + \vv\,\dz\uu - \Delta_\visc\uu +
-        \frac 1 \rho_\star \gradx \pp &= \fU
+        \dt \uu + \alert<2>{\uu\cdot\gradx\uu + \vv\,\dz\uu} - \Delta_\visc\uu +
+        \gradx \pp &= \fU
         \\[0.2em]&
-        \varepsilon^2 \Big( \dt \vv + \uu\cdot\gradx\vv + \vv\,\dz\vv -
+        \varepsilon^2 \Big( \dt \vv + \alert<2>{\uu\cdot\gradx\vv + \vv\,\dz\vv} -
         \Delta_\visc\vv \Big)
         + \dz \pp &= 0
         \\[0.2em]&
@@ -332,19 +332,19 @@
       \vspace{-1.4\baselineskip}
     \end{tabular}
   \end{BlockNoTitle}
-  \uncover<1-> {If $\varepsilon=1$, standard $O(1)$ Navier-Stokes
+  \uncover<2-> {If $\varepsilon=1$, we get standard $O(1)$ \alert<2>{Navier--Stokes} equations
   \par  \hfill
   ...but $\varepsilon=1$ is  not realistic in geophysical domains (\exclamation)}
   \vfill
-  \uncover<2->{
+  \uncover<3->{
   Better approaches:}
   \begin{enumerate}\itemsep0.5em
-  \item<2-> $\varepsilon=0$: Hydrostatic Navier-Stokes or Primitive Equations
-  \item<3-> $0<\varepsilon\lesssim 10^{-3}$:
-    ``\textit{\bfseries\alert{Quasi-hydrostatic}}'' Navier-Stokes Equations
+  \item<3-> $\varepsilon=0$: Hydrostatic Navier--Stokes or Primitive Equations
+  \item<4-> $0<\varepsilon\lesssim 10^{-3}$:
+    ``\textit{\bfseries\alert{Quasi-hydrostatic}}'' Navier--Stokes Equations
     \vspace*{0.5em}
     \begin{itemize}
-    \item<3-> More realistic case in geophysical domains, e.g.
+    \item<4-> More realistic case in geophysical domains, e.g.
       $$
       \varepsilon = \frac{\text{5,121 m}}{\text{3,700 km}}
       \quad
@@ -354,7 +354,7 @@
   \end{enumerate}
 \end{frame}
 
-\begin{frame}{Hydrostatic Navier-Stokes (or Primitive) equations}
+\begin{frame}{Hydrostatic Navier--Stokes (or Primitive) equations}
 %------------------------------------------------------------
   The simplification \framedmath{\varepsilon=0} is usually taken,
   obtaining:
@@ -381,7 +381,7 @@
 \end{block}
 \begin{itemize}
 \item Originally derived from scale analysis~\cita{Pedlosky:1987,CushmanRoisin-Beckers:09}
-\item Mathematically justified as limit of anisotropic Navier-Stokes \aniNS,
+\item Mathematically justified as limit of anisotropic Navier--Stokes \aniNS,
   when $\varepsilon\to 0$ in vertical momentum
   equation~\cita{Besson-Laydi:92,Azerad-Guillen:01}
 % \item Complemented with adequate boundary
@@ -392,7 +392,7 @@
 \end{itemize}
 \end{frame}
 
-% \begin{frame}{Vertical integration of Hydrostatic Navier-Stokes}
+% \begin{frame}{Vertical integration of Hydrostatic Navier--Stokes}
 %   \begin{itemize}
 %   \item Model widely studied (both theoretically and in numerical
 %     simulations)
@@ -437,7 +437,7 @@
 % \end{itemize}
 % \end{frame}
 
-\begin{frame}{Vertical integration of Hydrostatic Navier-Stokes}
+\begin{frame}{Vertical integration of Hydrostatic Navier--Stokes}
   \begin{itemize}\itemsep0.77ex
   \item Widely studied \soften{(both theoretically and in numerical
     simulations)}
@@ -491,11 +491,18 @@
 \vspace{0.5em}
 \small
 \begin{tabularx}{\textwidth}{@{}X@{\qquad}X@{}}
-  {\bf Not integrated \aniNS}  & {\bf Integrated model \reducedProblem}
+  {\bf Integrated model \reducedProblem} &
+  {\bf Not integrated \aniNS}
   \\ \toprule
-  System of  4 PDE +   4 unknowns: \ \bad &
-  System of 3 PDE + 3 unknowns: \ \good
+  System of \textit{3 PDE} + 3 unknowns: \ \good&
+  System of  \textit{4 PDE} +   4 unknowns: \ \bad
   \\ %\midrule
+    % 3 unknowns\ \good\ :
+    \hspace{17ex}
+    \begin{tabular}[b]{l}
+      $\uu$ (in $\domain$) \\ $\ps$ (in $\surface$) \ \good
+    \end{tabular}
+    &
   % 4 unknowns \bad \ :
       \hspace{17ex}
       \begin{tabular}[l]{l}
@@ -503,58 +510,110 @@
       \\ $\pp$ (in $\domain$) \ \bad
     \end{tabular}
     % $\vv=\vv(\uu)$
-    &
-    % 3 unknowns\ \good\ :
-    \hspace{17ex}
-    \begin{tabular}[b]{l}
-      $\uu$ (in $\domain$) \\ $\ps$ (in $\surface$) \ \good
-    \end{tabular}
     \\ \midrule
-    $\vv$ is not decoupled\ \bad
+    $\vv=\vv(\uu)$ is \emph{decoupled} \ \good
     &
-    $\vv=\vv(\uu)$ is decoupled \ \good
+    $\vv$ is \textit{not decoupled}\ \bad
   \\ \midrule
-  Only differential problems \ \good  &  Differential
-  $+$ z-integral pb. \ \bad
+   Differential
+  $+$ z-\emph{integral} pb. \ \bad
+  &
+  Only differential problems \ \good
   \\ \midrule
-  Unstructured or struct. meshes \ \good &
   Structured meshes\ \bad
+  &
+  Unstructured or struct. meshes \ \good
   \\
   % \begin{center}\vspace{-2em}
   \hspace{-3.2ex}
-    \pgfimage[width=3.5cm]{img/unstruct-mesh}
-  % \end{center}
-  &
-  % \begin{center}\vspace{-2em}
-  \hspace{-3.2ex}
-    \pgfimage[width=3.5cm]{img/struct-mesh}
+    \hfill\pgfimage[width=3.5cm]{img/struct-mesh}\hfill\qquad~
   % \end{center}
 %  \\ \bottomrule
+    &
+  % \begin{center}\vspace{-2em}
+  \hspace{-3.2ex}
+    \hfill\pgfimage[width=3.5cm]{img/unstruct-mesh}\hfill\qquad~
+  % \end{center}
     \\ \hline
-    More general models, $\varepsilon\ge 0$\ \good &
     Needs simplification $\varepsilon=0$\ \bad
+    &
+    More general models, $\varepsilon\ge 0$\ \good
   \\ \midrule
-  {\scriptsize Flexibility (extensions like mesh adaptivity)}\good &
   {\scriptsize Less flexibility for include extensions} \bad
+  &
+  {\scriptsize Flexibility (extensions like mesh adaptivity)}\good
 \end{tabularx}
 \end{frame}
+
+% \begin{frame}
+% \frametitle{Comparison of the models}
+% \vspace{0.5em}
+% \small
+% \begin{tabularx}{\textwidth}{@{}X@{\qquad}X@{}}
+%   {\bf Not integrated \aniNS}  & {\bf Integrated model \reducedProblem}
+%   \\ \toprule
+%   System of  4 PDE +   4 unknowns: \ \bad &
+%   System of 3 PDE + 3 unknowns: \ \good
+%   \\ %\midrule
+%   % 4 unknowns \bad \ :
+%       \hspace{17ex}
+%       \begin{tabular}[l]{l}
+%       $\uu$ (in $\domain$), \\  $\vv$ (in $\domain$),
+%       \\ $\pp$ (in $\domain$) \ \bad
+%     \end{tabular}
+%     % $\vv=\vv(\uu)$
+%     &
+%     % 3 unknowns\ \good\ :
+%     \hspace{17ex}
+%     \begin{tabular}[b]{l}
+%       $\uu$ (in $\domain$) \\ $\ps$ (in $\surface$) \ \good
+%     \end{tabular}
+%     \\ \midrule
+%     $\vv$ is not decoupled\ \bad
+%     &
+%     $\vv=\vv(\uu)$ is decoupled \ \good
+%   \\ \midrule
+%   Only differential problems \ \good  &  Differential
+%   $+$ z-integral pb. \ \bad
+%   \\ \midrule
+%   Unstructured or struct. meshes \ \good &
+%   Structured meshes\ \bad
+%   \\
+%   % \begin{center}\vspace{-2em}
+%   \hspace{-3.2ex}
+%     \pgfimage[width=3.5cm]{img/unstruct-mesh}
+%   % \end{center}
+%   &
+%   % \begin{center}\vspace{-2em}
+%   \hspace{-3.2ex}
+%     \pgfimage[width=3.5cm]{img/struct-mesh}
+%   % \end{center}
+% %  \\ \bottomrule
+%     \\ \hline
+%     More general models, $\varepsilon\ge 0$\ \good &
+%     Needs simplification $\varepsilon=0$\ \bad
+%   \\ \midrule
+%   {\scriptsize Flexibility (extensions like mesh adaptivity)}\good &
+%   {\scriptsize Less flexibility for include extensions} \bad
+% \end{tabularx}
+% \end{frame}
 
 \begin{frame}{Our objectives}
 \begin{enumerate}\itemsep0.66em
 \item \textit{Analysis} of the pecularities (the stability) of
-  Navier-Stokes in geophysical domains (where $\varepsilon$ is ``small'')
+  Navier--Stokes in geophysical domains (where $\varepsilon$ is ``small'')
 \item Use this analysis to \textit{propose some new FE
     combinations} which:% fulfill the following \textit{purposes}:
   \begin{enumerate}\itemsep0.33em
   \item Allow numerically solving \textit{more realistic models than pure hydrostatic
       ones}. Moreover, to achieve solving both Hydrostatic and not
-    Hydrostatic Navier-Stokes equations in the same way.
+    Hydrostatic Navier--Stokes equations in the same way.
   \item \textit{Avoid the introduction of integro-differential equations},
     exploiting the advantages of non-integral models (enounced above)
   \end{enumerate}
 \item Develop \textit{new discrete schemes} which are
   stable, when $\varepsilon\to 0$, for usual LBB FE combinations for
-  Navier-Stokes (including $\varepsilon=0$)
+  Navier--Stokes (including $\varepsilon=0$)
 \item Extend these new schemes to \textit{more complex time-dependent
     problems} (including variable density) and define \textit{new
   time-splitting schemes}

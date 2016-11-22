@@ -1,0 +1,46 @@
+\begin{thebibliography}{BBF08}
+
+\bibitem[AG01]{Azerad-Guillen:01}
+P.~Az{\'e}rad and F.~Guill{\'e}n.
+\newblock Mathematical justification of the hydrostatic approximation in the
+  primitive equations of geophysical fluid dynamics.
+\newblock {\em Siam J. Math. Ana.}, 33(4):847--859, 2001.
+
+\bibitem[All07]{allaire:2007}
+Grégoire Allaire.
+\newblock {\em Numerical Analysis and Optimization}.
+\newblock Oxford University Press, Oxford, 2007.
+
+\bibitem[BBF08]{Boffi-Brezzi-Fortin:08}
+Daniele Boffi, Franco Brezzi, and Michel Fortin.
+\newblock {Finite elements for the Stokes problem}, 2008.
+
+\bibitem[BL92]{Besson-Laydi:92}
+O.~Besson and M.R. Laydi.
+\newblock Some estimates for the anisotropic {N}avier-{S}tokes equations and
+  for the hydrostatic approximation.
+\newblock {\em Math. Mod. and Num. Anal}, Vol. 26(7):855--865, 1992.
+
+\bibitem[Bre10]{brezis:2017}
+Haim Brezis.
+\newblock {\em Functional {Analysis}, {Sobolev} {Spaces} and {Partial}
+  {Differential} {Equations}}.
+\newblock Springer New York, New York, NY, 2010.
+
+\bibitem[BS08]{Brenner-Scott:08}
+S.C. Brenner and L.R. Scott.
+\newblock {\em The Mathematical Theory of Finite Element Methods}.
+\newblock Springer, 2008.
+
+\bibitem[CB09]{CushmanRoisin-Beckers:09}
+B.~{Cushman-Roisin} and J.~M. Beckers.
+\newblock {\em Introduction to Geophysical Fluid Dynamics - Physical and
+  Numerical Aspects}.
+\newblock Academic Press, 2009.
+
+\bibitem[Ped87]{Pedlosky:1987}
+J.~Pedlosky.
+\newblock {\em Geophysical Fluid Dynamics.}
+\newblock Springer-Verlag, New York, USA, 1987.
+
+\end{thebibliography}
