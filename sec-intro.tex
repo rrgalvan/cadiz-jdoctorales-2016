@@ -48,14 +48,14 @@
   \begin{itemize}
   \item $\Omega\subset\Rset^N$, \quad ($N=1,2,3$), \ open spatial domain \tiragris{occupied by a
       homogeneous, isotropic, heat conductor material}
-  \item $\xx=(x_1,\dots,x_N) \in \Omega$: \textit{space} variable, \quad $t\in (0,T)$: \textit{time} variable
+  \item $\xx=(x_1,\dots,x_N) \in \Omega$: \textit{space} variable,
+    \quad $t\in (0,T)$: \textit{time} variable
   \item \textit{Temperature}: unknown function,
     \begin{align*}
     u:\Omega\times (0,T) \to \Rset, \\
       (\xx,t) \mapsto u(\xx,t).
     \end{align*}
     \vspace{-1em}
-    \pause
   \item \textit{Heat source}: a given function, $f(\xx,t)$
     \vspace{0.66em}
   \item Using physical laws (see e.g.~\cite{allaire:2007}),
@@ -92,7 +92,7 @@
     \end{itemize}
     \bigskip
     \item<4-> We must add an \textbf{initial condition}
-      \soften{(state of the model at time $t=0$)}:
+      \soften{\small (state of the model at time $t=0$)}:
       \begin{BlockNoTitle}
         \begin{equation*}
           u(\xx,0) = u_0(\xx), \soften{ \qquad \forall \xx\in\Omega}
@@ -101,7 +101,7 @@
 
     \item<4->
       And also \textbf{boundary conditions}
-      \soften{(evolution of the model on the boundary,
+      \soften{\small (evolution of the model on the boundary,
         $\xx\in\partial\Omega$)}\dots
   \end{itemize}
 \end{frame}
@@ -203,13 +203,11 @@
         \end{aligned}
     \end{tabular}
   \end{BlockNoTitle}
-  \medskip
-  \pause
-  Now we are about to use this simpler problem as example for:
-  \smallskip
+  \medskip \pause Now we are about to use this simpler problem
+  (\textbf{elliptic linear} PDE equation) as example for: \smallskip
   \begin{enumerate}
-  \item \emph{Analysis} of the model (including existence and uniqueness of solution) and
-  \item \emph{Numerical simulation} (calculating the solution).
+  \item \emph{\alert{Analysis}} of the model (existence and uniqueness of solution,...) and
+  \item \emph{\alert{Numerical simulation}} (calculating the solution).
 \end{enumerate}
 \end{frame}
 
@@ -220,7 +218,7 @@
   \begin{proposition}
   Let
   $$
-  X=\{ \Phi\in C^1(\overline\Omega) \st \Phi=0 \quad \mbox{on } \partial\Omega\}.
+  X=\{ \Phi\in \alert{C^1(\overline\Omega)} \st \alert{\Phi=0 \quad \mbox{on } \partial\Omega}\}.
   $$
   A function $u\in C^2(\Omega)$ is a solution of \poissonProblem $\mathbf\Longleftrightarrow$ $u\in X$ and satisfies:
   \begin{equation}
@@ -328,7 +326,7 @@
   \soften{Some results from \textbf{functional analysis}:}
   \begin{itemize}
   \setlength\itemsep{0.5em}
-  \item<1->
+  \item
     $L^p(\Omega)=\{ f: \Omega \to \Rset \quad \text{measurable} \st
     \alert{\int_\Omega |f(\xx)|^p < +\infty} \} \quad p \in [1,+\infty)$
     \begin{itemize}
@@ -336,10 +334,10 @@
       \scriptsize
     \item $L^p(\Omega)$ is a Banach space for
       $\norm[L^p(\Omega)]{f}=\left(\int_\Omega|f(\xx)|^p\right)^{1/p}$
-    \item $L^2(\Omega)$ is a Hilbert space for $(f,g)_{L^2(\Omega)}=\int_\Omega f(\xx) g(\xx) d\xx$
+    \item \alert{$L^2(\Omega)$} is a Hilbert space for $(f,g)_{L^2(\Omega)}=\int_\Omega f(\xx) g(\xx) d\xx$
     \end{itemize}
 
-  \item<2->
+  \item
     $ H^m(\Omega) = \{ f\in L^2(\Omega) \st \text{\alert{weak derivatives} of
       order $|\alpha| \le m$ are \alert{in} } \alert{L^2(\Omega)} \} $
     \begin{itemize}
@@ -353,7 +351,7 @@
       \item $C^\infty(\overline\Omega) \subset H^m(\Omega)$, dense inclusion.
     \end{itemize}
 
-  \item<3-> \alert{$H_0^1(\Omega) = \{ v \in H^1(\Omega) \st v|_{\partial\Omega}=0 \}$}
+  \item \alert{$H_0^1(\Omega) = \{ v \in H^1(\Omega) \st v|_{\partial\Omega}=0 \}$}
      \hfill\soften{ (sense of $v|_{\partial\Omega}=0$ ? Trace theory)}
     \begin{itemize}
       \setlength\itemsep{0.3em}
@@ -418,39 +416,39 @@
 % \end{enumerate}
 % \end{frame}
 
-% %--------------------------------------------------------------------------
-% \begin{frame}{Finite Difference Method}
-% %--------------------------------------------------------------------------
-% Simpler numerical method for PDE
+%--------------------------------------------------------------------------
+\begin{frame}{\soften{Numerical Simulation:} Finite Difference Method}
+%--------------------------------------------------------------------------
+Simpler numerical method for PDE
 
-% Example: the \alert{Poisson problem} in
-% $\Omega=(0,1)\times (0,1) \subset\Rset^2$:
+Example: the \alert{Poisson problem} in
+$\Omega=(0,1)\times (0,1) \subset\Rset^2$:
 
-% \begin{enumerate}
-%   \setlength\itemsep{1.1em}
-% \item We consider the mesh \structure{$\overline \Omega_h = \{ (x_i,y_j)=(ih,jh) \st 0 \le i,j \le M \} $}
-% and \alert{define $u_h(\xx)$ by} \soften{piecewise interpolation of the approximations}
-% $$
-% \alert{u^h_{ij}\simeq u(x_i,y_j)}.
-% $$
-% \item Partial derivatives are approximated \structure{on each interior node $(x_i,y_j)$} as incremental quotients:
-%   \begin{BlockNoTitle}
-%     \vspace{-1.5em}
-%     \begin{multline*}
-%       -\Delta u(x_i,y_j) = -\partial^2_{xx}u(x_i,y_j)
-%       -\partial^2_{yy}u(x_i,y_j)\simeq
-%       \\
-%       -\frac{u_{i-1,j}-2u_{ij}+u_{i+1,j}}{h^2}
-%       -\frac{u_{i,j-1}-2u_{ij}+u_{i,j+1}}{h^2} = f(x_i,x_j).
-%     \end{multline*}
-%   \end{BlockNoTitle}
-%   + B.C. $\Rightarrow$ \textbf{linear equations system}, $(M-1)^2$ equations and unknowns.
-% \end{enumerate}
+\begin{enumerate}
+  \setlength\itemsep{1.1em}
+\item We consider the mesh \structure{$\overline \Omega_h = \{ (x_i,y_j)=(ih,jh) \st 0 \le i,j \le M \} $}
+and \alert{define $u_h(\xx)$ by} \soften{piecewise interpolation of the approximations}
+$$
+\alert{u^h_{ij}\simeq u(x_i,y_j)}.
+$$
+\item Partial derivatives are approximated \structure{on each interior node $(x_i,y_j)$} as incremental quotients:
+  \begin{BlockNoTitle}
+    \vspace{-1.5em}
+    \begin{multline*}
+      -\Delta u(x_i,y_j) = -\partial^2_{xx}u(x_i,y_j)
+      -\partial^2_{yy}u(x_i,y_j)\simeq
+      \\
+      -\frac{u_{i-1,j}-2u_{ij}+u_{i+1,j}}{h^2}
+      -\frac{u_{i,j-1}-2u_{ij}+u_{i,j+1}}{h^2} = f(x_i,x_j).
+    \end{multline*}
+  \end{BlockNoTitle}
+  + B.C. $\Rightarrow$ \textbf{linear equations system}, $(M-1)^2$ equations and unknowns.
+\end{enumerate}
 
-% \end{frame}
+\end{frame}
 
 %--------------------------------------------------------------------------
-\begin{frame}{Finite Element Method (FEM)}
+\begin{frame}{\soften{Numerical Simulation:} Finite Element Method (FEM)}
 %--------------------------------------------------------------------------
   \begin{enumerate}
   \item We approximate $\overline\Omega$ by a \alert{triangulation
@@ -518,7 +516,13 @@
   \end{proposition}
 
   \medskip\small
-  $\dim(V_h)$ is known as the \textit{number of degrees of freedom} of $V_h$.
+  \begin{description}
+    \item []
+    \begin{itemize}
+    \item  $\dim(V_h)$ is the \textit{number of degrees
+        of freedom} of $V_h$.
+    \end{itemize}
+  \end{description}
 \end{frame}
 
 

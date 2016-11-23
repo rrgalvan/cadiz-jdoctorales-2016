@@ -55,12 +55,6 @@ B.~{Cushman-Roisin} and J.~M. Beckers.
   Numerical Aspects}.
 \newblock Academic Press, 2009.
 
-\bibitem[GGRG15]{fguillen-rrgalvan-paper2-NumMath:2015}
-F.~Guillén-González and J.~R. Rodríguez-Galván.
-\newblock Analysis of the hydrostatic {Stokes} problem and finite-element
-  approximation in unstructured meshes.
-\newblock {\em Numerische Mathematik}, 130(2):225--256, June 2015.
-
 \bibitem[GGRG16]{fguillen-rrgalvan-paper1-ApNumMath:2016}
 F.~Guillén-González and J.R. Rodríguez~Galván.
 \newblock On the stability of approximations for the {Stokes} problem using
