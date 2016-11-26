@@ -1,4 +1,4 @@
-\begin{thebibliography}{GGRG16}
+\begin{thebibliography}{GGRG15b}
 
 \bibitem[AG01]{Azerad-Guillen:01}
 P.~Az{\'e}rad and F.~Guill{\'e}n.
@@ -54,6 +54,18 @@ B.~{Cushman-Roisin} and J.~M. Beckers.
 \newblock {\em Introduction to Geophysical Fluid Dynamics - Physical and
   Numerical Aspects}.
 \newblock Academic Press, 2009.
+
+\bibitem[GGRG15a]{fguillen-rrgalvan-paper2-NumMath:2015}
+F.~Guillén-González and J.~R. Rodríguez-Galván.
+\newblock Analysis of the hydrostatic {Stokes} problem and finite-element
+  approximation in unstructured meshes.
+\newblock {\em Numerische Mathematik}, 130(2):225--256, June 2015.
+
+\bibitem[GGRG15b]{fguillen-rrgalvan-paper3-SIAM:2015}
+F.~Guillén~González and J.~R. Rodríguez~Galván.
+\newblock Stabilized {Schemes} for the {Hydrostatic} {Stokes} {Equations}.
+\newblock {\em SIAM Journal on Numerical Analysis}, 53(4):1876--1896, January
+  2015.
 
 \bibitem[GGRG16]{fguillen-rrgalvan-paper1-ApNumMath:2016}
 F.~Guillén-González and J.R. Rodríguez~Galván.
